@@ -16,16 +16,14 @@ Route::post('app.login','LoginController@login');
 
 Route::group(['prefix'=>'pm','middleware'=>'auth'],function(){
    Route::get('dashboard',function(){
-         return "<a href='logout'>Logout</a>";
+         return "<a href='".url('logout')."'>Logout</a>";
    });
 
-   Route::get('logout',function(){
-      return Auth::logout();
-   });
+   
 });
 
 
-
+Route::get('logout','LoginController@logout');
 Route::get('test','LoginController@test');
 
 Route::get('create_user',function(){
