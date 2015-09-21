@@ -13,6 +13,7 @@ class Authenticate
      * @var Guard
      */
     protected $auth;
+    protected $res;
 
     /**
      * Create a new filter instance.
@@ -35,11 +36,8 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         if ($this->auth->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('auth/login');
-            }
+            $this->res = Session::flash('error','You Cant Access this page guys!!');
+            return redirect()->back()->with('error',$this->res);
         }
 
         return $next($request);

@@ -11,13 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/','LoginController@index');
+Route::post('app.login','LoginController@login');
+
+Route::group(['prefix'=>'pm','middleware'=>'auth'],function(){
+   Route::get('dashboard',function(){
+         return "<a href='logout'>Logout</a>";
+   });
+
+   Route::get('logout',function(){
+      return Auth::logout();
+   });
 });
 
+
+
+Route::get('test','LoginController@test');
+
 Route::get('create_user',function(){
-   $obj = DB::table('users')->insert(array('nama'=>'Hasan Basri','email'=>'hasan.basri@kompas.com','telp'=>'0856565656',
-                  'bagian'=>'pm','password'=>Hash::make('hasan'),'status_active' => '1'));
+   $obj = DB::table('user')->insert(array('nama'=>'Hasan Basri','email'=>'hasan.basri@kompas.com','telepon'=>'0856565656',
+                  'type'=>'pm','password'=>Hash::make('hasan'),'status' => 'active','alamat'=>'Rawamangun'));
 
    if($obj) {
       print "success create users";
@@ -27,9 +40,3 @@ Route::get('create_user',function(){
    }
 });
 
-Route::get('user/logins','WelcomeController@show_login');
-Route::post('user/logins',['as'=>'user.logins','uses'=>'WelcomeController@login']);
-
-Route::group(['prefix' => 'admin'],function(){
-   Route::get('test','WelcomeController@test');
-});
