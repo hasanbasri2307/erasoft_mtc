@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Session;
 use Illuminate\Contracts\Auth\Guard;
 
 class Authenticate
@@ -37,7 +38,7 @@ class Authenticate
     {
         if ($this->auth->guest()) {
             $this->res = Session::flash('error','You Cant Access this page guys!!');
-            return redirect()->back()->with('error',$this->res);
+            return redirect()->back();
         }
 
         return $next($request);
