@@ -22,7 +22,7 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Erasoft\\":"app/Erasoft"
+            "Erasoft\\":"app/Erasoft/"
         }
     },
     "autoload-dev": {

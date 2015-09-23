@@ -33,9 +33,8 @@ class LoginFormRequest extends Request
     public function messages()
     {
         return [
-            'email.required' => 'Email Harus diisi vrooh',
-            'email.max' => 'Email Ga bole panjang2 vrohhh',
-            'password.max' => 'password kepanjangan vrohh'
+            'email.required' => 'Email Harus Diisi !',
+            'password.required' => 'Password Harus Diisi !'
         ];
     }
 }

@@ -3,20 +3,11 @@ namespace Erasoft\Libraries;
 
 class CustomLib {
 
-    public function __construct()
+    public static function generate_error($params)
     {
-        print "hey ";
-    }
+        $view = view('error_notification')->with('error',$params)->render();
+        return $view;
+    }   
 
-    public static function test()
-    {
-        echo "saya ".__CLASS__;
-        echo "<br>";
-        echo __METHOD__;
-    }
-
-    public function get()
-    {
-        echo "hello";
-    }
+  
 }

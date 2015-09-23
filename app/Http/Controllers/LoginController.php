@@ -25,12 +25,22 @@ class LoginController extends Controller
 
     public function login(LoginFormRequest $req)
     {
+        $remember = $req->remember;
+        if($remember =='remember')
+        {
+            $remember= true;
+        }
+        else {
+            $remember = false;
+        }
+
+
         self::$_obj['userdata'] = [
                 'email' => $req->email,
                 'password' => $req->password
         ];
 
-        if(Auth::attempt(self::$_obj['userdata']))
+        if(Auth::attempt(self::$_obj['userdata'],$remember))
         {
             if(Auth::user()->type == 'pm')
             {

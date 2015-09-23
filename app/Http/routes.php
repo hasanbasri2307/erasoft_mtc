@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/','LoginController@index');
+Route::get('/',['uses'=>'LoginController@index','middleware'=>'guest']);
 Route::post('app.login','LoginController@login');
 
 Route::group(['prefix'=>'pm','middleware'=>'auth'],function(){

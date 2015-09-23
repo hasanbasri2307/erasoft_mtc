@@ -35,7 +35,33 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
-            return redirect('/home');
+            if($this->auth->user()->type == 'pm')
+            {
+                return redirect('pm/dashboard');
+            }
+            elseif($this->auth->user()->type == 'suppport')
+            {
+                return redirect('suppport/dashboard');
+            }
+            elseif($this->auth->user()->type == 'client')
+            {
+                return redirect('client/dashboard');
+            }
+        }
+        elseif($this->auth->viaRemember())
+        {
+            if($this->auth->user()->type == 'pm')
+            {
+                return redirect('pm/dashboard');
+            }
+            elseif($this->auth->user()->type == 'suppport')
+            {
+                return redirect('suppport/dashboard');
+            }
+            elseif($this->auth->user()->type == 'client')
+            {
+                return redirect('client/dashboard');
+            }
         }
 
         return $next($request);
