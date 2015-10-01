@@ -12,7 +12,7 @@ use App\Http\Requests\LoginFormRequest;
 
 class LoginController extends Controller
 {
-    private static $_obj = array();
+    private static $_data = array();
     /**
      * Display a listing of the resource.
      *
@@ -35,12 +35,12 @@ class LoginController extends Controller
         }
 
 
-        self::$_obj['userdata'] = [
+        $params = [
                 'email' => $req->email,
                 'password' => $req->password
         ];
 
-        if(Auth::attempt(self::$_obj['userdata'],$remember))
+        if(Auth::attempt($params,$remember))
         {
             if(Auth::user()->type == 'pm')
             {

@@ -76,7 +76,7 @@
 											@endif
 
 											@if(Session::has('error'))
-											    { CustomLib::generate_error(Session::get('error')) }}
+											    {!!  CustomLib::generate_error(Session::get('error')) !!}
 											@endif
 											{!! Form::open(['action'=>'LoginController@login']) !!}
 												<fieldset>
