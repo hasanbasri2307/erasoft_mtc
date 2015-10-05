@@ -2,25 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Session;
 use Hash;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginFormRequest;
+use Illuminate\Contracts\Auth\Guard;
 
 class LoginController extends Controller
 {
     private static $_data = array();
+    private $auth;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
+        //Do your magic here
+    }
+
     public function index()
     {
-        return view('master_login');
+        return view('template.master_login');
     }
 
     public function login(LoginFormRequest $req)
@@ -40,12 +47,9 @@ class LoginController extends Controller
                 'password' => $req->password
         ];
 
-        if(Auth::attempt($params,$remember))
+        if($this->auth->attempt($params,$remember))
         {
-            if(Auth::user()->type == 'pm')
-            {
-                return redirect('pm/dashboard');
-            }
+            return redirect('dashboard');
         }
         else
         {
@@ -56,7 +60,7 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::logout();
+        $this->auth->logout();
         return redirect('/');
     }
     

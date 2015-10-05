@@ -7,7 +7,6 @@ class CustomLib {
     {
         $view = view('error_notification')->with('error',$params)->render();
         return $view;
-    }   
-
+    } 
   
 }
