@@ -272,16 +272,6 @@
 							<li class="active">Dashboard</li>
 						</ul><!-- /.breadcrumb -->
 
-						<!-- #section:basics/content.searchbox -->
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-									<i class="ace-icon fa fa-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div><!-- /.nav-search -->
-
 						<!-- /section:basics/content.searchbox -->
 					</div>
 
@@ -344,7 +334,7 @@
 		<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
 
 		<!-- page specific plugin scripts -->
-
+		@yield("js_script")
 		<!--[if lte IE 8]>
 		  <script src="../assets/js/excanvas.js"></script>
 		<![endif]-->
@@ -378,7 +368,7 @@
 		<script src="{{ asset('assets/js/ace/ace.settings-skin.js') }}"></script>
 		<script src="{{ asset('assets/js/ace/ace.widget-on-reload.js') }}"></script>
 		<script src="{{ asset('assets/js/ace/ace.searchbox-autocomplete.js') }}"></script>
-		@yield("js_script")
+		
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">

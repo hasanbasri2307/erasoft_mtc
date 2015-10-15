@@ -28,6 +28,7 @@ Route::group(['middleware'=>'auth'],function(){
    Route::get('user/edit/{id}',['uses'=>'UserController@edit','as'=>'user.edit']);
    Route::post('user/store',['uses'=>'UserController@store','as'=>'user.store']);
    Route::post('user/update/{id}',['uses'=>'UserController@update','as'=>'user.update']);
+   Route::get('user/delete/{id}',['uses'=>'UserController@delete','as'=>'user.delete']);
 
 });
 
