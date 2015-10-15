@@ -328,7 +328,7 @@
 
 		<!--[if !IE]> -->
 		<script type="text/javascript">
-			window.jQuery || document.write("<script src='../assets/js/jquery.js'>"+"<"+"/script>");
+			window.jQuery || document.write("<script src='{{ asset('assets/js/jquery.js') }}'>"+"<"+"/script>");
 		</script>
 
 		<!-- <![endif]-->
@@ -339,9 +339,9 @@
 </script>
 <![endif]-->
 		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.js'>"+"<"+"/script>");
+			if('ontouchstart' in document.documentElement) document.write("<script src='{{ asset('assets/js/jquery.mobile.custom.js') }}'>"+"<"+"/script>");
 		</script>
-		<script src="../assets/js/bootstrap.js"></script>
+		<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
 
 		<!-- page specific plugin scripts -->
 
