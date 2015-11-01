@@ -1,5 +1,6 @@
 @extends("template.master")
 @section("title","Dashboard Administrator")
+@section("breadcrumbs",Breadcrumbs::render('dashboard'))
 @section("sidebar_menu")
 	@include("menu.admin_menu")
 @endsection

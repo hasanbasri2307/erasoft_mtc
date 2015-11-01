@@ -20,21 +20,25 @@ Route::get('logout',['uses'=>'LoginController@logout','as'=>'logout']);
 Route::group(['middleware'=>'auth'],function(){
 
    Route::get('dashboard',['uses'=>'DashboardController@index','as'=>'dashboard']);
+   Route::get('profile',['uses'=>'UserController@profile','as'=>'user.profile']);
    //user
    Route::get('user',['uses'=>'UserController@index','as'=>'user']);
-   Route::get('user/profile/{id}',['uses'=>'UserController@profile','as'=>'user.profile']);
    Route::get('user/show/{id}',['uses'=>'UserController@show','as'=>'user.show']);
    Route::get('user/create',['uses'=>'UserController@create','as'=>'user.create']);
    Route::get('user/edit/{id}',['uses'=>'UserController@edit','as'=>'user.edit']);
    Route::post('user/store',['uses'=>'UserController@store','as'=>'user.store']);
-   Route::post('user/update/{id}',['uses'=>'UserController@update','as'=>'user.update']);
-   Route::get('user/delete/{id}',['uses'=>'UserController@delete','as'=>'user.delete']);
+   Route::put('user/update/{id}',['uses'=>'UserController@update','as'=>'user.update']);
+   Route::delete('user/delete/{id}',['uses'=>'UserController@destroy','as'=>'user.delete']);
+
+   //API USER
+   Route::get('get.user',['uses'=>'UserController@getuser','as'=>'get.user']);
+   
 
 });
+Route::get('update.user',['uses'=>'UserController@update_profile','as'=>'update.profile']);
 
 
-
-Route::get('test','LoginController@test');
+Route::get('test','UserController@test');
 
 Route::get('create_pm',function(){
    $obj = DB::table('user')->insert(array('nama'=>'Project Manager','email'=>'pm@kompas.com','telepon'=>'0856565656',

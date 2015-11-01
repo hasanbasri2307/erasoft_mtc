@@ -4,9 +4,11 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
 		<title>Erasoft Maintenance System - @yield("title")</title>
+		
 
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		@yield("meta")
 
 		<!-- bootstrap & fontawesome -->
 		<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}" />
@@ -68,7 +70,7 @@
 					<a href="#" class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
-							Ace Admin
+							Erasoft
 						</small>
 					</a>
 
@@ -167,15 +169,9 @@
 							</a>
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								
 								<li>
-									<a href="#">
-										<i class="ace-icon fa fa-cog"></i>
-										Pengaturan
-									</a>
-								</li>
-
-								<li>
-									<a href="profile.html">
+									<a href="{{ route('user.profile') }}">
 										<i class="ace-icon fa fa-user"></i>
 										Profil
 									</a>
@@ -202,57 +198,12 @@
 
 		<!-- /section:basics/navbar.layout -->
 		<div class="main-container" id="main-container">
-			<script type="text/javascript">
-				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
-			</script>
-
+			
 			<!-- #section:basics/sidebar -->
-			<div id="sidebar" class="sidebar                  responsive">
-				<script type="text/javascript">
-					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
-				</script>
-
-				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
-					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-						<button class="btn btn-success">
-							<i class="ace-icon fa fa-signal"></i>
-						</button>
-
-						<button class="btn btn-info">
-							<i class="ace-icon fa fa-pencil"></i>
-						</button>
-
-						<!-- #section:basics/sidebar.layout.shortcuts -->
-						<button class="btn btn-warning">
-							<i class="ace-icon fa fa-users"></i>
-						</button>
-
-						<button class="btn btn-danger">
-							<i class="ace-icon fa fa-cogs"></i>
-						</button>
-
-						<!-- /section:basics/sidebar.layout.shortcuts -->
-					</div>
-
-					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-						<span class="btn btn-success"></span>
-
-						<span class="btn btn-info"></span>
-
-						<span class="btn btn-warning"></span>
-
-						<span class="btn btn-danger"></span>
-					</div>
-				</div><!-- /.sidebar-shortcuts -->
+			<div id="sidebar" class="sidebar responsive">
 
 				@yield("sidebar_menu")
 
-				
-
-				<!-- /section:basics/sidebar.layout.minimize -->
-				<script type="text/javascript">
-					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
-				</script>
 			</div>
 
 			<!-- /section:basics/sidebar -->
@@ -263,14 +214,8 @@
 						<script type="text/javascript">
 							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
 						</script>
-
-						<ul class="breadcrumb">
-							<li>
-								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">Home</a>
-							</li>
-							<li class="active">Dashboard</li>
-						</ul><!-- /.breadcrumb -->
+						
+						@yield("breadcrumbs")
 
 						<!-- /section:basics/content.searchbox -->
 					</div>

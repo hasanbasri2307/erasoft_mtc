@@ -137,6 +137,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -197,7 +199,8 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'CustomLib' => Erasoft\Libraries\CustomLib::class
+        'CustomLib' => Erasoft\Libraries\CustomLib::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class
 
     ],
 

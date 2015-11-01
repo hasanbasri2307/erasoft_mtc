@@ -10,7 +10,6 @@ use Illuminate\Contracts\Auth\Guard;
 class DashboardController extends Controller
 {
     private $auth;
-    private static $_data = array();
 
     public function __construct(Guard $auth)
     {

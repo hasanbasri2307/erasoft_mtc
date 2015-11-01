@@ -72,11 +72,11 @@
 													}
 													$data .='</ul>';
 												?>
-												{!! CustomLib::generate_error($data) !!}  
+												{!! CustomLib::generate_notification($data,"error") !!}  
 											@endif
 
 											@if(Session::has('error'))
-											    {!!  CustomLib::generate_error(Session::get('error')) !!}
+											    {!!  CustomLib::generate_notification(Session::get('error'),"error") !!}
 											@endif
 											{!! Form::open(['action'=>'LoginController@login']) !!}
 												<fieldset>

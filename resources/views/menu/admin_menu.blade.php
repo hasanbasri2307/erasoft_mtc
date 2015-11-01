@@ -1,6 +1,6 @@
 <ul class="nav nav-list">
 					<li @if(Route::is('dashboard')) class="active" @endif>
-						<a href="{{ url('admin/dashboard') }}">
+						<a href="{{ url('dashboard') }}">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> Dashboard </span>
 						</a>

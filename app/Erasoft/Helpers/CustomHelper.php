@@ -1,9 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
  
-function getControllerName(Request $req)
+function getControllerName()
 {
-	$c_name = $req->route();
-	return $c_name;
+	$route = new Route();
+	print $route->getActionName();
+	print "<br />";
+	print $route->getAction();
+	
 }

@@ -12,7 +12,6 @@ use Illuminate\Contracts\Auth\Guard;
 
 class LoginController extends Controller
 {
-    private static $_data = array();
     private $auth;
     /**
      * Display a listing of the resource.
