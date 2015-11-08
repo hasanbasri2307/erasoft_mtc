@@ -35,7 +35,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $hidden = ['password'];
+ 
 
     protected $primaryKey = 'id_user';
     public $timestamps = true;

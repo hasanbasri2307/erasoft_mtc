@@ -12,6 +12,7 @@ use Session;
 use Validator;
 use Illuminate\Routing\Route;
 use Illuminate\Contracts\Auth\Guard;
+use Erasoft\Libraries\CustomLib;
 
 class UserController extends Controller
 {
@@ -154,31 +155,59 @@ class UserController extends Controller
     {
         $results = [];
 
-        
-            if(empty($req->password))
-            {
-                $data = [
-                    'name' => $req->name,
-                    'address' => $req->address,
-                    'phone' => $req->phone,
-                ];
+        $data = [
+            'name' => $req->name,
+            'address' => $req->address,
+            'phone' => $req->phone
+            
+        ];
 
-                $rules = [
-                    'name'=>'required',
-                    'address' =>'required',
-                    'phone' =>'required|max:15'
+        $rules = [
+            'name'=>'required',
+            'address' =>'required',
+            'phone' =>'required|numeric'
 
-                ];
+        ];
 
-                $validator = Validator::make($data,$rules);
-                if($validator->fails())
-                {
-                    $results['error'] =  $validator->errors();
-                    $results['status'] = false;
+        if($req->password != "") {
+            $data['password'] = $req->password;
+            $data['password_confirmation'] = $req->password_confirmation;
+            $rules['password'] = "required|confirmed";
+            $rules['password_confirmation'] = "required";
+        }
+       
+       
+        $validator = Validator::make($data,$rules);
+        if($validator->fails())
+        {
+            $errors = $validator->errors();
+            $error_message = "";
+            $error_message .= "<ul>";
 
-                    return response()->json($results);
-                }
+            foreach($errors->all() as $val) {
+                $error_message .= "<li>".$val."</li>";
             }
+
+            $error_message.="</ul>";
+
+            $results['message'] =  CustomLib::generate_notification($error_message,"error");
+            $results['status'] = false;
+
+            return response()->json($results);
+        }
+
+        $user = User::find($req->id_user);
+        $user->nama = $req->name;
+        $user->alamat = $req->address;
+        $user->telepon = $req->phone;
+        if($req->password !="")
+            $user->password = Hash::make($req->password);
+        $user->save();
+
+        $results['message'] = CustomLib::generate_notification("Data Has Been Saved","success");
+        $results['status'] = true;
+
+        return response()->json($results); 
 
     }
 

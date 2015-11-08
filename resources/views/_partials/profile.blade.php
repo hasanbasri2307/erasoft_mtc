@@ -1,4 +1,7 @@
 @extends("template.master")
+@section("meta")
+<meta name="csrf-token" content="<?php echo csrf_token() ?>"/>
+@endsection
 @section("title","User List")
 @section("breadcrumbs",Breadcrumbs::render('profile_user',$user))
 @section("sidebar_menu")
@@ -128,7 +131,7 @@
 									<div id="user-profile-3" class="user-profile row">
 										<div class="col-sm-offset-1 col-sm-10">
 											
-											<form class="form-horizontal">
+											<form class="form-horizontal" id="update_profile_form">
 												<div class="tabbable">
 													<ul class="nav nav-tabs padding-16">
 														<li class="active">
@@ -147,14 +150,15 @@
 													</ul>
 
 													<div class="tab-content profile-edit-tab-content">
+
 														<div id="edit-basic" class="tab-pane in active">
 															<h4 class="header blue bolder smaller">General</h4>
-
+															<div class="alert"></div>
 															<div class="form-group">
 																<label class="col-sm-3 control-label no-padding-right" for="form-field-date">Name</label>
 																<div class="col-sm-9">
-																	
-																		<input type="text" id="form-field-email" class="user_name" />
+																		<input type="hidden" name="id_user" value="{{ $user->id_user }}">
+																		<input type="text" id="form-field-email" class="user_name" name="name" />
 																		
 																</div>
 																
@@ -164,7 +168,7 @@
 																<label class="col-sm-3 control-label no-padding-right" for="form-field-date">Phone</label>
 																<div class="col-sm-9">
 																	
-																		<input type="text" id="form-field-email" class="user_phone" />
+																		<input type="text" id="form-field-email" class="user_phone" name="phone" />
 																		
 																</div>
 																
@@ -187,22 +191,23 @@
 
 																<div class="col-sm-9">
 																	<span class="input-icon input-icon-right">
-																		<input type="email" id="form-field-email" class="user_email" disabled="disabled" />
+																		<input type="email" id="form-field-email" class="user_email" disabled="disabled" name="email" />
 																		<i class="ace-icon fa fa-envelope"></i>
 																	</span>
 																</div>
 															</div>
+
 														</div>
 
 
 														<div id="edit-password" class="tab-pane">
-															<div class="space-10"></div>
-
+															
+															<div class="alert"></div>
 															<div class="form-group">
 																<label class="col-sm-3 control-label no-padding-right" for="form-field-pass1">New Password</label>
 
 																<div class="col-sm-9">
-																	<input type="password" id="form-field-pass1" />
+																	<input type="password" id="form-field-pass1" name="password" />
 																</div>
 															</div>
 
@@ -212,7 +217,7 @@
 																<label class="col-sm-3 control-label no-padding-right" for="form-field-pass2">Confirm Password</label>
 
 																<div class="col-sm-9">
-																	<input type="password" id="form-field-pass2" />
+																	<input type="password" id="form-field-pass2" name="password_confirmation" />
 																</div>
 															</div>
 														</div>
@@ -221,7 +226,7 @@
 
 												<div class="clearfix form-actions">
 													<div class="col-md-offset-3 col-md-9">
-														<button class="btn btn-info" type="button" id="save">
+														<button class="btn btn-info" type="submit" id="save">
 															<i class="ace-icon fa fa-check bigger-110"></i>
 															Save
 														</button>
@@ -271,7 +276,37 @@
 					  $('.user_phone').val(data.telepon);
 					  $('#change_profile').slideDown('slow');
 					});
-				});		
+				});
+
+				$('#save').on('click',function(e){
+					e.preventDefault();
+					var url = "{{ route('update.profile') }}";
+					var data = $('#update_profile_form').serialize();
+
+					$.ajax({
+						headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+						url: url,
+						type: 'PUT',
+						dataType: 'json',
+						data: data,
+					})
+					.done(function(data) {
+						if(data.status == false || data.status == true){
+							$('.alert').html(data.message).hide().slideDown('slow');
+						}
+
+						console.log("success");
+					})
+					.fail(function() {
+						console.log("error");
+					})
+					.always(function() {
+						console.log("complete");
+					});
+					
+				});
+
+						
 				
 			  
 			});

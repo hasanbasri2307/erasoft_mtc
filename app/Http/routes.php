@@ -32,10 +32,10 @@ Route::group(['middleware'=>'auth'],function(){
 
    //API USER
    Route::get('get.user',['uses'=>'UserController@getuser','as'=>'get.user']);
-   
+   Route::put('update.user',['uses'=>'UserController@update_profile','as'=>'update.profile']);
 
 });
-Route::get('update.user',['uses'=>'UserController@update_profile','as'=>'update.profile']);
+
 
 
 Route::get('test','UserController@test');
