@@ -1,17 +1,17 @@
 @extends("template.master")
-@section("title","User Add")
-@section("breadcrumbs",Breadcrumbs::render('add_user'))
+@section("title","Software Add")
+@section("breadcrumbs",Breadcrumbs::render('software'))
 @section("sidebar_menu")
-	@include("menu.admin_menu")
+	@include("menu.support_menu")
 @endsection
 @section("content")
 	<div class="page-content">
 					<div class="page-header">
 							<h1>
-								User
+								Software
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
-									Add User
+									Add Software
 								</small>
 							</h1>
 						</div><!-- /.page-header -->
@@ -33,7 +33,7 @@
 
 											
 								<!-- PAGE CONTENT BEGINS -->
-								{!! Form::open(array('url' => 'user/store','class'=>'form-horizontal')) !!}
+								{!! Form::open(array('url' => 'software/store','class'=>'form-horizontal','name'=>'add_software')) !!}
 								
 									<!-- #section:elements.form -->
 									<div class="form-group">
@@ -45,48 +45,36 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Email </label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Version </label>
 
 										<div class="col-sm-9">
-											{!! Form::email('email', Request::old('email'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Email')); !!}
+											{!! Form::text('version', Request::old('version'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Version')); !!}
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Password </label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Modul </label>
 
 										<div class="col-sm-9">
-											{!! Form::password('password',array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Password')); !!}
+											<table id="modul" class="table table-striped table-bordered table-hover">
+											<thead>
+												<tr>
+													
+													<th>Modul Name</th>
+													<th><button type="button" id="add_modul" class="btn btn-white btn-success" onclick="add_row();">Add</button></th>
+												</tr>
+											</thead>
+
+											<tbody>
+												
+											</tbody>
+										</table>
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Phone </label>
-
-										<div class="col-sm-9">
-											{!! Form::number('phone', Request::old('phone'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Phone Number')); !!}
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Address </label>
-
-										<div class="col-sm-9">
-											{!! Form::textarea('address', Request::old('address'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-8','placeholder'=>'Address')); !!}
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Type </label>
-
-										<div class="col-sm-9">
-											{!! Form::select('type', CustomLib::gen_type(), null, ['placeholder' => '--- Type Users ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5']); !!}
-
-										</div>
-									</div>
-
-									
 
 									<div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
 
-											<button class="btn btn-info" type="submit">
+											<button class="btn btn-info" type="submit" onclick="check(this);">
 												<i class="ace-icon fa fa-check bigger-110"></i>
 												Submit
 											</button>
@@ -106,6 +94,32 @@
 						</div><!-- /.row -->
 @endsection
 @section("js_script")
+		<script type="text/javascript">
+
+			function add_row(){
+				$('#modul tbody').append('<tr><td><input type="text" name="modul_name[]" placeholder="Modul" id="modul_name" class="col-xs-10 col-sm-5"></td><td><button class="btn btn-sm btn-danger" onclick="delete_row(this);" type="button">Delete</button></td></tr>');
+			}
+
+			function delete_row(id){
+				$(id).parent().parent().remove();
+			}
+
+			function check(e){
+				
+				$('form[name=add_software]').submit(function() {
+					var check = $('#modul_name').val();
+					
+                    if(!check){
+                    	alert("Modul name must be filled");
+                    	return false
+                    }
+
+                    return true;
+                });
+;			}
+
+		</script>
+
 	<script src="{{ asset('assets/js/dataTables/jquery.dataTables.js') }}"></script>
 	<script src="{{ asset('assets/js/dataTables/jquery.dataTables.bootstrap.js') }}"></script>
 	<script src="{{ asset('assets/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js') }}"></script>
@@ -215,7 +229,11 @@
 					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
 					return 'left';
 				}
+
+				
+				
 			
-			})
+			});
 		</script>
+		
 @endsection

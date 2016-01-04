@@ -53,8 +53,6 @@ class UserController extends Controller
             $user->nama = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            $user->telepon = $request->phone;
-            $user->alamat = $request->address;
             $user->type = $request->type;
             $user->status = "active";
             $user->save();
@@ -106,8 +104,6 @@ class UserController extends Controller
         try {
             $user = User::find($id);
             $user->nama = $request->name;
-            $user->telepon = $request->phone;
-            $user->alamat = $request->address;
             $user->save();
 
             Session::flash("success","Success Update User");

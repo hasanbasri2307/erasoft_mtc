@@ -19,6 +19,7 @@ Route::get('logout',['uses'=>'LoginController@logout','as'=>'logout']);
 
 Route::group(['middleware'=>'auth'],function(){
 
+   //USER
    Route::get('dashboard',['uses'=>'DashboardController@index','as'=>'dashboard']);
    Route::get('profile',['uses'=>'UserController@profile','as'=>'user.profile']);
    //user
@@ -33,6 +34,15 @@ Route::group(['middleware'=>'auth'],function(){
    //API USER
    Route::get('get.user',['uses'=>'UserController@getuser','as'=>'get.user']);
    Route::put('update.user',['uses'=>'UserController@update_profile','as'=>'update.profile']);
+
+   //Software
+   Route::get('software',['uses'=>'SoftwareController@index','as'=>'software']);
+   Route::get('software/show/{id}',['uses'=>'SoftwareController@show','as'=>'software.show']);
+   Route::get('software/create',['uses'=>'SoftwareController@create','as'=>'software.create']);
+   Route::get('software/edit/{id}',['uses'=>'SoftwareController@edit','as'=>'software.edit']);
+   Route::post('software/store',['uses'=>'SoftwareController@store','as'=>'software.store']);
+   Route::put('software/update/{id}',['uses'=>'SoftwareController@update','as'=>'software.update']);
+   Route::delete('software/delete/{id}',['uses'=>'SoftwareController@destroy','as'=>'software.delete']);
 
 });
 

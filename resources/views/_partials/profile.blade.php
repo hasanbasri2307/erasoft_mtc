@@ -5,7 +5,13 @@
 @section("title","User List")
 @section("breadcrumbs",Breadcrumbs::render('profile_user',$user))
 @section("sidebar_menu")
-	@include("menu.admin_menu")
+    @if(Auth::user()->type == "admin")
+	    @include("menu.admin_menu")
+    @elseif(Auth::user()->type == "pm")
+        @include("menu.pm_menu")
+    @elseif(Auth::user()->type == "support")
+        @include("menu.support_menu")
+    @endif
 @endsection
 @section("content")
 	<div class="page-content">
