@@ -29,25 +29,17 @@ class UserRequest extends Request
                     "name"=>"required",
                     "email" =>"required|email|unique:user,email",
                     "password" => "required",
-                    "phone" =>"required",
-                    "address" => "required",
                     "type" => "required"
-                    //
                 ];
                 break;
 
             case 'PUT':
                 return [
-                    "name"=>"required",
-                    "phone" =>"required",
-                    "address" => "required",
-                    //
+                    "name"=>"required"
                 ];
 
                 break;
-        
         }
-        
     }
 
     public function messages()
@@ -58,8 +50,6 @@ class UserRequest extends Request
             "email.required" => "Email Must Be Filled",
             "email.email" => "Email Format Must Be Valid",
             "password.required" => "Password Must Be Filled",
-            "phone.required" => "Phone Must Be Filled",
-            "address.required" => "Address Must Be Filled",
             "type.required" => "Type Must Be Filled"
         ];
     }

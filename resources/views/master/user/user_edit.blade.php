@@ -2,7 +2,7 @@
 @section("title","User List")
 @section("breadcrumbs",Breadcrumbs::render('edit_user',$user))
 @section("sidebar_menu")
-	@include("menu.admin_menu")
+	@include("menu.pm_menu")
 @endsection
 @section("content")
 	<div class="page-content">
@@ -52,21 +52,7 @@
 											{!! Form::email('email', $user->email,array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Email','disabled'=>'disabled')); !!}
 										</div>
 									</div>
-									
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Phone </label>
 
-										<div class="col-sm-9">
-											{!! Form::number('phone', $user->telepon,array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Phone Number')); !!}
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Address </label>
-
-										<div class="col-sm-9">
-											{!! Form::textarea('address', $user->alamat,array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-8','placeholder'=>'Address')); !!}
-										</div>
-									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Type </label>
 

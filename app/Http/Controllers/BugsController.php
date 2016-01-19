@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Bugs;
 use App\Software;
 use App\SoftwareDetail;
+use App\Http\Requests\BugRequest;
 use Illuminate\Support\Facades\Session;
 
 class BugsController extends Controller
@@ -43,7 +44,7 @@ class BugsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BugRequest $request)
     {
         //
         $bugs = new Bugs();
@@ -90,7 +91,7 @@ class BugsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BugRequest $request, $id)
     {
         //
         $bugs= Bugs::find($id);

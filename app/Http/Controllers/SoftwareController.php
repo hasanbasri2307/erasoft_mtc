@@ -9,6 +9,7 @@ use App\Software;
 use App\SoftwareDetail;
 use League\Flysystem\Exception;
 use Session;
+use App\Http\Requests\SoftwareRequest;
 
 class SoftwareController extends Controller
 {
@@ -41,7 +42,7 @@ class SoftwareController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SoftwareRequest $request)
     {
         //
         try {
@@ -110,7 +111,7 @@ class SoftwareController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SoftwareRequest $request, $id)
     {
         //
         try {
@@ -156,8 +157,4 @@ class SoftwareController extends Controller
             print $e->getMessage();
         }
     }
-
-    $date = Input::get('tgl_gaji');
-    $n = date("Y-m-d",strtotime($date));
-    $gahi->tgl_gaji = $n
 }

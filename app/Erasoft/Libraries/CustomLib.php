@@ -19,7 +19,7 @@ class CustomLib {
 
     public static function gen_type()
     {
-    	$type = ["administrator"=>"Administrator","client"=>"Client","pm"=>"Project Manager","support"=>"Support"];
+    	$type = ["client"=>"Client","pm"=>"Project Manager","support"=>"Support"];
     	return $type;
     }
 

@@ -94,3 +94,29 @@ Breadcrumbs::register('view_bugs', function($breadcrumbs, $bugs)
     $breadcrumbs->push($bugs->nama, route('bugs.show', $bugs->id_bugs));
 });
 
+//User
+Breadcrumbs::register('client', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Client', route('client'));
+});
+
+Breadcrumbs::register('add_client', function($breadcrumbs)
+{
+    $breadcrumbs->parent('client');
+    $breadcrumbs->push('Add', route('client.create'));
+});
+
+Breadcrumbs::register('edit_client', function($breadcrumbs, $client)
+{
+    $breadcrumbs->parent('client');
+    $breadcrumbs->push($client->nama_pt, route('user.edit', $client->id_client));
+});
+
+Breadcrumbs::register('view_client', function($breadcrumbs, $client)
+{
+    $breadcrumbs->parent('client');
+    $breadcrumbs->push($client->nama_pt, route('user.show', $client->id_client));
+});
+
+

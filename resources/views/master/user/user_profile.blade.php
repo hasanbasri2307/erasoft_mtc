@@ -2,7 +2,7 @@
 @section("title","User List")
 @section("breadcrumbs",Breadcrumbs::render('view_user',$user))
 @section("sidebar_menu")
-	@include("menu.admin_menu")
+	@include("menu.pm_menu")
 @endsection
 @section("content")
 	<div class="page-content">
@@ -57,24 +57,6 @@
 
 																	<div class="profile-info-value">
 																		<span>{{ $user->email }}</span>
-																	</div>
-																</div>
-
-																<div class="profile-info-row">
-																	<div class="profile-info-name"> Address </div>
-
-																	<div class="profile-info-value">
-																		<i class="fa fa-map-marker light-orange bigger-110"></i>
-																		<span>Indonesia</span>
-																		<span>{{ $user->alamat }}</span>
-																	</div>
-																</div>
-
-																<div class="profile-info-row">
-																	<div class="profile-info-name"> Phone </div>
-
-																	<div class="profile-info-value">
-																		<span>{{ $user->telepon }}</span>
 																	</div>
 																</div>
 

@@ -153,15 +153,11 @@ class UserController extends Controller
 
         $data = [
             'name' => $req->name,
-            'address' => $req->address,
-            'phone' => $req->phone
             
         ];
 
         $rules = [
             'name'=>'required',
-            'address' =>'required',
-            'phone' =>'required|numeric'
 
         ];
 
@@ -194,8 +190,6 @@ class UserController extends Controller
 
         $user = User::find($req->id_user);
         $user->nama = $req->name;
-        $user->alamat = $req->address;
-        $user->telepon = $req->phone;
         if($req->password !="")
             $user->password = Hash::make($req->password);
         $user->save();

@@ -72,23 +72,6 @@
 																	</div>
 																</div>
 
-																<div class="profile-info-row">
-																	<div class="profile-info-name"> Address </div>
-
-																	<div class="profile-info-value">
-																		<i class="fa fa-map-marker light-orange bigger-110"></i>
-																		<span>Indonesia</span>
-																		<span>{{ $user->alamat }}</span>
-																	</div>
-																</div>
-
-																<div class="profile-info-row">
-																	<div class="profile-info-name"> Phone </div>
-
-																	<div class="profile-info-value">
-																		<span>{{ $user->telepon }}</span>
-																	</div>
-																</div>
 
 																<div class="profile-info-row">
 																	<div class="profile-info-name"> Status </div>
@@ -170,24 +153,7 @@
 																
 															</div>
 															<div class="space-4"></div>
-															<div class="form-group">
-																<label class="col-sm-3 control-label no-padding-right" for="form-field-date">Phone</label>
-																<div class="col-sm-9">
-																	
-																		<input type="text" id="form-field-email" class="user_phone" name="phone" />
-																		
-																</div>
-																
-															</div>
-															<div class="space-4"></div>
 
-															<div class="form-group">
-																<label class="col-sm-3 control-label no-padding-right" for="form-field-comment">Address</label>
-
-																<div class="col-sm-9">
-																	<textarea id="form-field-comment" name="address" class="user_address"></textarea>
-																</div>
-															</div>
 
 															<div class="space"></div>
 															<h4 class="header blue bolder smaller">Contact</h4>
@@ -277,9 +243,7 @@
 					var url = '{{ route("get.user") }}';
 					$.get( url, function( data ) {
 					  $('.user_name').val(data.nama);
-					  $('.user_address').val(data.alamat);
 					  $('.user_email').val(data.email);
-					  $('.user_phone').val(data.telepon);
 					  $('#change_profile').slideDown('slow');
 					});
 				});

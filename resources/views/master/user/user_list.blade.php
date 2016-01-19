@@ -2,7 +2,7 @@
 @section("title","User List")
 @section("breadcrumbs",Breadcrumbs::render('user'))
 @section("sidebar_menu")
-	@include("menu.admin_menu")
+	@include("menu.pm_menu")
 @endsection
 @section("content")
 	<div class="page-content">
@@ -49,12 +49,7 @@
 											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
-														<th class="center">
-															<label class="pos-rel">
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label>
-														</th>
+
 														<th>Name</th>
 														<th>Email</th>
 														<th class="hidden-480">Type</th>
@@ -68,12 +63,7 @@
 												<tbody>
 												@foreach($user as $data)
 													<tr>
-														<td class="center">
-															<label class="pos-rel">
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label>
-														</td>
+
 
 														<td>
 															{{ $data['nama'] }}

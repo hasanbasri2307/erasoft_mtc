@@ -22,6 +22,7 @@ Route::group(['middleware'=>'auth'],function(){
    //USER
    Route::get('dashboard',['uses'=>'DashboardController@index','as'=>'dashboard']);
    Route::get('profile',['uses'=>'UserController@profile','as'=>'user.profile']);
+   
    //user
    Route::get('user',['uses'=>'UserController@index','as'=>'user']);
    Route::get('user/show/{id}',['uses'=>'UserController@show','as'=>'user.show']);
@@ -34,6 +35,18 @@ Route::group(['middleware'=>'auth'],function(){
    //API USER
    Route::get('get.user',['uses'=>'UserController@getuser','as'=>'get.user']);
    Route::put('update.user',['uses'=>'UserController@update_profile','as'=>'update.profile']);
+
+   
+   //client
+   Route::get('client',['uses'=>'ClientController@index','as'=>'client']);
+   Route::get('client/show/{id}',['uses'=>'ClientController@show','as'=>'client.show']);
+   Route::get('client/create',['uses'=>'ClientController@create','as'=>'client.create']);
+   Route::get('client/edit/{id}',['uses'=>'ClientController@edit','as'=>'client.edit']);
+   Route::post('client/store',['uses'=>'ClientController@store','as'=>'client.store']);
+   Route::put('client/update/{id}',['uses'=>'ClientController@update','as'=>'client.update']);
+   Route::delete('client/delete/{id}',['uses'=>'ClientController@destroy','as'=>'client.delete']);
+
+   
 
    //Software
    Route::get('software',['uses'=>'SoftwareController@index','as'=>'software']);
