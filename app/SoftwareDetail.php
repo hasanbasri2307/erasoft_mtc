@@ -15,4 +15,8 @@ class SoftwareDetail extends Model
     {
     	return $this->belongsTo('App\Software','id_software');
     }
+
+    public function bugs(){
+        return $this->hasMany('App\Bugs');
+    }
 }

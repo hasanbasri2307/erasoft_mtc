@@ -70,3 +70,27 @@ Breadcrumbs::register('view_software', function($breadcrumbs, $software)
 });
 
 //Bugs
+Breadcrumbs::register('bugs', function($breadcrumbs)
+{
+    $breadcrumbs->parent('software & bugs');
+    $breadcrumbs->push('Bugs', route('bugs'));
+});
+
+Breadcrumbs::register('add_bugs', function($breadcrumbs)
+{
+    $breadcrumbs->parent('bugs');
+    $breadcrumbs->push('Add', route('bugs.create'));
+});
+
+Breadcrumbs::register('edit_bugs', function($breadcrumbs, $bugs)
+{
+    $breadcrumbs->parent('bugs');
+    $breadcrumbs->push($bugs->nama_bugs, route('software.edit', $bugs->id_bugs));
+});
+
+Breadcrumbs::register('view_bugs', function($breadcrumbs, $bugs)
+{
+    $breadcrumbs->parent('bugs');
+    $breadcrumbs->push($bugs->nama, route('bugs.show', $bugs->id_bugs));
+});
+

@@ -44,6 +44,16 @@ Route::group(['middleware'=>'auth'],function(){
    Route::put('software/update/{id}',['uses'=>'SoftwareController@update','as'=>'software.update']);
    Route::delete('software/delete/{id}',['uses'=>'SoftwareController@destroy','as'=>'software.delete']);
 
+   //Bugs
+   Route::get('bugs',['uses'=>'BugsController@index','as'=>'bugs']);
+   Route::get('bugs/show/{id}',['uses'=>'BugsController@show','as'=>'software.show']);
+   Route::get('bugs/create',['uses'=>'BugsController@create','as'=>'bugs.create']);
+   Route::get('bugs/edit/{id}',['uses'=>'BugsController@edit','as'=>'bugs.edit']);
+   Route::post('bugs/store',['uses'=>'BugsController@store','as'=>'bugs.store']);
+   Route::put('bugs/update/{id}',['uses'=>'BugsController@update','as'=>'bugs.update']);
+   Route::delete('bugs/delete/{id}',['uses'=>'BugsController@destroy','as'=>'bugs.delete']);
+   Route::get('list-software-detail',['uses'=>'BugsController@get_software_detail']);
+
 });
 
 

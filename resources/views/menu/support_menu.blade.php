@@ -8,7 +8,7 @@
 						<b class="arrow"></b>
 					</li>
 
-					<li @if(Route::is('software') || Route::is('software.show') || Route::is('software.create') || Route::is('software.edit')) class="active open" @endif>
+					<li @if(Route::is('software') || Route::is('software.show') || Route::is('software.create') || Route::is('software.edit') || Route::is('bugs') || Route::is('bugs.show') || Route::is('bugs.create') || Route::is('bugs.edit')) class="active open" @endif>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-desktop"></i>
 							<span class="menu-text">
@@ -32,8 +32,8 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
-								<a href="elements.html">
+							<li @if(Route::is('bugs') || Route::is('bugs.show') || Route::is('bugs.create') || Route::is('bugs.edit')) class="active" @endif>
+								<a href="{{ url('bugs') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Bugs
 								</a>

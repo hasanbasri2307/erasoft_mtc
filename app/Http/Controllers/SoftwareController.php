@@ -156,4 +156,8 @@ class SoftwareController extends Controller
             print $e->getMessage();
         }
     }
+
+    $date = Input::get('tgl_gaji');
+    $n = date("Y-m-d",strtotime($date));
+    $gahi->tgl_gaji = $n
 }
