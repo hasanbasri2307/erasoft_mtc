@@ -52,5 +52,30 @@ class CustomLib {
             }
         }
     }
+
+    public static function gen_status_tiket($status){
+        $result = "";
+        switch($status){
+            case 'open' :
+                $result = '<span class="label label-info arrowed-in-right arrowed">'.ucfirst($status).'</span>';
+                break;
+            case 'process':
+                $result = '<span class="label label-warning arrowed">'.ucfirst($status).'</span>';
+                break;
+            case 'finish':
+                $result = '<span class="label label-success arrowed">'.ucfirst($status).'</span>';
+                break;
+            case 'cancelled':
+                $result = '<span class="label label-danger arrowed">'.ucfirst($status).'</span>';
+                break;
+        }
+
+        return $result;
+    }
+
+    public static function gen_tanggal($date,$format="d F Y H:i:s"){
+        $time = strtotime($date);
+        return date($format,$time);
+    }
   
 }

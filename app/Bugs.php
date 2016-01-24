@@ -14,4 +14,8 @@ class Bugs extends Model
 	public function software_detail(){
 		return $this->belongsTo('App\SoftwareDetail','id_modul');
 	}
+
+	public function software(){
+		return $this->belongsTo("App\Software",'id_software');
+	}
 }

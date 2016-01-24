@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 19, 2016 at 05:14 PM
+-- Generation Time: Jan 25, 2016 at 06:40 AM
 -- Server version: 5.5.46-MariaDB-1ubuntu0.14.04.2
--- PHP Version: 5.6.16-4+deb.sury.org~trusty+1
+-- PHP Version: 5.6.17-3+deb.sury.org~trusty+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `bugs` (
 --
 
 INSERT INTO `bugs` (`id_bugs`, `nama_bugs`, `penyelesaian`, `id_software`, `id_modul`) VALUES
-(1, 'Test', 'dfdasfdaf', 1, 2);
+(1, 'test', 'test estest se', 1, 10);
 
 -- --------------------------------------------------------
 
@@ -67,10 +67,19 @@ CREATE TABLE IF NOT EXISTS `client` (
   `alamat` text NOT NULL,
   `no_telepon` varchar(15) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `lat` double NOT NULL,
+  `lon` double NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id_client`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `client`
+--
+
+INSERT INTO `client` (`id_client`, `nama_pt`, `pic`, `alamat`, `no_telepon`, `id_user`, `lat`, `lon`, `created_at`, `updated_at`) VALUES
+(2, 'PT Singoedan', 'Ilma', 'Rawabuntu', '08421231', 12, 0, 0, '2016-01-24 00:49:49', '2016-01-24 00:49:49');
 
 -- --------------------------------------------------------
 
@@ -86,6 +95,13 @@ CREATE TABLE IF NOT EXISTS `client_support` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id_cs`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `client_support`
+--
+
+INSERT INTO `client_support` (`id_cs`, `id_client`, `id_support`, `created_at`, `updated_at`) VALUES
+(1, 2, 7, '2016-01-24 00:49:49', '2016-01-24 00:49:49');
 
 -- --------------------------------------------------------
 
@@ -161,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `software` (
   `nama` varchar(30) NOT NULL,
   `versi` varchar(10) NOT NULL,
   PRIMARY KEY (`id_software`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `software`
@@ -182,18 +198,17 @@ CREATE TABLE IF NOT EXISTS `software_detail` (
   `id_software` int(11) NOT NULL,
   `nama_modul` varchar(30) NOT NULL,
   PRIMARY KEY (`id_detail`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `software_detail`
 --
 
 INSERT INTO `software_detail` (`id_detail`, `id_software`, `nama_modul`) VALUES
-(1, 1, 'accounting'),
-(2, 1, 'hrd'),
 (3, 2, 'accounting'),
 (4, 2, 'finance'),
-(5, 3, 'fds');
+(10, 1, 'hrd'),
+(11, 1, 'crm');
 
 -- --------------------------------------------------------
 
@@ -203,13 +218,23 @@ INSERT INTO `software_detail` (`id_detail`, `id_software`, `nama_modul`) VALUES
 
 CREATE TABLE IF NOT EXISTS `tiket` (
   `id_tiket` int(11) NOT NULL AUTO_INCREMENT,
-  `nomor_tiket` varchar(10) NOT NULL,
   `id_client` int(11) NOT NULL,
   `masalah` text NOT NULL,
+  `id_support` int(11) NOT NULL,
   `status` enum('open','process','finish','cancelled') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id_tiket`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `tiket`
+--
+
+INSERT INTO `tiket` (`id_tiket`, `id_client`, `masalah`, `id_support`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 'Tidak bisa tambah jurnal', 0, 'open', '2016-01-24 01:34:53', '2016-01-24 01:34:53'),
+(2, 2, 'Kurang TIdur', 0, 'open', '2016-01-24 01:50:44', '2016-01-24 01:50:44'),
+(3, 2, 'begadang', 0, 'open', '2016-01-24 09:24:21', '2016-01-24 09:24:21');
 
 -- --------------------------------------------------------
 
@@ -228,18 +253,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `nama`, `email`, `password`, `type`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(6, 'Project Manager', 'pm@kompas.com', '$2y$10$eWv0KaGtaKZkSfniIURMhuB4FnjyBCX4XotMisKx/kNVSMjy4UnxO', 'pm', 'active', 'D0pTiskikX9eI9Jvul6TxnYRuEFGKFJsQ6nizPzu4Ig8irUrDo25d1qvWnHN', '2016-01-19 09:03:45', '2016-01-19 02:03:45'),
-(7, 'Tech Support', 'support@kompas.com', '$2y$10$gyGVrqvFhQTbDtey2dFz4.xwO7oCnRMBneJ/lYZZYlW32MOLeBjpq', 'support', 'active', 'KtOIoSU1t0FhkDJUO5gYofHnZEY7u0L9wIeoa237fU4fCODbq5Ee3MMBwMf6', '2016-01-19 09:06:28', '2016-01-19 02:06:28'),
-(9, 'Client', 'client@kompas.com', '$2y$10$xZIe3QXrPFHocOuqwKxRju4Q56qVVitekNzL6zrG7ui44k38dW40G', 'client', 'active', '', '2015-10-20 07:44:18', '0000-00-00 00:00:00'),
-(10, 'Admin', 'admin@kompas.com', '$2y$10$0nU7h6Seey9PUq5A98qUPu3o1cWQeAx7YOIFYuWuEsJ7t7SqtoPNS', 'administrator', 'active', 'CXJtvzI1Zt1fnOvDqKodRG3xt47wGbxxNVY88deWav17lkFwmIvHBYWK2y9d', '2015-11-27 12:17:48', '2015-11-27 05:17:48'),
-(11, 'Roby', 'roby@google.com', '$2y$10$Ul2.Wzq9be0EHZ8iljJKFuF0d6CEcb0S9L.8xtUkN3soqhc/EmnsG', 'support', 'active', '', '2016-01-19 00:22:21', '2016-01-19 00:22:21');
+(6, 'Project Manager', 'pm@kompas.com', '$2y$10$eWv0KaGtaKZkSfniIURMhuB4FnjyBCX4XotMisKx/kNVSMjy4UnxO', 'pm', 'active', 'TMWf4ALEJuCcSnxkm3afgCwbzvus1Eg10u56BExHOAawVskBR3erxPDk37gd', '2016-01-24 16:38:41', '2016-01-24 16:38:41'),
+(7, 'Tech Support', 'support@kompas.com', '$2y$10$gyGVrqvFhQTbDtey2dFz4.xwO7oCnRMBneJ/lYZZYlW32MOLeBjpq', 'support', 'active', 'Ue5Z7CwJsZoChwnzeO91V4pbeVdaVnplDXdAgOOwpE6ID787GbEqx0eTUUIt', '2016-01-24 09:04:50', '2016-01-24 02:04:50'),
+(9, 'Client', 'client@kompas.com', '$2y$10$xZIe3QXrPFHocOuqwKxRju4Q56qVVitekNzL6zrG7ui44k38dW40G', 'client', 'active', 'BKglRbqjBN3pQAOnwHcKMKLCgs6GjEEgPcwrOHcKNT1dBMHwaHEVJyJ0Ce5D', '2016-01-24 07:48:01', '2016-01-24 00:48:01'),
+(10, 'Admin', 'admin@kompas.com', '$2y$10$0nU7h6Seey9PUq5A98qUPu3o1cWQeAx7YOIFYuWuEsJ7t7SqtoPNS', 'administrator', 'active', 'yBz0Hb2lnrOMYJUpypvFlvZFMnjDlU4MpqzL4LUDLYl8uMsPwcWXE2UJ7aDm', '2016-01-24 06:54:59', '2016-01-23 23:54:59'),
+(12, 'PT Singoedan', 'ilma@gmail.com', '$2y$10$EFsRUUTC8IZZeq8Z986az.4mJaKCC9C1/ONUuej4CCSZoSG0eIwOG', 'client', 'active', 'wkW1ZD0Tu0hcTgYxAN2iEox8VMLDBD4WPfh3o3POwQBtSSwsoz7MCk3PE8L2', '2016-01-24 09:12:01', '2016-01-24 02:12:01');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

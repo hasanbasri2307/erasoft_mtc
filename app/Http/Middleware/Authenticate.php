@@ -38,7 +38,7 @@ class Authenticate
     {
         if ($this->auth->guest()) {
             $this->res = Session::flash('error','You Cant Access this page guys!!');
-            return redirect()->back();
+            return redirect()->route('login');
         }
 
         return $next($request);

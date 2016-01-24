@@ -40,7 +40,11 @@ class User extends Model implements AuthenticatableContract,
     protected $primaryKey = 'id_user';
     public $timestamps = true;
 
-	public function client(){
+	public function support(){
 		return $this->belongsToMany('App\Client','client_support','id_support','id_client');
+	}
+
+	public function client(){
+		return $this->hasOne('App\Client',"id_user");
 	}
 }

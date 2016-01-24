@@ -14,4 +14,12 @@ class Client extends Model
 	public function support(){
 		return $this->belongsToMany('App\User','client_support','id_client','id_support');
 	}
+
+	public function tiket(){
+		return $this->hasMany('App\Tiket','id_client');
+	}
+
+	public function user(){
+		return $this->belongsTo("App\User","id_user");
+	}
 }

@@ -110,13 +110,38 @@ Breadcrumbs::register('add_client', function($breadcrumbs)
 Breadcrumbs::register('edit_client', function($breadcrumbs, $client)
 {
     $breadcrumbs->parent('client');
-    $breadcrumbs->push($client->nama_pt, route('user.edit', $client->id_client));
+    $breadcrumbs->push($client->nama_pt, route('client.edit', $client->id_client));
 });
 
 Breadcrumbs::register('view_client', function($breadcrumbs, $client)
 {
     $breadcrumbs->parent('client');
-    $breadcrumbs->push($client->nama_pt, route('user.show', $client->id_client));
+    $breadcrumbs->push($client->nama_pt, route('client.show', $client->id_client));
+});
+
+//tiket
+Breadcrumbs::register('tiket', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Tiket', route('tiket'));
+});
+
+Breadcrumbs::register('add_tiket', function($breadcrumbs)
+{
+    $breadcrumbs->parent('tiket');
+    $breadcrumbs->push('Add', route('tiket.create'));
+});
+
+Breadcrumbs::register('edit_tiket', function($breadcrumbs, $tiket)
+{
+    $breadcrumbs->parent('client');
+    $breadcrumbs->push($tiket->nama_pt, route('tiket.edit', $client->id_tiket));
+});
+
+Breadcrumbs::register('view_tiket', function($breadcrumbs, $tiket)
+{
+    $breadcrumbs->parent('client');
+    $breadcrumbs->push($tiket->id_tiket, route('tiket.show', $tiket->id_tiket));
 });
 
 

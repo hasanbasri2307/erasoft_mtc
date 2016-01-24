@@ -67,6 +67,8 @@ class BugsController extends Controller
     public function show($id)
     {
         //
+        parent::$_data['bugs'] = Bugs::find($id);
+        return view("master.bugs.bugs_show",parent::$_data);
     }
 
     /**

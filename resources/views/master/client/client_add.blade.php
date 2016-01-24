@@ -2,6 +2,9 @@
 @section("title","Client Add")
 @section("css_script")
     <link rel="stylesheet" href="{{ asset("assets/css/chosen.css") }}" />
+    <style>
+        #mapss {width:500px; height:340px; border:5px solid #DEEBF2;}
+    </style>
 @endsection
 @section("breadcrumbs",Breadcrumbs::render('add_client'))
 @section("sidebar_menu")
@@ -67,6 +70,32 @@
 
                     <div class="col-sm-9">
                         {!! Form::textarea('address', Request::old('address'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-8','placeholder'=>'Address')); !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Mapss </label>
+
+                    <div class="col-sm-9">
+
+                        <div id="mapss"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Latitude </label>
+
+                    <div class="col-sm-9">
+
+                        {!! Form::text('lat', Request::old('lat'),array('class'=>'col-xs-10 col-sm-5','id'=>'lat','placeholder'=>'Latitude')); !!}
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Longitude </label>
+
+                    <div class="col-sm-9">
+
+                        {!! Form::text('long', Request::old('long'),array('class'=>'col-xs-10 col-sm-5','id'=>'long','placeholder'=>'Longitude')); !!}
+
                     </div>
                 </div>
                 <hr>
@@ -139,6 +168,7 @@
     </div><!-- /.row -->
 @endsection
 @section("js_script")
+
     <script src="{{ asset('assets/js/chosen.jquery.js') }}"></script>
     <script type="text/javascript">
         function add_row(){
@@ -190,5 +220,32 @@
         });
 
 
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEmLG7FcND-tqSo0TzzfHX95eSKoAKL6w&signed_in=true&callback=initMap"></script>
+
+    <script type="text/javascript">
+        if (GBrowserIsCompatible())
+        {
+            map = new GMap2(document.getElementById("mapss"));
+            map.addControl(new GLargeMapControl());
+            map.addControl(new GMapTypeControl(3));
+            map.setCenter( new GLatLng(-6.21462 ,106.84513), 11,0);
+
+
+
+//
+
+            GEvent.addListener(map,'click',function(overlay,point)
+            {
+                document.getElementById('lat').value = point.lat()
+                document.getElementById('long').value = point.lng()
+
+
+            });
+            var marker = new GMarker(new GLatLng(-6.21462 ,106.84513), {draggable: true});
+
+        }
     </script>
 @endsection

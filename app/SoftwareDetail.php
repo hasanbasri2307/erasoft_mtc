@@ -19,4 +19,6 @@ class SoftwareDetail extends Model
     public function bugs(){
         return $this->hasMany('App\Bugs');
     }
+
+
 }

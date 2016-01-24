@@ -12,7 +12,7 @@
 */
 
 //Login Route
-Route::get('/',['uses'=>'LoginController@index','middleware'=>'guest']);
+Route::get('/',['uses'=>'LoginController@index','middleware'=>'guest','as'=>'login']);
 Route::post('app.login','LoginController@login');
 Route::get('logout',['uses'=>'LoginController@logout','as'=>'logout']);
 
@@ -59,13 +59,22 @@ Route::group(['middleware'=>'auth'],function(){
 
    //Bugs
    Route::get('bugs',['uses'=>'BugsController@index','as'=>'bugs']);
-   Route::get('bugs/show/{id}',['uses'=>'BugsController@show','as'=>'software.show']);
+   Route::get('bugs/show/{id}',['uses'=>'BugsController@show','as'=>'bugs.show']);
    Route::get('bugs/create',['uses'=>'BugsController@create','as'=>'bugs.create']);
    Route::get('bugs/edit/{id}',['uses'=>'BugsController@edit','as'=>'bugs.edit']);
    Route::post('bugs/store',['uses'=>'BugsController@store','as'=>'bugs.store']);
    Route::put('bugs/update/{id}',['uses'=>'BugsController@update','as'=>'bugs.update']);
    Route::delete('bugs/delete/{id}',['uses'=>'BugsController@destroy','as'=>'bugs.delete']);
    Route::get('list-software-detail',['uses'=>'BugsController@get_software_detail']);
+
+   //tiket
+   Route::get('tiket',['uses'=>'TiketController@index','as'=>'tiket']);
+   Route::get('tiket/show/{id}',['uses'=>'TiketController@show','as'=>'tiket.show']);
+   Route::get('tiket/create',['uses'=>'TiketController@create','as'=>'tiket.create']);
+   Route::get('tiket/edit/{id}',['uses'=>'TiketController@edit','as'=>'tket.edit']);
+   Route::post('tiket/store',['uses'=>'TiketController@store','as'=>'tiket.store']);
+   Route::put('tiket/update/{id}',['uses'=>'TiketController@update','as'=>'tiket.update']);
+   Route::delete('tiket/delete/{id}',['uses'=>'TiketController@destroy','as'=>'tiket.delete']);
 
 });
 

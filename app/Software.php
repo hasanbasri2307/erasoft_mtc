@@ -15,4 +15,8 @@ class Software extends Model
     {
     	return $this->hasMany('App\SoftwareDetail','id_software');
     }
+
+    public function bugs(){
+        return $this->hasMany("App\Bugs",'id_software');
+    }
 }
