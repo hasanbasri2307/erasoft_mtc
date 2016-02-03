@@ -51,7 +51,7 @@ class ClientController extends Controller
 	    $user->email = $request->email;
 	    $user->nama = $request->name_pt;
 		$user->password = Hash::make($request->password);
-	    $user->type = $request->type;
+	    $user->type = "client";
 	    $user->status = "active";
 	    $user->save();
 
@@ -61,6 +61,8 @@ class ClientController extends Controller
 	    $client->alamat = $request->address;
 	    $client->no_telepon = $request->phone;
 		$client->id_user = $user->id_user;
+	    $client->lat = $request->lat;
+	    $client->long = $request->long;
 	    $client->save();
 
 	    foreach($request->support as $item){

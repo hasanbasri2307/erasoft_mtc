@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Tiket;
 use App\Http\Requests\TiketRequest;
 use App\Http\Controllers\Controller;

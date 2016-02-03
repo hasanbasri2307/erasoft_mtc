@@ -2,6 +2,9 @@
 @section("title","Client Add")
 @section("css_script")
     <link rel="stylesheet" href="{{ asset("assets/css/chosen.css") }}" />
+    <style>
+        #mapss {width:500px; height:340px; border:5px solid #DEEBF2;}
+    </style>
 @endsection
 @section("breadcrumbs",Breadcrumbs::render('add_client'))
 @section("sidebar_menu")
@@ -63,10 +66,37 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Maps </label>
+
+                    <div class="col-sm-9">
+
+                        <div id="mapss"></div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Address </label>
 
                     <div class="col-sm-9">
-                        {!! Form::textarea('address', $client->alamat,array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-8','placeholder'=>'Address')); !!}
+                        {!! Form::textarea('address', $client->alamat,array('class'=>'col-xs-10 col-sm-5','id'=>'address','placeholder'=>'Address')); !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Latitude </label>
+
+                    <div class="col-sm-9">
+
+                        {!! Form::text('lat', $client->lat,array('class'=>'col-xs-10 col-sm-5','id'=>'lat','placeholder'=>'Latitude','readonly'=>'true')); !!}
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Longitude </label>
+
+                    <div class="col-sm-9">
+
+                        {!! Form::text('long', $client->long,array('class'=>'col-xs-10 col-sm-5','id'=>'long','placeholder'=>'Longitude','readonly'=>'true')); !!}
+
                     </div>
                 </div>
                 <hr>
@@ -80,14 +110,7 @@
                 </div>
 
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Type </label>
 
-                    <div class="col-sm-9">
-                        {!! Form::select('type', CustomLib::gen_type(), 'client', ['placeholder' => '--- Type Users ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5','disabled'=>'disabled']); !!}
-
-                    </div>
-                </div>
                 <hr>
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Support </label>
@@ -189,5 +212,70 @@
         });
 
 
+
+
+    </script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+        var geocoder = new google.maps.Geocoder();
+        var _lat = "{{ $client->lat }}";
+        var _long = "{{ $client->long }}";
+        var pt = "{{ $client->nama_pt }}";
+        function geocodePosition(pos) {
+            geocoder.geocode({
+                latLng: pos
+            }, function(responses) {
+                if (responses && responses.length > 0) {
+                    updateMarkerAddress(responses[0].formatted_address);
+                } else {
+                    updateMarkerAddress('Cannot determine address at this location.');
+                }
+            });
+        }
+
+
+        function updateMarkerPosition(latLng) {
+            document.getElementById('lat').value = latLng.lat();
+            document.getElementById('long').value = latLng.lng();
+        }
+
+        function updateMarkerAddress(str) {
+            document.getElementById('address').innerHTML = str;
+        }
+
+        function initialize() {
+            var latLng = new google.maps.LatLng( _lat, _long);
+            var map = new google.maps.Map(document.getElementById('mapss'), {
+                zoom: 13,
+                center: latLng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            var marker = new google.maps.Marker({
+                position: latLng,
+                title: pt,
+                map: map,
+                draggable: true
+            });
+
+            // Update current position info.
+            updateMarkerPosition(latLng);
+            geocodePosition(latLng);
+
+            // Add dragging event listeners.
+            google.maps.event.addListener(marker, 'dragstart', function() {
+                updateMarkerAddress('Dragging...');
+            });
+
+            google.maps.event.addListener(marker, 'drag', function() {
+                updateMarkerPosition(marker.getPosition());
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function() {
+                geocodePosition(marker.getPosition());
+            });
+        }
+
+        // Onload handler to fire off the app.
+        google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 @endsection

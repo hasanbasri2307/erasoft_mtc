@@ -34,7 +34,8 @@ class ClientRequest extends Request
 				    'address' => 'required',
 				    'email' => 'required|email|unique:user,email',
 				    'password' => 'required',
-				    'type' => 'required'
+				    'long' => 'required',
+				    'lat' => 'required'
 			    ];
 		        break;
 
@@ -61,7 +62,8 @@ class ClientRequest extends Request
 	        'email.email' => 'Email Format Must Be Valid',
             'email.unique' => 'Email Already Exists',
             'password.required' => 'Password Must Be Filled',
-            'type.required' => 'Type Must Be Filled'
+	        'long.required' => 'Longitude Must Be Filled',
+	        'lat.required' => "Latitude Must Be Filled"
         ];
     }
 }

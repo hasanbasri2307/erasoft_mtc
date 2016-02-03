@@ -66,14 +66,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Address </label>
-
-                    <div class="col-sm-9">
-                        {!! Form::textarea('address', Request::old('address'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-8','placeholder'=>'Address')); !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Mapss </label>
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Maps </label>
 
                     <div class="col-sm-9">
 
@@ -81,11 +74,19 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Address </label>
+
+                    <div class="col-sm-9">
+                        {!! Form::textarea('address', Request::old('address'),array('class'=>'col-xs-10 col-sm-5','id'=>'address','placeholder'=>'Address')); !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Latitude </label>
 
                     <div class="col-sm-9">
 
-                        {!! Form::text('lat', Request::old('lat'),array('class'=>'col-xs-10 col-sm-5','id'=>'lat','placeholder'=>'Latitude')); !!}
+                        {!! Form::text('lat', Request::old('lat'),array('class'=>'col-xs-10 col-sm-5','id'=>'lat','placeholder'=>'Latitude','readonly'=>'true')); !!}
 
                     </div>
                 </div>
@@ -94,7 +95,7 @@
 
                     <div class="col-sm-9">
 
-                        {!! Form::text('long', Request::old('long'),array('class'=>'col-xs-10 col-sm-5','id'=>'long','placeholder'=>'Longitude')); !!}
+                        {!! Form::text('long', Request::old('long'),array('class'=>'col-xs-10 col-sm-5','id'=>'long','placeholder'=>'Longitude','readonly'=>'true')); !!}
 
                     </div>
                 </div>
@@ -115,14 +116,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Type </label>
 
-                    <div class="col-sm-9">
-                        {!! Form::select('type', CustomLib::gen_type(), 'client', ['placeholder' => '--- Type Users ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5','readonly'=>true]); !!}
-
-                    </div>
-                </div>
                 <hr>
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Support </label>
@@ -222,30 +216,65 @@
 
     </script>
 
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEmLG7FcND-tqSo0TzzfHX95eSKoAKL6w&signed_in=true&callback=initMap"></script>
-
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript">
-        if (GBrowserIsCompatible())
-        {
-            map = new GMap2(document.getElementById("mapss"));
-            map.addControl(new GLargeMapControl());
-            map.addControl(new GMapTypeControl(3));
-            map.setCenter( new GLatLng(-6.21462 ,106.84513), 11,0);
+        var geocoder = new google.maps.Geocoder();
 
-
-
-//
-
-            GEvent.addListener(map,'click',function(overlay,point)
-            {
-                document.getElementById('lat').value = point.lat()
-                document.getElementById('long').value = point.lng()
-
-
+        function geocodePosition(pos) {
+            geocoder.geocode({
+                latLng: pos
+            }, function(responses) {
+                if (responses && responses.length > 0) {
+                    updateMarkerAddress(responses[0].formatted_address);
+                } else {
+                    updateMarkerAddress('Cannot determine address at this location.');
+                }
             });
-            var marker = new GMarker(new GLatLng(-6.21462 ,106.84513), {draggable: true});
-
         }
+
+
+        function updateMarkerPosition(latLng) {
+            document.getElementById('lat').value = latLng.lat();
+            document.getElementById('long').value = latLng.lng();
+        }
+
+        function updateMarkerAddress(str) {
+            document.getElementById('address').innerHTML = str;
+        }
+
+        function initialize() {
+            var latLng = new google.maps.LatLng( -6.121435, 106.774124);
+            var map = new google.maps.Map(document.getElementById('mapss'), {
+                zoom: 10,
+                center: latLng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            var marker = new google.maps.Marker({
+                position: latLng,
+                title: 'Point A',
+                map: map,
+                draggable: true
+            });
+
+            // Update current position info.
+            updateMarkerPosition(latLng);
+            geocodePosition(latLng);
+
+            // Add dragging event listeners.
+            google.maps.event.addListener(marker, 'dragstart', function() {
+                updateMarkerAddress('Dragging...');
+            });
+
+            google.maps.event.addListener(marker, 'drag', function() {
+                updateMarkerPosition(marker.getPosition());
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function() {
+                geocodePosition(marker.getPosition());
+            });
+        }
+
+        // Onload handler to fire off the app.
+        google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 @endsection
