@@ -47,4 +47,8 @@ class User extends Model implements AuthenticatableContract,
 	public function client(){
 		return $this->hasOne('App\Client',"id_user");
 	}
+
+	public function cs(){
+		return $this->hasMany('App\ClientSupport',"id_support");
+	}
 }

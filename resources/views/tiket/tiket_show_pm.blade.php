@@ -2,7 +2,7 @@
 @section("title","Tiket Detail")
 @section("breadcrumbs",Breadcrumbs::render('view_tiket',$tiket))
 @section("sidebar_menu")
-    @include("menu.client_menu")
+    @include("menu.pm_menu")
 @endsection
 @section("content")
     <div class="page-content">
@@ -62,13 +62,38 @@
                                                     </div>
                                                 </div>
                                                 <div class="profile-info-row">
-                                                    <div class="profile-info-name"> Status </div>
+                                                    <div class="profile-inf-name"> Status </div>
 
                                                     <div class="profile-info-value">
                                                         <span>{!! \Erasoft\Libraries\CustomLib::gen_status_tiket($tiket->status) !!}</span>
                                                     </div>
                                                 </div>
 
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> Pilih Support </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span> 
+                                                        @if($tiket->id_support==0)
+                                                            {!! Form::select('support', $support,null,['class'=>'chosen-select form-control','id'=>'support_name']) !!}
+                                                        @else
+                                                            {!! Form::select('support', $support,null,['class'=>'chosen-select form-control','id'=>'support_name','disabled'=>'disabled']) !!}
+                                                        @endif
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                @if($tiket->id_support == 0)
+                                                    <div class="profile-info-row">
+                                                        <div class="profile-info-name">  </div>
+
+                                                        <div class="profile-info-value">
+                                                            <span> <button class="btn btn-info" id="save" data-token="{{ csrf_token() }}" data-id="{{ $tiket->id_tiket }}" >
+                                                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                                                    Submit
+                                                                </button></span>
+                                                        </div>
+                                                    </div>
+                                                @endif
 
                                             </div>
 
@@ -90,4 +115,20 @@
         </div><!-- /.row -->
     </div><!-- /.page-content -->
 @endsection
-
+@section("js_script")
+    <script type="application/javascript">
+        $('#save').on('click',function(){
+            var _data = $('#support_name').val();
+            var _id = $(this).data("id");
+            var url = '<?php echo url("tiket/update_support");?>';
+            var token = $(this).data("token");
+            $.post(url, {_token: token,'id_tiket':_id,'id_support':_data}, function(data, textStatus, xhr) {
+                if(data.status){
+                    alert("sukses update data");
+                    location.reload();
+                }
+            });
+            
+        });
+    </script>
+@endsection

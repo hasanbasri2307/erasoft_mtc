@@ -75,6 +75,7 @@ Route::group(['middleware'=>'auth'],function(){
    Route::post('tiket/store',['uses'=>'TiketController@store','as'=>'tiket.store']);
    Route::put('tiket/update/{id}',['uses'=>'TiketController@update','as'=>'tiket.update']);
    Route::delete('tiket/delete/{id}',['uses'=>'TiketController@destroy','as'=>'tiket.delete']);
+   Route::post('tiket/update_support',['uses'=>'TiketController@update_support','as'=>'tiket.update_support']);
 
 });
 

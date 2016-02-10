@@ -6,6 +6,10 @@ use App\Http\Requests\TiketRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use Illuminate\Contracts\Auth\Guard;
+use App\ClientSupport;
+use Illuminate\Http\Request;
+
 
 class TiketController extends Controller
 {
@@ -71,7 +75,17 @@ class TiketController extends Controller
     {
         //
         parent::$_data['tiket'] = Tiket::find($id);
-        return view("tiket.tiket_show",parent::$_data);
+
+        if(Auth::user()->type == "pm"){
+            parent::$_data['support'] = $this->_gen_support(parent::$_data['tiket']->id_client);
+            $view = "tiket.tiket_show_pm";
+        }elseif(Auth::user()->type== "client"){
+            $view = "tiket.tiket_show";
+        }elseif(Auth::user()->type == "support"){
+            $view = "tiket.tiket_show_support";
+        }
+
+        return view($view,parent::$_data);
     }
 
     /**
@@ -106,5 +120,25 @@ class TiketController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function update_support(Request $req){
+        if($req->ajax()){
+            $tiket = Tiket::find($req->id_tiket);
+            $tiket->id_support = $req->id_support;
+            $tiket->save();
+            
+            return response()->json(["status"=>true]);
+        }
+    }
+
+    private function _gen_support($id_client){
+        $support = ClientSupport::where("id_client","=",$id_client)->get();
+        $res = [];
+        foreach($support as $c){
+            $res[$c->id_support] = $c->support->nama;
+        }
+
+        return $res;
     }
 }
