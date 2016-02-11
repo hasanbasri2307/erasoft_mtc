@@ -137,6 +137,17 @@ class BugsController extends Controller
         }
     }
 
+    public function get_bugs(Request $req){
+        if($req->ajax()){
+            if($req->isMethod('get')){
+                $bugs = Bugs::all();
+                $view = view("_partials.bugs_list")->with("bugs",$bugs)->render();
+
+                return response()->json(['status'=>true,'view'=>$view]);
+            }
+        }
+    }
+
     private function _gen_software(){
         $software = Software::all();
         $output=[];

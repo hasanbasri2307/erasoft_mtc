@@ -66,7 +66,8 @@ Route::group(['middleware'=>'auth'],function(){
    Route::put('bugs/update/{id}',['uses'=>'BugsController@update','as'=>'bugs.update']);
    Route::delete('bugs/delete/{id}',['uses'=>'BugsController@destroy','as'=>'bugs.delete']);
    Route::get('list-software-detail',['uses'=>'BugsController@get_software_detail']);
-
+   Route::get('bugs/get_bugs',['uses'=>'BugsController@get_bugs']);
+   
    //tiket
    Route::get('tiket',['uses'=>'TiketController@index','as'=>'tiket']);
    Route::get('tiket/show/{id}',['uses'=>'TiketController@show','as'=>'tiket.show']);
@@ -76,7 +77,26 @@ Route::group(['middleware'=>'auth'],function(){
    Route::put('tiket/update/{id}',['uses'=>'TiketController@update','as'=>'tiket.update']);
    Route::delete('tiket/delete/{id}',['uses'=>'TiketController@destroy','as'=>'tiket.delete']);
    Route::post('tiket/update_support',['uses'=>'TiketController@update_support','as'=>'tiket.update_support']);
+   Route::post('tiket/update_batal',['uses'=>'TiketController@update_batal']);
 
+
+   //Rencana Kunjungan
+   Route::get('rencana-kunjungan',['uses'=>'RencanaKunjunganController@index','as'=>'rencana.kunjungan']);
+   Route::get('rencana-kunjungan/show/{id}',['uses'=>'RencanaKunjunganController@show','as'=>'rencana.kunjungan.show']);
+   Route::get('rencana-kunjungan/create/{id}',['uses'=>'RencanaKunjunganController@create','as'=>'rencana.kunjungan.create']);
+   Route::get('rencana-kunjungan/edit/{id}',['uses'=>'RencanaKunjunganController@edit','as'=>'rencana.kunjungan.edit']);
+   Route::post('rencana-kunjungan/store',['uses'=>'RencanaKunjunganController@store','as'=>'rencana.kunjungan.store']);
+   Route::put('rencana-kunjungan/update/{id}',['uses'=>'RencanaKunjunganController@update','as'=>'rencana.kunjungan.update']);
+   Route::delete('rencana-kunjungan/delete/{id}',['uses'=>'RencanaKunjunganController@destroy','as'=>'rencana.kunjungan.delete']);
+
+   //Rencana Kunjungan
+   Route::get('server-maintenance',['uses'=>'ServerMaintenanceController@index','as'=>'server.maintenance']);
+   Route::get('server-maintenance/show/{id}',['uses'=>'ServerMaintenanceController@show','as'=>'server.maintenance.show']);
+   Route::get('server-maintenance/create',['uses'=>'ServerMaintenanceController@create','as'=>'server.maintenance.create']);
+   Route::get('server-maintenance/edit/{id}',['uses'=>'ServerMaintenanceController@edit','as'=>'server.maintenance.edit']);
+   Route::post('server-maintenance/store',['uses'=>'ServerMaintenanceController@store','as'=>'server.maintenance.store']);
+   Route::put('server-maintenance/update/{id}',['uses'=>'ServerMaintenanceController@update','as'=>'server.maintenance.update']);
+   Route::delete('server-maintenance/delete/{id}',['uses'=>'ServerMaintenanceController@destroy','as'=>'server.maintenance.delete']);
 });
 
 

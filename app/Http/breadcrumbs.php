@@ -144,4 +144,33 @@ Breadcrumbs::register('view_tiket', function($breadcrumbs, $tiket)
     $breadcrumbs->push($tiket->id_tiket, route('tiket.show', $tiket->id_tiket));
 });
 
+//maintenance
+Breadcrumbs::register('maintenance', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Maintenance', '#');
+});
 
+Breadcrumbs::register('rencana_kunjungan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('maintenance');
+    $breadcrumbs->push('Rencana Kunjungan', route('rencana.kunjungan'));
+});
+
+Breadcrumbs::register('add_rencana_kunjungan', function($breadcrumbs,$tiket)
+{
+    $breadcrumbs->parent('rencana_kunjungan');
+    $breadcrumbs->push('Add', route('rencana.kunjungan.create',$tiket));
+});
+
+Breadcrumbs::register('edit_rencana_kunjungan', function($breadcrumbs, $rk)
+{
+    $breadcrumbs->parent('rencana_kunjungan');
+    $breadcrumbs->push($rk->id_rk, route('rencana.kunjungan.edit', $rk->id_rk));
+});
+
+Breadcrumbs::register('view_rencana_kunjungan', function($breadcrumbs, $rk)
+{
+    $breadcrumbs->parent('rencana_kunjungan');
+    $breadcrumbs->push($rk->id_rk, route('rencana.kunjungan.show', $rk->id_rk));
+});

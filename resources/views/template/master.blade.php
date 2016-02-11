@@ -13,13 +13,13 @@
 		<!-- bootstrap & fontawesome -->
 		<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}" />
-		
+		<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.custom.css') }}" />
 
 		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
 		<link rel="stylesheet" href="{{ asset('assets/css/ace-fonts.css') }}" />
-
+		
 		<!-- ace styles -->
 		<link rel="stylesheet" href="{{ asset('assets/css/ace.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
 		@yield("css_script")
@@ -279,28 +279,15 @@
 		<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
 
 		<!-- page specific plugin scripts -->
-		@yield("js_script")
+		
 		<!--[if lte IE 8]>
 		  <script src="../assets/js/excanvas.js"></script>
 		<![endif]-->
 		<script src="{{ asset('assets/js/jquery-ui.custom.js') }}"></script>
 		<script src="{{ asset('assets/js/jquery.ui.touch-punch.js') }}"></script>
-		<script src="{{ asset('assets/js/jquery.easypiechart.js') }}"></script>
-		<script src="{{ asset('assets/js/jquery.sparkline.js') }}"></script>
-		<script src="{{ asset('assets/js/flot/jquery.flot.js') }}"></script>
-		<script src="{{ asset('assets/js/flot/jquery.flot.pie.js') }}"></script>
-		<script src="{{ asset('assets/js/flot/jquery.flot.resize.js') }}"></script>
 
 		<!-- ace scripts -->
-		<script src="{{ asset('assets/js/ace/elements.scroller.js') }}"></script>
-		<script src="{{ asset('assets/js/ace/elements.colorpicker.js') }}"></script>
-		<script src="{{ asset('assets/js/ace/elements.fileinput.js') }}"></script>
-		<script src="{{ asset('assets/js/ace/elements.typeahead.js') }}"></script>
-		<script src="{{ asset('assets/js/ace/elements.wysiwyg.js') }}"></script>
-		<script src="{{ asset('assets/js/ace/elements.spinner.js') }}"></script>
-		<script src="{{ asset('assets/js/ace/elements.treeview.js') }}"></script>
-		<script src="{{ asset('assets/js/ace/elements.wizard.js') }}"></script>
-		<script src="{{ asset('assets/js/ace/elements.aside.js') }}"></script>
+
 		<script src="{{ asset('assets/js/ace/ace.js') }}"></script>
 		<script src="{{ asset('assets/js/ace/ace.ajax-content.js') }}"></script>
 		<script src="{{ asset('assets/js/ace/ace.touch-drag.js') }}"></script>
@@ -314,7 +301,7 @@
 		<script src="{{ asset('assets/js/ace/ace.widget-on-reload.js') }}"></script>
 		<script src="{{ asset('assets/js/ace/ace.searchbox-autocomplete.js') }}"></script>
 		
-
+		@yield("js_script")
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
 			jQuery(function($) {

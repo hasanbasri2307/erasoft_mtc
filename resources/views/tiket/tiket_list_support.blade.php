@@ -2,7 +2,7 @@
 @section("title","Tiket List")
 @section("breadcrumbs",Breadcrumbs::render('tiket'))
 @section("sidebar_menu")
-    @include("menu.client_menu")
+    @include("menu.support_menu")
 @endsection
 @section("content")
     <div class="page-content">
@@ -53,7 +53,9 @@
                                     <th>Masalah</th>
                                     <th>Status</th>
                                     <th>Dibuat Tanggal</th>
-
+                                    <th>Client</th>
+                                    <th>PIC</th>
+                                    <th>Contact Person</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -75,14 +77,24 @@
                                         <td>
                                             {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['created_at']) !!}
                                         </td>
-
                                         <td>
-                                            <div class="hidden-sm hidden-xs action-buttons">
-                                                <a class="blue" href="{{ url('tiket/show',$data['id_tiket']) }}">
-                                                    <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                                </a>
+                                            {{ $data->client->nama_pt }}
+                                        </td>
+                                        <td>
+                                            {{ $data->client->pic }}
+                                        </td>
+                                        <td>
+                                            {{ $data->client->no_telepon }}
+                                        </td>
+                                        <td>
+                                            @if($data['status'] == "open")
+                                                <div class="hidden-sm hidden-xs action-buttons">
+                                                    <a class="blue" href="{{ url('rencana-kunjungan/create',$data['id_tiket']) }}" title="Buat Rencana Kunjungan">
+                                                        <i class="ace-icon fa fa-pencil-square-o bigger-130"></i>
+                                                    </a>
 
-                                            </div>
+                                                </div>
+                                            @endif
 
                                         </td>
                                     </tr>
@@ -93,13 +105,6 @@
                             </table>
                         </div>
                         <br />
-
-                        <a href="{{ url('tiket/create') }}">
-                            <button class="btn btn-app btn-pink btn-sm">
-                                <i class="ace-icon glyphicon glyphicon-pencil"></i>
-                                Add
-                            </button>
-                        </a>
                     </div>
                 </div>
             </div><!-- /.col -->
@@ -171,7 +176,7 @@
                         "sButtonText": "<i class='fa fa-copy bigger-110 pink'></i>",
                         "fnComplete": function() {
                             this.fnInfo( '<h3 class="no-margin-top smaller">Table copied</h3>\
-									<p>Copied '+(oTable1.fnSettings().fnRecordsTotal())+' row(s) to the clipboard.</p>',
+                                    <p>Copied '+(oTable1.fnSettings().fnRecordsTotal())+' row(s) to the clipboard.</p>',
                                     1500
                             );
                         }
@@ -200,9 +205,9 @@
                         "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
 
                         "sInfo": "<h3 class='no-margin-top'>Print view</h3>\
-									  <p>Please use your browser's print function to\
-									  print this table.\
-									  <br />Press <b>escape</b> when finished.</p>",
+                                      <p>Please use your browser's print function to\
+                                      print this table.\
+                                      <br />Press <b>escape</b> when finished.</p>",
                     }
                 ]
             } );
@@ -327,25 +332,5 @@
         })
     </script>
 
-    <script>
-
-        $(document).on('click', 'a#delete_bugs', function(e) {
-            e.preventDefault();
-            var conf = confirm("Delete This Data ? ");
-            if(conf){
-                var token = $(this).data('token');
-                var route = $(this).attr('href');
-
-                $.ajax({
-                    url:route,
-                    type: 'post',
-                    data: {_method: 'delete', _token :token}
-                }).done(function(){
-                    location.reload(true);
-                });
-            }
-
-
-        });
-    </script>
+    
 @endsection

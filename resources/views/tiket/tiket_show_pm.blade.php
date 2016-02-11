@@ -62,12 +62,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="profile-info-row">
-                                                    <div class="profile-inf-name"> Status </div>
+                                                    <div class="profile-info-name"> Status </div>
 
                                                     <div class="profile-info-value">
-                                                        <span>{!! \Erasoft\Libraries\CustomLib::gen_status_tiket($tiket->status) !!}</span>
+                                                        <span>{!! \Erasoft\Libraries\CustomLib::gen_status_tiket($tiket->status) !!} </span> 
+                                                        @if($tiket->status != "cancelled")
+                                                            <a id="batal_tiket" data-token="{{ csrf_token() }}" data-id="{{ $tiket->id_tiket }}" style="cursor:pointer;"> Batalkan Tiket ?</a> (tiket yang dibatalkan tidak bisa di proses lagi !!)
+                                                        @endif
                                                     </div>
                                                 </div>
+                                                
 
                                                 <div class="profile-info-row">
                                                     <div class="profile-info-name"> Pilih Support </div>
@@ -77,23 +81,34 @@
                                                         @if($tiket->id_support==0)
                                                             {!! Form::select('support', $support,null,['class'=>'chosen-select form-control','id'=>'support_name']) !!}
                                                         @else
-                                                            {!! Form::select('support', $support,null,['class'=>'chosen-select form-control','id'=>'support_name','disabled'=>'disabled']) !!}
+                                                            {!! Form::select('support', $support,$tiket->id_support,['class'=>'chosen-select form-control','id'=>'support_name','disabled'=>'disabled']) !!}
                                                         @endif
                                                         </span>
                                                     </div>
                                                 </div>
-                                                @if($tiket->id_support == 0)
-                                                    <div class="profile-info-row">
+                                                @if($tiket->id_support !=0 and $tiket->status == "open")
+                                                    <div class="profile-info-row" id="div_ganti_support">
                                                         <div class="profile-info-name">  </div>
 
                                                         <div class="profile-info-value">
-                                                            <span> <button class="btn btn-info" id="save" data-token="{{ csrf_token() }}" data-id="{{ $tiket->id_tiket }}" >
-                                                                    <i class="ace-icon fa fa-check bigger-110"></i>
-                                                                    Submit
-                                                                </button></span>
+                                                            <span> 
+                                                                <a id="ganti_support" style="cursor:pointer">Ganti Support ?</a>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 @endif
+                                        
+                                                <div class="profile-info-row" <?php if($tiket->id_support != 0) { ?> style="display:none" <?php } ?> id="btn_submit">
+                                                    <div class="profile-info-name">  </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span> <button class="btn btn-info" id="save" data-token="{{ csrf_token() }}" data-id="{{ $tiket->id_tiket }}" >
+                                                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                                                Submit
+                                                            </button></span>
+                                                    </div>
+                                                </div>
+                                               
 
                                             </div>
 
@@ -125,10 +140,31 @@
             $.post(url, {_token: token,'id_tiket':_id,'id_support':_data}, function(data, textStatus, xhr) {
                 if(data.status){
                     alert("sukses update data");
-                    location.reload();
+                    location.reload(true);
                 }
             });
             
+        });
+
+        $('#ganti_support').on('click',function(){
+            $('#btn_submit').show();
+            $('#div_ganti_support').hide();
+            $('#support_name').removeAttr('disabled');
+        });
+
+        $('#batal_tiket').on('click',function(){
+            var _confirm = confirm("Yakin batalkan tiket ? ");
+            if(_confirm){
+                var _id = $(this).data("id");
+                var url = '<?php echo url("tiket/update_batal");?>';
+                var token = $(this).data("token");
+                $.post(url, {_token: token,'id_tiket':_id}, function(data, textStatus, xhr) {
+                    if(data.status){
+                        alert("sukses update data");
+                        location.reload(true);
+                    }
+                });
+            }
         });
     </script>
 @endsection

@@ -11,7 +11,7 @@
         <!-- /section:settings.box -->
         <div class="page-header">
             <h1>
-                Bugs
+                Tiket
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
                     Tiket List
@@ -53,7 +53,7 @@
                                     <th>Masalah</th>
                                     <th>Status</th>
                                     <th>Dibuat Tanggal</th>
-
+                                    <th>Status Support</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -75,7 +75,13 @@
                                         <td>
                                             {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['created_at']) !!}
                                         </td>
-
+                                        <td>
+                                            @if($data['id_support'] == 0)
+                                                Support Belum Diset
+                                            @else
+                                                Support Sudah Diset
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="hidden-sm hidden-xs action-buttons">
                                                 <a class="blue" href="{{ url('tiket/show',$data['id_tiket']) }}">

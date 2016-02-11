@@ -28,6 +28,9 @@ class TiketController extends Controller
             $client_id = Auth::user()->client->id_client;
             $tiket = Tiket::where("id_client","=",$client_id)->get();
             $view = "tiket.tiket_list";
+        }elseif(Auth::user()->type == "support"){
+            $tiket = Tiket::where("id_support","=",Auth::user()->id_user)->get();
+            $view = "tiket.tiket_list_support";
         }
 
         parent::$_data['tiket'] = $tiket;
@@ -88,40 +91,6 @@ class TiketController extends Controller
         return view($view,parent::$_data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function update_support(Request $req){
         if($req->ajax()){
             $tiket = Tiket::find($req->id_tiket);
@@ -130,6 +99,19 @@ class TiketController extends Controller
             
             return response()->json(["status"=>true]);
         }
+
+        return response()->json(["status"=>false]);
+    }
+
+    public function update_batal(Request $req){
+        if($req->ajax()){
+            $tiket = Tiket::find($req->id_tiket);
+            $tiket->status = "cancelled";
+            $tiket->save();
+            return response()->json(["status"=>true]);            
+        }
+
+        return response()->json(["status"=>false]);
     }
 
     private function _gen_support($id_client){

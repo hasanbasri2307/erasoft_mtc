@@ -42,8 +42,15 @@
 							</li>
 						</ul>
 					</li>
+					<li @if(Route::is('tiket') || Route::is('tiket.create') || Route::is('tiket.edit') || Route::is('tiket.show')) class="active" @endif >
+				        <a href="{{ route('tiket') }}">
+				            <i class="menu-icon glyphicon glyphicon-pencil"></i>
+				            <span class="menu-text"> Tiket </span>
+				        </a>
 
-					<li class="">
+				        <b class="arrow"></b>
+				    </li>
+					<li @if(Route::is('rencana.kunjungan') || Route::is('rencana.kunjungan.show') || Route::is('rencana.kunjungan.create') || Route::is('rencana.kunjungan.edit') || Route::is('server.maintenance') || Route::is('server.maintenance.show') || Route::is('server.maintenance.create') || Route::is('server.maintenance.edit')) class="active open" @endif>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> Maintenance </span>
@@ -54,8 +61,8 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
-								<a href="tables.html">
+							<li @if(Route::is('rencana.kunjungan') || Route::is('rencana.kunjungan.show') || Route::is('rencana.kunjungan.create') || Route::is('rencana.kunjungan.edit')) class="active" @endif>
+								<a href="{{ url('rencana-kunjungan') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Rencana Kunjungan
 								</a>
@@ -63,8 +70,8 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
-								<a href="jqgrid.html">
+							<li @if(Route::is('server.maintenance') || Route::is('server.maintenance.show') || Route::is('server.maintenance.create') || Route::is('server.maintenance.edit')) class="active" @endif>
+								<a href="{{ url('server-maintenance') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Server Maintenance
 								</a>

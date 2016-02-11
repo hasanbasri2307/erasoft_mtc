@@ -1,8 +1,8 @@
 @extends("template.master")
-@section("title","Tiket List")
-@section("breadcrumbs",Breadcrumbs::render('tiket'))
+@section("title","Rencana Kunjungan List")
+@section("breadcrumbs",Breadcrumbs::render('rencana_kunjungan'))
 @section("sidebar_menu")
-    @include("menu.client_menu")
+    @include("menu.support_menu")
 @endsection
 @section("content")
     <div class="page-content">
@@ -11,10 +11,10 @@
         <!-- /section:settings.box -->
         <div class="page-header">
             <h1>
-                Tiket
+                Rencana Kunjungan
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    Tiket List
+                    Rencana Kunjungan List
                 </small>
             </h1>
 
@@ -39,7 +39,7 @@
                             <div class="pull-right tableTools-container"></div>
                         </div>
                         <div class="table-header">
-                            Tiket Registered
+                            Rencana Kunjungan Registered
                         </div>
 
                         <!-- div.table-responsive -->
@@ -50,8 +50,9 @@
                                 <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Masalah</th>
-                                    <th>Status</th>
+                                    <th>Tgl Kunjungan</th>
+                                    <th>Tipe</th>
+                                    <th>ID Tiket</th>
                                     <th>Dibuat Tanggal</th>
 
                                     <th></th>
@@ -60,17 +61,19 @@
 
                                 <tbody>
                                 <?php $no=1;?>
-                                @foreach($tiket as $data)
+                                @foreach($rk as $data)
                                     <tr>
                                         <td class="center">
                                             {{ $no }}
                                         </td>
-
-                                        <td>
-                                            {{ $data['masalah'] }}
+                                         <td>
+                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['tgl_kunjungan']) !!}
                                         </td>
                                         <td>
-                                           {!! \Erasoft\Libraries\CustomLib::gen_status_tiket($data['status']) !!}
+                                            {{ $data['tipe'] }}
+                                        </td>
+                                        <td>
+                                            {{ $data['id_tiket'] }}
                                         </td>
                                         <td>
                                             {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['created_at']) !!}
@@ -78,7 +81,7 @@
 
                                         <td>
                                             <div class="hidden-sm hidden-xs action-buttons">
-                                                <a class="blue" href="{{ url('tiket/show',$data['id_tiket']) }}">
+                                                <a class="blue" href="{{ url('rencana-kunjungan/show',$data['id_rk']) }}">
                                                     <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                 </a>
 
@@ -94,7 +97,7 @@
                         </div>
                         <br />
 
-                        <a href="{{ url('tiket/create') }}">
+                        <a href="{{ url('rencana-kunjungan/create') }}">
                             <button class="btn btn-app btn-pink btn-sm">
                                 <i class="ace-icon glyphicon glyphicon-pencil"></i>
                                 Add
@@ -325,27 +328,5 @@
             }
 
         })
-    </script>
-
-    <script>
-
-        $(document).on('click', 'a#delete_bugs', function(e) {
-            e.preventDefault();
-            var conf = confirm("Delete This Data ? ");
-            if(conf){
-                var token = $(this).data('token');
-                var route = $(this).attr('href');
-
-                $.ajax({
-                    url:route,
-                    type: 'post',
-                    data: {_method: 'delete', _token :token}
-                }).done(function(){
-                    location.reload(true);
-                });
-            }
-
-
-        });
     </script>
 @endsection
