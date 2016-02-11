@@ -1,11 +1,11 @@
 @extends("template.master")
-@section("title","Rencana Kunjungan Add")
+@section("title","Rencana Kunjungan Edit")
 @section("css_script")
 
 	<link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-timepicker.css') }}" />
 @endsection
-@section("breadcrumbs",Breadcrumbs::render('add_rencana_kunjungan',$id_tiket))
+@section("breadcrumbs",Breadcrumbs::render('edit_rencana_kunjungan',$rk))
 @section("sidebar_menu")
 	@include("menu.support_menu")
 @endsection
@@ -38,7 +38,7 @@
 
 											
 								<!-- PAGE CONTENT BEGINS -->
-								{!! Form::open(array('url' => 'rencana-kunjungan/store','class'=>'form-horizontal','name'=>'add_rk')) !!}
+								{!! Form::model($rk,array('route' => ['rencana.kunjungan.update',$rk->id_rk],'class'=>'form-horizontal','method'=>'PUT')) !!}
 								
 									<!-- #section:elements.form -->
 									<div class="form-group">
@@ -46,7 +46,7 @@
 
 										<div class="col-sm-9">
 											
-											{!! Form::text('tgl_kunjungan', Request::old('tgl_kunjungan'),array('class'=>'ol-xs-10 col-sm-5 date-picker','id'=>'id-date-picker-1','data-date-format'=>'yyyy-mm-dd')); !!}
+											{!! Form::text('tgl_kunjungan',$rk->tgl_kunjungan,array('class'=>'ol-xs-10 col-sm-5 date-picker','id'=>'id-date-picker-1','data-date-format'=>'yyyy-mm-dd')); !!}
 											
 										</div>
 									</div>
@@ -55,7 +55,7 @@
 
 										<div class="col-sm-9">
 
-											{!! Form::text('jam_berangkat', Request::old('jam_berangkat'),array('class'=>'col-xs-10 col-sm-5','id'=>'jam_berangkat')); !!}
+											{!! Form::text('jam_berangkat', $rk->jam_berangkat,array('class'=>'col-xs-10 col-sm-5','id'=>'jam_berangkat')); !!}
 										</div>
 									</div>
 									<div class="form-group">
@@ -63,14 +63,16 @@
 
 										<div class="col-sm-9">
 
-											{!! Form::text('jam_pulang', Request::old('jam_pulang'),array('class'=>'col-xs-10 col-sm-5','id'=>'jam_pulang')); !!}
+											{!! Form::text('jam_pulang', $rk->jam_pulang,array('class'=>'col-xs-10 col-sm-5','id'=>'jam_pulang')); !!}
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Tipe Kunjungan </label>
 
 										<div class="col-sm-9">
-											{!! Form::radio('tipe_kunjungan','kunjungan') !!}  Kunjungan {!! Form::radio('tipe_kunjungan','remote') !!}  Remote
+
+											{!! Form::radio('tipe_kunjungan','kunjungan', ($rk->tipe =='kunjungan' ? true : false) ) !!}  Kunjungan 
+											{!! Form::radio('tipe_kunjungan','remote',($rk->tipe =='remote' ? true : false )) !!}  Remote
 											
 										</div>
 									</div>
@@ -78,7 +80,7 @@
 					                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Catatan Aktifitas </label>
 
 					                    <div class="col-sm-9">
-					                        {!! Form::textarea('aktifitas', Request::old('aktifitas'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-8','placeholder'=>'Catatan Aktifitas')); !!}
+					                        {!! Form::textarea('aktifitas', $rk->aktifitas,array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-8','placeholder'=>'Catatan Aktifitas')); !!}
 					                    </div>
 					                </div>
 					                <div class="form-group">
@@ -112,12 +114,21 @@
 											</thead>
 
 											<tbody id="bugs">
-												
+												@foreach($rk_detail as $item)
+													<tr>
+														<td>{{ $item->bugs->nama_bugs }}</td>
+														<td>{{ $item->bugs->penyelesaian }}</td>
+														<td>{{ $item->bugs->software_detail->software->nama }}</td>
+														<td>{{ $item->bugs->software_detail->nama_modul }}</td>
+														<td><a onclick="delete_row(this);" style="cursor:pointer">Hapus</a></td>
+														<input type="hidden" name="bugs[]" value="{{ $item->id_bugs }}" id="bugs_add">
+													</tr>
+												@endforeach
 											</tbody>
 										</table>
 										</div>
 									</div>
-									<input type="hidden" name="id_tiket" value="{{ $id_tiket }}">
+									
 									<div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
 

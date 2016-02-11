@@ -22,7 +22,7 @@
                                 <th>Application</th>
 								<th>Modul</th>
 
-								<th></th>
+								<th>Pilih</th>
 							</tr>
 							</thead>
 
@@ -51,18 +51,7 @@
 
 
 								<td>
-									<div class="hidden-sm hidden-xs action-buttons">
-										<a class="blue" href="{{ url('bugs/show',$data['id_bugs']) }}">
-											<i class="ace-icon fa fa-search-plus bigger-130"></i>
-										</a>
-
-										<a class="green" href="{{ url('bugs/edit',$data['id_bugs']) }}">
-											<i class="ace-icon fa fa-pencil bigger-130"></i>
-										</a>
-										<a href="{{ route('bugs.delete',array($data['id_bugs'])) }}" data-method="delete" rel="nofollow"  data-token={{ csrf_token() }} class="red" id="delete_bugs"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>
-
-									</div>
-
+									<input type="checkbox" data-id="{{ $data->id_bugs }}" data-name="{{ $data->nama_bugs }}" data-penyelesaian="{{ $data->penyelesaian }}" data-software="{{ $data->software_detail->software->nama }}" data-modul="{{ $data->software_detail->nama_modul }}" onclick="pilih(this);" >
 								</td>
 							</tr>
 							<?php $no++;?>
@@ -70,6 +59,8 @@
 
 							</tbody>
 						</table>
+						<br />
+						
 					</div>
 					
 				</div>
@@ -79,6 +70,34 @@
 <script src="{{ asset('assets/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables/extensions/ColVis/js/dataTables.colVis.js') }}"></script>
 			<script type="text/javascript">
+				function PopupCenter(url, title, w, h) {
+				    // Fixes dual-screen position                         Most browsers      Firefox
+				    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+				    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+				    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+				    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+				    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+				    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+				    var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+				    // Puts focus on the newWindow
+				    if (window.focus) {
+				        newWindow.focus();
+				    }
+				}
+
+				function pilih(elm){
+					var _id = $(elm).data("id");
+					var _name = $(elm).data("name");
+					var _solusi = $(elm).data("penyelesaian");
+					var _software = $(elm).data("software");
+					var _modul = $(elm).data("modul");
+
+					$('#bugs').append("<tr><td>"+_name+"</td><td>"+_solusi+"</td><td>"+_software+"</td><td>"+_modul+"</td><td><a style='cursor:pointer' onclick='delete_row(this);'>Hapus</a></td><input type='hidden' name='bugs[]' value='"+_id+"' id='bugs_add'></tr>");
+				}
+
 	jQuery(function($) {
 		//initiate dataTables plugin
 		var oTable1 =
@@ -103,103 +122,25 @@
 				} );
 		//oTable1.fnAdjustColumnSizing();
 
-
-		//TableTools settings
-		TableTools.classes.container = "btn-group btn-overlap";
-		TableTools.classes.print = {
-			"body": "DTTT_Print",
-			"info": "tableTools-alert gritter-item-wrapper gritter-info gritter-center white",
-			"message": "tableTools-print-navbar"
-		}
-
 		//initiate TableTools extension
 		var tableTools_obj = new $.fn.dataTable.TableTools( oTable1, {
-			"sSwfPath": "../assets/js/dataTables/extensions/TableTools/swf/copy_csv_xls_pdf.swf", //in Ace demo ../assets will be replaced by correct assets path
-
-			"sRowSelector": "td:not(:last-child)",
-			"sRowSelect": "multi",
-			"fnRowSelected": function(row) {
-				//check checkbox when row is selected
-				try { $(row).find('input[type=checkbox]').get(0).checked = true }
-				catch(e) {}
-			},
-			"fnRowDeselected": function(row) {
-				//uncheck checkbox
-				try { $(row).find('input[type=checkbox]').get(0).checked = false }
-				catch(e) {}
-			},
 			
 			"sSelectedClass": "success",
-			"aButtons": [
-				{
-					"sExtends": "copy",
-					"sToolTip": "Copy to clipboard",
-					"sButtonClass": "btn btn-white btn-primary btn-bold",
-					"sButtonText": "<i class='fa fa-copy bigger-110 pink'></i>",
-					"fnComplete": function() {
-						this.fnInfo( '<h3 class="no-margin-top smaller">Table copied</h3>\
-									<p>Copied '+(oTable1.fnSettings().fnRecordsTotal())+' row(s) to the clipboard.</p>',
-							1500
-						);
-					}
-				},
-
-				{
-					"sExtends": "csv",
-					"sToolTip": "Export to CSV",
-					"sButtonClass": "btn btn-white btn-primary  btn-bold",
-					"sButtonText": "<i class='fa fa-file-excel-o bigger-110 green'></i>"
-				},
-
-				{
-					"sExtends": "pdf",
-					"sToolTip": "Export to PDF",
-					"sButtonClass": "btn btn-white btn-primary  btn-bold",
-					"sButtonText": "<i class='fa fa-file-pdf-o bigger-110 red'></i>"
-				},
-
-				{
-					"sExtends": "print",
-					"sToolTip": "Print view",
-					"sButtonClass": "btn btn-white btn-primary  btn-bold",
-					"sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
-
-					"sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
-
-					"sInfo": "<h3 class='no-margin-top'>Print view</h3>\
-									  <p>Please use your browser's print function to\
-									  print this table.\
-									  <br />Press <b>escape</b> when finished.</p>",
-				}
-			]
+			
 		} );
 		//we put a container before our table and append TableTools element to it
-		$(tableTools_obj.fnContainer()).appendTo($('.tableTools-container'));
 
 		//also add tooltips to table tools buttons
 		//addding tooltips directly to "A" buttons results in buttons disappearing (weired! don't know why!)
 		//so we add tooltips to the "DIV" child after it becomes inserted
 		//flash objects inside table tools buttons are inserted with some delay (100ms) (for some reason)
-		setTimeout(function() {
-			$(tableTools_obj.fnContainer()).find('a.DTTT_button').each(function() {
-				var div = $(this).find('> div');
-				if(div.length > 0) div.tooltip({container: 'body'});
-				else $(this).tooltip({container: 'body'});
-			});
-		}, 200);
-
+		
 
 
 		//ColVis extension
 		var colvis = new $.fn.dataTable.ColVis( oTable1, {
-			"buttonText": "<i class='fa fa-search'></i>",
-			"aiExclude": [0, 6],
-			"bShowAll": true,
-			//"bRestore": true,
-			"sAlign": "right",
-			"fnLabel": function(i, title, th) {
-				return $(th).text();//remove icons, etc
-			}
+			
+			
 
 		});
 

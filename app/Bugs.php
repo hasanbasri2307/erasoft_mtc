@@ -18,4 +18,8 @@ class Bugs extends Model
 	public function software(){
 		return $this->belongsTo("App\Software",'id_software');
 	}
+
+	public function rk(){
+		return $this->hashMany('App\RencanaKunjunganDetail','id_bugs');
+	}
 }

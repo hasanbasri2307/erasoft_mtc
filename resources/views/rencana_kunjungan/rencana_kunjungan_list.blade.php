@@ -84,7 +84,11 @@
                                                 <a class="blue" href="{{ url('rencana-kunjungan/show',$data['id_rk']) }}">
                                                     <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                 </a>
-
+                                                @if($data->tiket->status != "finish")
+                                                    <a class="green" href="{{ url('rencana-kunjungan/edit',$data['id_rk']) }}">
+                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                    </a>
+                                                @endif
                                             </div>
 
                                         </td>
@@ -97,12 +101,7 @@
                         </div>
                         <br />
 
-                        <a href="{{ url('rencana-kunjungan/create') }}">
-                            <button class="btn btn-app btn-pink btn-sm">
-                                <i class="ace-icon glyphicon glyphicon-pencil"></i>
-                                Add
-                            </button>
-                        </a>
+                       
                     </div>
                 </div>
             </div><!-- /.col -->
