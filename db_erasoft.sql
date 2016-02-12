@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 11, 2016 at 10:44 AM
+-- Generation Time: Feb 12, 2016 at 10:34 AM
 -- Server version: 10.0.21-MariaDB
 -- PHP Version: 5.6.17
 
@@ -28,8 +28,56 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `actions_maintenance` (
   `id_actions` int(11) NOT NULL,
-  `nama_action` varchar(20) NOT NULL
+  `nama_action` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `actions_maintenance`
+--
+
+INSERT INTO `actions_maintenance` (`id_actions`, `nama_action`) VALUES
+(1, 'Backup Data '),
+(2, 'Database Performance'),
+(3, 'Data Integrity'),
+(4, 'Erasoft Registry Check'),
+(5, 'Server Performance'),
+(6, 'Connection Performance'),
+(7, 'Virus Check');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `am_detail`
+--
+
+CREATE TABLE `am_detail` (
+  `id_am_detail` int(11) NOT NULL,
+  `id_am` int(11) NOT NULL,
+  `nama` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `am_detail`
+--
+
+INSERT INTO `am_detail` (`id_am_detail`, `id_am`, `nama`) VALUES
+(4, 1, 'Daily'),
+(5, 1, 'Weekly'),
+(6, 1, 'Monthly'),
+(7, 2, 'Compact / Repair Data'),
+(8, 2, 'Compact Log File'),
+(9, 2, 'Database / Harddisk Capacity'),
+(10, 3, 'Data Capacity'),
+(11, 3, 'Data Quality'),
+(14, 5, 'Memory Usage'),
+(15, 5, 'CPU Usage'),
+(16, 5, 'Local Area Connection'),
+(19, 4, 'Server'),
+(20, 4, 'Client'),
+(21, 6, 'Client to Server'),
+(22, 6, 'Client to Client'),
+(23, 7, 'Server'),
+(24, 7, 'Client');
 
 -- --------------------------------------------------------
 
@@ -143,7 +191,8 @@ CREATE TABLE `server_maintenance` (
   `tahun` int(11) NOT NULL,
   `id_support` int(11) NOT NULL,
   `id_client` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -214,6 +263,7 @@ CREATE TABLE `tiket` (
   `masalah` text NOT NULL,
   `id_support` int(11) NOT NULL,
   `status` enum('open','process','finish','cancelled') NOT NULL,
+  `tgl_selesai` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -222,10 +272,10 @@ CREATE TABLE `tiket` (
 -- Dumping data for table `tiket`
 --
 
-INSERT INTO `tiket` (`id_tiket`, `id_client`, `masalah`, `id_support`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Tidak bisa tambah jurnal', 13, 'cancelled', '2016-02-11 04:06:01', '2016-02-11 04:06:01'),
-(2, 2, 'Kurang TIdur', 13, 'open', '2016-02-11 04:13:57', '2016-02-11 04:13:57'),
-(3, 2, 'begadang', 0, 'open', '2016-01-24 09:24:21', '2016-01-24 09:24:21');
+INSERT INTO `tiket` (`id_tiket`, `id_client`, `masalah`, `id_support`, `status`, `tgl_selesai`, `created_at`, `updated_at`) VALUES
+(1, 2, 'Tidak bisa tambah jurnal', 13, 'cancelled', '2016-02-12 02:17:31', '2016-02-11 04:06:01', '2016-02-11 04:06:01'),
+(2, 2, 'Kurang TIdur', 13, 'open', '2016-02-12 02:17:31', '2016-02-11 04:13:57', '2016-02-11 04:13:57'),
+(3, 2, 'begadang', 0, 'open', '2016-02-12 02:17:31', '2016-01-24 09:24:21', '2016-01-24 09:24:21');
 
 -- --------------------------------------------------------
 
@@ -250,12 +300,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nama`, `email`, `password`, `type`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(6, 'Project Manager', 'pm@kompas.com', '$2y$10$eWv0KaGtaKZkSfniIURMhuB4FnjyBCX4XotMisKx/kNVSMjy4UnxO', 'pm', 'active', 'hzYDum7NJUqhIAvSlVJCjE5c2jcps7Eh1qRaQmta2Nbnank5VW03dxJjyveb', '2016-02-11 04:35:51', '2016-02-11 04:35:51'),
+(6, 'Project Manager', 'pm@kompas.com', '$2y$10$eWv0KaGtaKZkSfniIURMhuB4FnjyBCX4XotMisKx/kNVSMjy4UnxO', 'pm', 'active', 'fRhHIhT2GdsVLTNPVyOWmqxOZdIVI6lOXs1JkT0Jmq1o9SPjHg0EIrYbN0gZ', '2016-02-12 02:40:40', '2016-02-12 02:40:40'),
 (7, 'Tech Support', 'support@kompas.com', '$2y$10$gyGVrqvFhQTbDtey2dFz4.xwO7oCnRMBneJ/lYZZYlW32MOLeBjpq', 'support', 'active', 'J8owt7mOhieG0M9jjEYST0CytleYcCtrqFDk5XNas4b0josrXYkOlyHR8THA', '2016-02-11 03:39:22', '2016-02-11 03:39:22'),
 (9, 'Client', 'client@kompas.com', '$2y$10$xZIe3QXrPFHocOuqwKxRju4Q56qVVitekNzL6zrG7ui44k38dW40G', 'client', 'active', 'BKglRbqjBN3pQAOnwHcKMKLCgs6GjEEgPcwrOHcKNT1dBMHwaHEVJyJ0Ce5D', '2016-01-24 07:48:01', '2016-01-24 00:48:01'),
 (10, 'Admin', 'admin@kompas.com', '$2y$10$0nU7h6Seey9PUq5A98qUPu3o1cWQeAx7YOIFYuWuEsJ7t7SqtoPNS', 'administrator', 'active', 'yBz0Hb2lnrOMYJUpypvFlvZFMnjDlU4MpqzL4LUDLYl8uMsPwcWXE2UJ7aDm', '2016-01-24 06:54:59', '2016-01-23 23:54:59'),
 (12, 'PT Singoedan', 'ilma@gmail.com', '$2y$10$EFsRUUTC8IZZeq8Z986az.4mJaKCC9C1/ONUuej4CCSZoSG0eIwOG', 'client', 'active', 'wkW1ZD0Tu0hcTgYxAN2iEox8VMLDBD4WPfh3o3POwQBtSSwsoz7MCk3PE8L2', '2016-01-24 09:12:01', '2016-01-24 02:12:01'),
-(13, 'chandra', 'chandra@gmail.com', '$2y$10$wKZKWzbjqcJxONsGXgP00eraVuSWd3DNMhANyjc5bQDgMPDfMmpEi', 'support', 'active', '', '2016-02-11 03:52:07', '2016-02-11 03:52:07');
+(13, 'chandra', 'chandra@gmail.com', '$2y$10$wKZKWzbjqcJxONsGXgP00eraVuSWd3DNMhANyjc5bQDgMPDfMmpEi', 'support', 'active', 'p7AdJwTx5AdNanUv2F1mDbo9JV1iP5j4wozap2emLf3ANF3QzOucPbtNhDGc', '2016-02-12 02:40:06', '2016-02-12 02:40:06');
 
 --
 -- Indexes for dumped tables
@@ -266,6 +316,12 @@ INSERT INTO `user` (`id_user`, `nama`, `email`, `password`, `type`, `status`, `r
 --
 ALTER TABLE `actions_maintenance`
   ADD PRIMARY KEY (`id_actions`);
+
+--
+-- Indexes for table `am_detail`
+--
+ALTER TABLE `am_detail`
+  ADD PRIMARY KEY (`id_am_detail`);
 
 --
 -- Indexes for table `bugs`
@@ -341,7 +397,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `actions_maintenance`
 --
 ALTER TABLE `actions_maintenance`
-  MODIFY `id_actions` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_actions` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `am_detail`
+--
+ALTER TABLE `am_detail`
+  MODIFY `id_am_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `bugs`
 --

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class ActionMainRequest extends Request
+class ServerMaintenanceRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ActionMainRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -25,13 +25,6 @@ class ActionMainRequest extends Request
     {
         return [
             //
-            'nama' => 'required'
-        ];
-    }
-
-    public function messages(){
-        return [
-            'nama.required' => "Nama Must Be Filled"
         ];
     }
 }
