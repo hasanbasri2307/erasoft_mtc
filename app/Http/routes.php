@@ -57,6 +57,15 @@ Route::group(['middleware'=>'auth'],function(){
    Route::put('software/update/{id}',['uses'=>'SoftwareController@update','as'=>'software.update']);
    Route::delete('software/delete/{id}',['uses'=>'SoftwareController@destroy','as'=>'software.delete']);
 
+   //Action Maintenance
+   Route::get('action-maintenance',['uses'=>'ActionMainController@index','as'=>'action.maintenance']);
+   Route::get('action-maintenance/show/{id}',['uses'=>'ActionMainController@show','as'=>'action.maintenance.show']);
+   Route::get('action-maintenance/create',['uses'=>'ActionMainController@create','as'=>'action.maintenance.create']);
+   Route::get('action-maintenance/edit/{id}',['uses'=>'ActionMainController@edit','as'=>'action.maintenance.edit']);
+   Route::post('action-maintenance/store',['uses'=>'ActionMainController@store','as'=>'action.maintenance.store']);
+   Route::put('action-maintenance/update/{id}',['uses'=>'ActionMainController@update','as'=>'action.maintenance.update']);
+   Route::delete('action-maintenance/delete/{id}',['uses'=>'ActionMainController@destroy','as'=>'action.maintenance.delete']);
+
    //Bugs
    Route::get('bugs',['uses'=>'BugsController@index','as'=>'bugs']);
    Route::get('bugs/show/{id}',['uses'=>'BugsController@show','as'=>'bugs.show']);

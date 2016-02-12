@@ -37,6 +37,32 @@ Breadcrumbs::register('profile_user', function($breadcrumbs, $user)
     $breadcrumbs->push('Profile', route('user.show', $user->id_user));
 });
 
+//Action Maintenance
+Breadcrumbs::register('action maintenance', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Action Maintenance', route('action.maintenance'));
+});
+
+Breadcrumbs::register('add action maintenance', function($breadcrumbs)
+{
+    $breadcrumbs->parent('action maintenance');
+    $breadcrumbs->push('Add', route('action.maintenance.create'));
+});
+
+Breadcrumbs::register('edit action maintenance', function($breadcrumbs, $am)
+{
+    $breadcrumbs->parent('action maintenance');
+    $breadcrumbs->push($am->nama_action, route('user.edit', $am->id_actions));
+});
+
+Breadcrumbs::register('view action maintenance', function($breadcrumbs, $am)
+{
+    $breadcrumbs->parent('action maintenance');
+    $breadcrumbs->push($am->nama_action, route('user.show', $am->id_actions));
+});
+
+
 
 //Software
 Breadcrumbs::register('software & bugs', function($breadcrumbs)

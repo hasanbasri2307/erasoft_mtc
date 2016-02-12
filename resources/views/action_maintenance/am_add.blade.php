@@ -1,6 +1,6 @@
 @extends("template.master")
-@section("title","Software Add")
-@section("breadcrumbs",Breadcrumbs::render('software'))
+@section("title","Action Maintenance Add")
+@section("breadcrumbs",Breadcrumbs::render('add action maintenance'))
 @section("sidebar_menu")
 	@include("menu.support_menu")
 @endsection
@@ -8,10 +8,10 @@
 	<div class="page-content">
 					<div class="page-header">
 							<h1>
-								Software
+								Action Maintenance
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
-									Add Software
+									Add Action Maintenance
 								</small>
 							</h1>
 						</div><!-- /.page-header -->
@@ -33,34 +33,28 @@
 
 											
 								<!-- PAGE CONTENT BEGINS -->
-								{!! Form::open(array('url' => 'software/store','class'=>'form-horizontal','name'=>'add_software')) !!}
+								{!! Form::open(array('url' => 'action-maintenance/store','class'=>'form-horizontal','name'=>'add_am')) !!}
 								
 									<!-- #section:elements.form -->
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Name </label>
 
 										<div class="col-sm-9">
-											{!! Form::text('nama', Request::old('nama'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Software Name')); !!}
+											{!! Form::text('nama', Request::old('nama'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Name')); !!}
 											
 										</div>
 									</div>
+									
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Version </label>
-
-										<div class="col-sm-9">
-											{!! Form::text('version', Request::old('version'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Version')); !!}
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Modul </label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Details </label>
 
 										<div class="col-sm-9">
 											<table id="modul" class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
 													
-													<th>Modul Name</th>
-													<th><button type="button" id="add_modul" class="btn btn-white btn-success" onclick="add_row();">Add</button></th>
+													<th>Detail Name</th>
+													<th><button type="button" id="add_detail" class="btn btn-white btn-success" onclick="add_row();">Add</button></th>
 												</tr>
 											</thead>
 
@@ -97,7 +91,7 @@
 		<script type="text/javascript">
 
 			function add_row(){
-				$('#modul tbody').append('<tr><td><input type="text" name="modul_name[]" placeholder="Modul" id="modul_name" class="col-xs-10 col-sm-5"></td><td><button class="btn btn-sm btn-danger" onclick="delete_row(this);" type="button">Delete</button></td></tr>');
+				$('#modul tbody').append('<tr><td><input type="text" name="am_detail[]" placeholder="Detail" id="am_detail" class="col-xs-10 col-sm-5"></td><td><button class="btn btn-sm btn-danger" onclick="delete_row(this);" type="button">Delete</button></td></tr>');
 			}
 
 			function delete_row(id){
@@ -106,11 +100,11 @@
 
 			function check(e){
 				
-				$('form[name=add_software]').submit(function() {
-					var check = $('#modul_name').val();
+				$('form[name=add_am]').submit(function() {
+					var check = $('#am_detail').val();
 					
                     if(!check){
-                    	alert("Modul name must be filled");
+                    	alert("Detail name must be filled");
                     	return false
                     }
 

@@ -50,6 +50,14 @@
 
 				        <b class="arrow"></b>
 				    </li>
+				    <li @if(Route::is('action.maintenance') || Route::is('action.maintenance.create') || Route::is('action.maintenance.edit') || Route::is('action.maintenance.show')) class="active" @endif >
+				        <a href="{{ route('action.maintenance') }}">
+				            <i class="menu-icon fa fa-list-alt"></i>
+				            <span class="menu-text"> Act. Maintenance </span>
+				        </a>
+
+				        <b class="arrow"></b>
+				    </li>
 					<li @if(Route::is('rencana.kunjungan') || Route::is('rencana.kunjungan.show') || Route::is('rencana.kunjungan.create') || Route::is('rencana.kunjungan.edit') || Route::is('server.maintenance') || Route::is('server.maintenance.show') || Route::is('server.maintenance.create') || Route::is('server.maintenance.edit')) class="active open" @endif>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
