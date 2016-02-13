@@ -18,4 +18,8 @@ class Tiket extends Model
 	public function rk(){
 		return $this->hashOne('App\RencanaKunjungan','id_tiket');
 	}
+
+	public function support(){
+		return $this->belongsTo('App\User','id_support');
+	}
 }

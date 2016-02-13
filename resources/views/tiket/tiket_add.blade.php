@@ -1,6 +1,6 @@
 @extends("template.master")
 @section("title","Tiket Add")
-@section("breadcrumbs",Breadcrumbs::render('tiket'))
+@section("breadcrumbs",Breadcrumbs::render('add_tiket'))
 @section("sidebar_menu")
     @include("menu.client_menu")
 @endsection

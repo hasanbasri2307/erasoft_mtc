@@ -54,7 +54,7 @@
                                     <th>Tipe</th>
                                     <th>ID Tiket</th>
                                     <th>Dibuat Tanggal</th>
-
+                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -78,13 +78,16 @@
                                         <td>
                                             {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['created_at']) !!}
                                         </td>
+                                        <td>
+                                            {!! \Erasoft\Libraries\CustomLib::gen_status_t($data['status']) !!}
+                                        </td>
 
                                         <td>
                                             <div class="hidden-sm hidden-xs action-buttons">
                                                 <a class="blue" href="{{ url('rencana-kunjungan/show',$data['id_rk']) }}">
                                                     <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                 </a>
-                                                @if($data->tiket->status != "finish")
+                                                @if($data->tiket->status != "finish" or $data->status != "approved")
                                                     <a class="green" href="{{ url('rencana-kunjungan/edit',$data['id_rk']) }}">
                                                         <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                     </a>

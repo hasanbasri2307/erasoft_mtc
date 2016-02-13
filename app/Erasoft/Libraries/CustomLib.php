@@ -19,7 +19,7 @@ class CustomLib {
 
     public static function gen_type()
     {
-    	$type = ["client"=>"Client","pm"=>"Project Manager","support"=>"Support"];
+    	$type = ["pm"=>"Project Manager","support"=>"Support"];
     	return $type;
     }
 
@@ -73,9 +73,73 @@ class CustomLib {
         return $result;
     }
 
+    public static function gen_status_t($status){
+        $result = "";
+        switch($status){
+            case 'waiting' :
+                $result = '<span class="label label-warning arrowed-in-right arrowed">'.ucfirst($status).'</span>';
+                break;
+            case 'approved':
+                $result = '<span class="label label-success arrowed">'.ucfirst($status).'</span>';
+                break;
+           
+        }
+
+        return $result;
+    }
+
     public static function gen_tanggal($date,$format="d F Y H:i:s"){
         $time = strtotime($date);
         return date($format,$time);
+    }
+
+    public static function gen_bulan($bulan){
+        $res = "";
+        switch ($bulan) {
+            case '1':
+                # code...
+                $res = "Januari";
+                break;
+            case '2':
+                $res = "Februari";
+                break;
+            case '3':
+                $res = "Maret";
+                break;
+            case '4':
+                $res = "April";
+                break;
+            case '5':
+                $res = 'Mei';
+                break;
+            case '6':
+                $res = "Juni";
+                break;
+            case '7':
+                $res = "Juli";
+                break;
+            case '8' :
+                $res = "Agustus";
+                break;
+            case '9':
+                $res = "September";
+                break;
+            case '10':
+                $res = "Oktober";
+                break;
+            case '11':
+                $res = "November";
+                break;
+            case '12':
+                $res = "Desember";
+                break;      
+            
+            default:
+                # code...
+                break;
+        }
+
+        return $res;
     }
   
 }

@@ -2,7 +2,7 @@
 @section("title","Rencana Kunjungan Detail")
 @section("breadcrumbs",Breadcrumbs::render('view_rencana_kunjungan',$rk))
 @section("sidebar_menu")
-    @include("menu.support_menu")
+    @include("menu.pm_menu")
 @endsection
 @section("content")
     <div class="page-content">
@@ -102,6 +102,9 @@
 
                                                     <div class="profile-info-value">
                                                         <span>{!! \Erasoft\Libraries\CustomLib::gen_status_t($rk->status) !!}</span>
+                                                         @if($rk->status == "waiting")
+                                                            <a id="approve_rk" data-token="{{ csrf_token() }}" data-id="{{ $rk->id_rk }}" style="cursor:pointer;"> Approve Rencana Kunjungan ?</a> 
+                                                        @endif
                                                     </div>
                                                 </div>
 
@@ -158,3 +161,21 @@
         </div><!-- /.row -->
     </div><!-- /.page-content -->
 @endsection
+@section("js_script")
+    <script type="text/javascript">
+    $('#approve_rk').on('click',function(){
+            var _confirm = confirm("Yakin Approve Rencana Kunjungan ? ");
+            if(_confirm){
+                var _id = $(this).data("id");
+                var url = '<?php echo url("rencana-kunjungan/update_approve");?>';
+                var token = $(this).data("token");
+                $.post(url, {_token: token,'id_rk':_id}, function(data, textStatus, xhr) {
+                    if(data.status){
+                        alert("sukses update data");
+                        location.reload(true);
+                    }
+                });
+            }
+        });
+    </script>
+@endsection 

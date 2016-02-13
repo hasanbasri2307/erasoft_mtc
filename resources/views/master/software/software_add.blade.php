@@ -1,6 +1,6 @@
 @extends("template.master")
 @section("title","Software Add")
-@section("breadcrumbs",Breadcrumbs::render('software'))
+@section("breadcrumbs",Breadcrumbs::render('add_software'))
 @section("sidebar_menu")
 	@include("menu.support_menu")
 @endsection

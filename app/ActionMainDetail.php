@@ -15,4 +15,8 @@ class ActionMainDetail extends Model
     public function am(){
     	return $this->belongsTo('App\ActionMain','id_am');
     }
+
+    public function sm_detail(){
+    	return $this->hasMany('App\SmDetail','id_action');
+    }
 }

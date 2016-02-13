@@ -117,7 +117,7 @@ Breadcrumbs::register('edit_bugs', function($breadcrumbs, $bugs)
 Breadcrumbs::register('view_bugs', function($breadcrumbs, $bugs)
 {
     $breadcrumbs->parent('bugs');
-    $breadcrumbs->push($bugs->nama, route('bugs.show', $bugs->id_bugs));
+    $breadcrumbs->push($bugs->nama_bugs, route('bugs.show', $bugs->id_bugs));
 });
 
 //User
@@ -217,7 +217,7 @@ Breadcrumbs::register('add_server_maintenance', function($breadcrumbs)
 Breadcrumbs::register('edit_server_maintenance', function($breadcrumbs, $sm)
 {
     $breadcrumbs->parent('server_maintenance');
-    $breadcrumbs->push($rk->id_sm, route('server.maintenance.edit', $sm->id_sm));
+    $breadcrumbs->push($sm->id_sm, route('server.maintenance.edit', $sm->id_sm));
 });
 
 Breadcrumbs::register('view_server_maintenance', function($breadcrumbs, $sm)

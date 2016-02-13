@@ -32,6 +32,36 @@
 
         <b class="arrow"></b>
     </li>
+    <li @if(Route::is('rencana.kunjungan') || Route::is('rencana.kunjungan.show') || Route::is('rencana.kunjungan.create') || Route::is('rencana.kunjungan.edit') || Route::is('server.maintenance') || Route::is('server.maintenance.show') || Route::is('server.maintenance.create') || Route::is('server.maintenance.edit')) class="active open" @endif>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-list"></i>
+                            <span class="menu-text"> Maintenance </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li @if(Route::is('rencana.kunjungan') || Route::is('rencana.kunjungan.show') || Route::is('rencana.kunjungan.create') || Route::is('rencana.kunjungan.edit')) class="active" @endif>
+                                <a href="{{ url('rencana-kunjungan') }}">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Rencana Kunjungan
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li @if(Route::is('server.maintenance') || Route::is('server.maintenance.show') || Route::is('server.maintenance.create') || Route::is('server.maintenance.edit')) class="active" @endif>
+                                <a href="{{ url('server-maintenance') }}">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Server Maintenance
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
+                    </li>
 
     <li class="">
                         <a href="#" class="dropdown-toggle">

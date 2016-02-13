@@ -98,6 +98,8 @@ Route::group(['middleware'=>'auth'],function(){
    Route::post('rencana-kunjungan/store',['uses'=>'RencanaKunjunganController@store','as'=>'rencana.kunjungan.store']);
    Route::put('rencana-kunjungan/update/{id}',['uses'=>'RencanaKunjunganController@update','as'=>'rencana.kunjungan.update']);
    Route::delete('rencana-kunjungan/delete/{id}',['uses'=>'RencanaKunjunganController@destroy','as'=>'rencana.kunjungan.delete']);
+   Route::post('rencana-kunjungan/update_approve',['uses'=>'RencanaKunjunganController@update_approve']);
+
 
    //Rencana Kunjungan
    Route::get('server-maintenance',['uses'=>'ServerMaintenanceController@index','as'=>'server.maintenance']);
@@ -107,6 +109,7 @@ Route::group(['middleware'=>'auth'],function(){
    Route::post('server-maintenance/store',['uses'=>'ServerMaintenanceController@store','as'=>'server.maintenance.store']);
    Route::put('server-maintenance/update/{id}',['uses'=>'ServerMaintenanceController@update','as'=>'server.maintenance.update']);
    Route::delete('server-maintenance/delete/{id}',['uses'=>'ServerMaintenanceController@destroy','as'=>'server.maintenance.delete']);
+   Route::post('server-maintenance/update_approve',['uses'=>'ServerMaintenanceController@update_approve']);
 });
 
 

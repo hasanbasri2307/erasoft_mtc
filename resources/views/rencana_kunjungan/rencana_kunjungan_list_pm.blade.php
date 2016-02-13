@@ -1,8 +1,8 @@
 @extends("template.master")
-@section("title","Server Maintenance List")
-@section("breadcrumbs",Breadcrumbs::render('server_maintenance'))
+@section("title","Rencana Kunjungan List")
+@section("breadcrumbs",Breadcrumbs::render('rencana_kunjungan'))
 @section("sidebar_menu")
-    @include("menu.support_menu")
+    @include("menu.pm_menu")
 @endsection
 @section("content")
     <div class="page-content">
@@ -11,10 +11,10 @@
         <!-- /section:settings.box -->
         <div class="page-header">
             <h1>
-                Server Maintenance
+                Rencana Kunjungan
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    Server Maintenance List
+                    Rencana Kunjungan List
                 </small>
             </h1>
 
@@ -39,7 +39,7 @@
                             <div class="pull-right tableTools-container"></div>
                         </div>
                         <div class="table-header">
-                            Server Maintenance Registered
+                            Rencana Kunjungan Registered
                         </div>
 
                         <!-- div.table-responsive -->
@@ -50,10 +50,12 @@
                                 <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tgl Check</th>
-                                    <th>Periode</th>
-                                    <th>Tahun</th>
+                                    <th>Tgl Kunjungan</th>
+                                    <th>Tipe</th>
+                                    <th>ID Tiket</th>
+                                    <th>Dibuat Tanggal</th>
                                     <th>Client</th>
+                                    <th>Support</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
@@ -61,37 +63,38 @@
 
                                 <tbody>
                                 <?php $no=1;?>
-                                @foreach($sm as $data)
+                                @foreach($rk as $data)
                                     <tr>
                                         <td class="center">
                                             {{ $no }}
                                         </td>
                                          <td>
-                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['tgl_check']) !!}
+                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['tgl_kunjungan']) !!}
                                         </td>
                                         <td>
-                                            {{ \Erasoft\Libraries\CustomLib::gen_bulan($data['periode']) }}
+                                            {{ $data['tipe'] }}
                                         </td>
                                         <td>
-                                            {{ $data['tahun'] }}
+                                            {{ $data['id_tiket'] }}
                                         </td>
                                         <td>
-                                            {{ $data->client->nama_pt }}
+                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['created_at']) !!}
                                         </td>
                                         <td>
-                                            {!! \Erasoft\Libraries\CustomLib::gen_status_t($data->status) !!}
+                                                {{ $data->tiket->client->nama_pt }}
                                         </td>
+                                        <td>
+                                                {{ $data->tiket->support->nama }}
+                                        </td>
+                                        <td>
+                                            {!! \Erasoft\Libraries\CustomLib::gen_status_t($data['status']) !!}
+                                        </td>
+
                                         <td>
                                             <div class="hidden-sm hidden-xs action-buttons">
-                                                <a class="blue" href="{{ url('server-maintenance/show',$data['id_sm']) }}">
+                                                <a class="blue" href="{{ url('rencana-kunjungan/show',$data['id_rk']) }}">
                                                     <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                 </a>
-                                                
-                                                @if($data->status == "waiting")
-                                                    <a class="green" href="{{ url('server-maintenance/edit',$data['id_sm']) }}">
-                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                    </a>
-                                                @endif
                                                 
                                             </div>
 
@@ -103,15 +106,8 @@
                                 </tbody>
                             </table>
                         </div>
-                 
                         <br />
 
-                        <a href="{{ url('server-maintenance/create') }}">
-                            <button class="btn btn-app btn-pink btn-sm">
-                                <i class="ace-icon glyphicon glyphicon-pencil"></i>
-                                Add
-                            </button>
-                        </a>        
                        
                     </div>
                 </div>

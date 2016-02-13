@@ -13,39 +13,56 @@ use Illuminate\Support\Facades\Auth;
 use App\Client;
 use App\ActionMain;
 use App\ActionMainDetail;
+use Session;
 
 class ServerMaintenanceController extends Controller
 {
     //
 	public function index(){
-		parent::$_data['sm'] = ServerMaintenance::all();
+		
+		if(Auth::user()->type == 'support'){
+			parent::$_data['sm'] = ServerMaintenance::where("id_support",'=',Auth::user()->id_user)->get();
+			$view = "sm_list";
+		}elseif(Auth::user()->type== 'pm'){
+			parent::$_data['sm'] = ServerMaintenance::all();
+			$view = "sm_list_pm";
+		}
 
-		return view("server_maintenance.sm_list",parent::$_data);
+		return view("server_maintenance.".$view,parent::$_data);
 	}
 
 	public function create(){
 		parent::$_data['client'] = $this->_client();
 		parent::$_data['tahun'] = $this->_tahun();
-		parent::$_data['bulan'] = $this->_bulan();
+		parent::$_data['bulan'] = $this->_bulan();	
+		parent::$_data['service'] = $this->_service();
 	
 		return view("server_maintenance.sm_add",parent::$_data);
 	}
 
 	public function store(ServerMaintenanceRequest $req){
 
-		$sm = new ServiceMaintenance();
+		$check = ServerMaintenance::where(['periode'=>$req->periode,'tahun'=>$req->tahun])->count();
+		
+		if($check > 0 ){
+			Session::flash("error","Data Bulan: <b>".\Erasoft\Libraries\CustomLib::gen_bulan($req->periode)."</b> Tahun: <b>".$req->tahun."</b> Sudah Ada");
+			return redirect()->route('server.maintenance.create');
+		}
+
+		$sm = new ServerMaintenance();
 		$sm->periode = $req->periode;
 		$sm->tahun = $req->tahun;
 		$sm->tgl_check = $req->tgl_check;
 		$sm->id_support = Auth::user()->id_user;
-		$sm->id_client = $req->client;
+		$sm->id_client = $req->id_client;
+		$sm->status = "waiting";
 		$sm->save();
 
-		foreach($req->sm_detail as $key => $item){
+		foreach($req->checked as $key => $item){
 			$sm_d = new SmDetail();
 			$sm_d->id_sm = $sm->id_sm;
 			$sm_d->id_action = $item;
-			$sm_d->keterangan = $req->keterangan[$key];
+			$sm_d->keterangan = $req->keterangan[$item];
 			$sm_d->save();
 		}
 
@@ -54,27 +71,31 @@ class ServerMaintenanceController extends Controller
 	}
 
 	public function edit($id){
+		parent::$_data['client'] = $this->_client();
+		parent::$_data['tahun'] = $this->_tahun();
+		parent::$_data['bulan'] = $this->_bulan();	
+		parent::$_data['service'] = $this->_service();
 		parent::$_data['sm'] = ServerMaintenance::find($id);
-		parent::$_data['sm_detail'] = SmDetail::where("id_sm","=",$id)->get();
+		parent::$_data['sm_detail'] = $this->_sm_detail($id);
 
 		return view("server_maintenance.sm_edit",parent::$_data);
 	}
 
-	public function update($id){
-		$sm = ServiceMaintenance::find($id);
+	public function update(ServerMaintenanceRequest $req,$id){
+		$sm = ServerMaintenance::find($id);
 		$sm->periode = $req->periode;
 		$sm->tahun = $req->tahun;
 		$sm->tgl_check = $req->tgl_check;
-		$sm->id_client = $req->client;
+		$sm->id_client = $req->id_client;
 		$sm->save();
 
 		$delete = SmDetail::where("id_sm",'=',$id)->delete();
 
-		foreach($req->sm_detail as $key => $item){
+		foreach($req->checked as $key => $item){
 			$sm_d = new SmDetail();
-			$sm_d->id_sm = $id;
+			$sm_d->id_sm = $sm->id_sm;
 			$sm_d->id_action = $item;
-			$sm_d->keterangan = $req->keterangan[$key];
+			$sm_d->keterangan = $req->keterangan[$item];
 			$sm_d->save();
 		}
 
@@ -88,10 +109,27 @@ class ServerMaintenanceController extends Controller
 
 	public function show($id){
 		parent::$_data['sm'] = ServerMaintenance::find($id);
-		parent::$_data['sm_d'] = SmDetail::where("id_sm",'=',$id)->get();
+		parent::$_data['sm_detail'] = SmDetail::where("id_sm",'=',$id)->get();
 
-		return view("server_maintenance.sm_detail",parent::$_data);
+		if(Auth::user()->type == "support"){
+			$view = 'sm_detail';
+		}elseif(Auth::user()->type == "pm"){
+			$view = 'sm_detail_pm';
+		}
+
+		return view("server_maintenance.".$view,parent::$_data);
 	}
+
+	public function update_approve(Request $req){
+        if($req->ajax()){
+            $tiket = ServerMaintenance::find($req->id_sm);
+            $tiket->status = "approved";
+            $tiket->save();
+            return response()->json(["status"=>true]);            
+        }
+
+        return response()->json(["status"=>false]);
+    }
 
 	private function _tahun (){
 		$tahun=[];
@@ -134,6 +172,29 @@ class ServerMaintenanceController extends Controller
 	private function _service(){
 		$service = ActionMain::all();
 		$res = [];
+
+		foreach($service as $item){
+			$detail_service = ActionMainDetail::where("id_am","=",$item->id_actions)->get();
+			$det = [];
+			foreach($detail_service as $val) {
+				$det[$val->id_am_detail] = $val->nama;
+			}
+
+			$res[$item->nama_action] = $det;
+			
+		}
+
+		return $res;
 		
+	}
+
+	private function _sm_detail($id){
+		$sm_d = SmDetail::where("id_sm","=",$id)->get();
+		$res = [];
+		foreach($sm_d as $item){
+			$res[$item->id_action] = $item->keterangan;
+		}
+
+		return $res;
 	}
 }

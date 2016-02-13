@@ -19,8 +19,17 @@ class RencanaKunjunganController extends Controller
     //
 
     public function index(){
-    	parent::$_data['rk'] = RencanaKunjungan::where("id_support",'=',Auth::user()->id_user)->get();
-    	return view("rencana_kunjungan.rencana_kunjungan_list",parent::$_data);
+    	
+    	
+        if(Auth::user()->type == 'support'){
+            parent::$_data['rk'] = RencanaKunjungan::where("id_support",'=',Auth::user()->id_user)->get();
+            $view = "rencana_kunjungan_list";
+        }elseif(Auth::user()->type== 'pm'){
+            parent::$_data['rk'] = RencanaKunjungan::all();
+            $view = "rencana_kunjungan_list_pm";
+        }
+
+        return view("rencana_kunjungan.".$view,parent::$_data);
     	
     }
 
@@ -38,6 +47,7 @@ class RencanaKunjunganController extends Controller
         $rk->tipe = $req->tipe_kunjungan;
         $rk->id_support = Auth::user()->id_user;
         $rk->id_tiket = $req->id_tiket;
+        $rk->status = "waiting";
         $rk->save();
 
         foreach($req->bugs as $item){
@@ -86,8 +96,24 @@ class RencanaKunjunganController extends Controller
     }
 
     public function show($id){
+        if(Auth::user()->type == "support"){
+            $view = "rencana_kunjungan_detail";
+        }elseif(Auth::user()->type == "pm"){
+            $view = "rencana_kunjungan_detail_pm";
+        }
         parent::$_data['rk'] = RencanaKunjungan::find($id);
         parent::$_data['rk_detail'] = RencanaKunjunganDetail::where("id_rk","=",$id)->get();
-        return view("rencana_kunjungan.rencana_kunjungan_detail",parent::$_data);
+        return view("rencana_kunjungan.".$view,parent::$_data);
+    }
+
+    public function update_approve(Request $req){
+        if($req->ajax()){
+            $tiket = RencanaKunjungan::find($req->id_rk);
+            $tiket->status = "approved";
+            $tiket->save();
+            return response()->json(["status"=>true]);            
+        }
+
+        return response()->json(["status"=>false]);
     }
 }

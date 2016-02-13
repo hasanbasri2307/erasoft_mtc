@@ -2,7 +2,7 @@
 @section("title","Server Maintenance List")
 @section("breadcrumbs",Breadcrumbs::render('server_maintenance'))
 @section("sidebar_menu")
-    @include("menu.support_menu")
+    @include("menu.pm_menu")
 @endsection
 @section("content")
     <div class="page-content">
@@ -87,12 +87,7 @@
                                                     <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                 </a>
                                                 
-                                                @if($data->status == "waiting")
-                                                    <a class="green" href="{{ url('server-maintenance/edit',$data['id_sm']) }}">
-                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                    </a>
-                                                @endif
-                                                
+                                                                                             
                                             </div>
 
                                         </td>
@@ -104,15 +99,7 @@
                             </table>
                         </div>
                  
-                        <br />
-
-                        <a href="{{ url('server-maintenance/create') }}">
-                            <button class="btn btn-app btn-pink btn-sm">
-                                <i class="ace-icon glyphicon glyphicon-pencil"></i>
-                                Add
-                            </button>
-                        </a>        
-                       
+                      
                     </div>
                 </div>
             </div><!-- /.col -->

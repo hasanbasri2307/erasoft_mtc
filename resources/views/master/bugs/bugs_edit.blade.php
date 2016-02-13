@@ -1,6 +1,6 @@
 @extends("template.master")
 @section("title","Bugs Add")
-@section("breadcrumbs",Breadcrumbs::render('bugs'))
+@section("breadcrumbs",Breadcrumbs::render('edit_bugs',$bugs))
 @section("sidebar_menu")
     @include("menu.support_menu")
 @endsection

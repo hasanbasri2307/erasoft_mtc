@@ -14,4 +14,8 @@ class SmDetail extends Model
     public function sm(){
     	return $this->belongsTo('App\ServerMaintenance','id_sm');
     }
+
+    public function am_detail(){
+    	return $this->belongsTo('App\ActionMainDetail','id_action');
+    }
 }

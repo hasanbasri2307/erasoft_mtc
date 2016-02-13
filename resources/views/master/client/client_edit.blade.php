@@ -6,7 +6,7 @@
         #mapss {width:500px; height:340px; border:5px solid #DEEBF2;}
     </style>
 @endsection
-@section("breadcrumbs",Breadcrumbs::render('add_client'))
+@section("breadcrumbs",Breadcrumbs::render('edit_client',$client))
 @section("sidebar_menu")
     @include("menu.pm_menu")
 @endsection

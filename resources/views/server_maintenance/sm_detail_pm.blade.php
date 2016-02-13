@@ -1,8 +1,8 @@
 @extends("template.master")
-@section("title","Rencana Kunjungan Detail")
-@section("breadcrumbs",Breadcrumbs::render('view_rencana_kunjungan',$rk))
+@section("title","Server Maintenance Detail")
+@section("breadcrumbs",Breadcrumbs::render('view_server_maintenance',$sm))
 @section("sidebar_menu")
-    @include("menu.support_menu")
+    @include("menu.pm_menu")
 @endsection
 @section("content")
     <div class="page-content">
@@ -11,7 +11,7 @@
         <!-- /section:settings.box -->
         <div class="page-header">
             <h1>
-                Rencana Kunjungan Detail
+                Server Maintenance Detail
 
             </h1>
         </div><!-- /.page-header -->
@@ -40,60 +40,35 @@
 
                                             <div class="profile-user-info">
                                                 <div class="profile-info-row">
+                                                    <div class="profile-info-name"> Tgl Check </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span>{{ \Erasoft\Libraries\CustomLib::gen_tanggal($sm->tgl_check) }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> Periode </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span>{{ \Erasoft\Libraries\CustomLib::gen_bulan($sm->periode) }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> Tahun </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span>{!! $sm->tahun !!}</span>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="profile-info-row">
                                                     <div class="profile-info-name"> Client </div>
 
                                                     <div class="profile-info-value">
-                                                        <span>{{ $rk->tiket->client->nama_pt }}</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> PIC </div>
-
-                                                    <div class="profile-info-value">
-                                                        <span>{{ $rk->tiket->client->pic }}</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> Tanggal Kunjungan </div>
-
-                                                    <div class="profile-info-value">
-                                                        <span>{!! \Erasoft\Libraries\CustomLib::gen_tanggal($rk['tgl_kunjungan']) !!}</span>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> Jam Berangkat </div>
-
-                                                    <div class="profile-info-value">
-                                                        <span>{{ $rk->jam_berangkat}}</span>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> Jam Pulang </div>
-
-                                                    <div class="profile-info-value">
-                                                        <span>{{ $rk->jam_pulang }}</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> Aktifitas </div>
-
-                                                    <div class="profile-info-value">
-                                                        <span>{{ $rk->aktifitas }}</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> No Tiket </div>
-
-                                                    <div class="profile-info-value">
-                                                        <span>{{ $rk->id_tiket }}</span>
+                                                        <span>{{ $sm->client->nama_pt }}</span>
                                                     </div>
                                                 </div>
 
@@ -101,10 +76,16 @@
                                                     <div class="profile-info-name"> Status </div>
 
                                                     <div class="profile-info-value">
-                                                        <span>{!! \Erasoft\Libraries\CustomLib::gen_status_t($rk->status) !!}</span>
+                                                        <span>{!! \Erasoft\Libraries\CustomLib::gen_status_t($sm->status) !!}</span> 
+                                                        @if($sm->status == "waiting")
+                                                            <a id="approve_sm" data-token="{{ csrf_token() }}" data-id="{{ $sm->id_sm }}" style="cursor:pointer;"> Approve Server Maintenance ?</a> 
+                                                        @endif
                                                     </div>
                                                 </div>
 
+
+
+                                    
                                             </div>
 
 
@@ -117,26 +98,24 @@
                                             <thead>
                                             <tr>
                                                 <th class="center">#</th>
-                                                <th>Nama Bugs</th>
-                                                <th>Penyelesaian</th>
-                                                <th>Software</th>
-                                                <th>Modul</th>
+                                                <th>Nama Action</th>
+                                                <th>Keterangan</th>
+                                                
 
                                             </tr>
                                             </thead>
 
                                             <tbody>
                                             <?php $no =1;?>
-                                            @foreach($rk_detail as $item)
+                                            @foreach($sm_detail as $item)
                                                 <tr>
                                                     <td class="center">{{ $no }}</td>
 
                                                     <td>
-                                                       {{ $item->bugs->nama_bugs }}
+                                                       {{ $item->am_detail->am->nama_action.' -> '.$item->am_detail->nama }}
                                                     </td>
-                                                    <td>{{ $item->bugs->penyelesaian }}</td>
-                                                    <td>{{ $item->bugs->software_detail->software->nama }}</td>
-                                                    <td>{{ $item->bugs->software_detail->nama_modul }}</td>
+                                                    <td>{{ $item->keterangan }}</td>
+                                                   
 
                                                 </tr>
                                                 <?php $no++; ?>
@@ -158,3 +137,21 @@
         </div><!-- /.row -->
     </div><!-- /.page-content -->
 @endsection
+@section("js_script")
+    <script type="text/javascript">
+    $('#approve_sm').on('click',function(){
+            var _confirm = confirm("Yakin Approve Server Maintenance ? ");
+            if(_confirm){
+                var _id = $(this).data("id");
+                var url = '<?php echo url("server-maintenance/update_approve");?>';
+                var token = $(this).data("token");
+                $.post(url, {_token: token,'id_sm':_id}, function(data, textStatus, xhr) {
+                    if(data.status){
+                        alert("sukses update data");
+                        location.reload(true);
+                    }
+                });
+            }
+        });
+    </script>
+@endsection 

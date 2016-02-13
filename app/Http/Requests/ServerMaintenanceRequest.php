@@ -13,7 +13,7 @@ class ServerMaintenanceRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,42 @@ class ServerMaintenanceRequest extends Request
      */
     public function rules()
     {
+        switch ($this->method()) {
+            case 'POST':
+                # code...
+                return [
+                    //
+                    'periode' => 'required',
+                    'tahun' =>"required",
+                    'tgl_check' => "required",
+                    'id_client' => "required"
+                ];
+                break;
+            
+            case 'PUT':
+                return [
+                    //
+                    'periode' => 'required',
+                    'tahun' =>"required",
+                    'tgl_check' => "required",
+                    'id_client' => "required"
+                ];
+                break;
+
+            default:
+                # code...
+                break;
+        }
+        
+    }
+
+    public function messages(){
         return [
-            //
+            'periode.required' => 'Periode Must Be Filled',
+            'tahun.required' => 'Tahun Must Be Filled',
+            'tgl_check.required' => 'Tgl Check Must Be Filled',
+            'client.required' => 'Client Must Be Filled',
         ];
+
     }
 }

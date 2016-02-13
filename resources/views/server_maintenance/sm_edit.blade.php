@@ -1,11 +1,11 @@
 @extends("template.master")
-@section("title","Server Maintenance Add")
+@section("title","Server Maintenance Edit")
 @section("css_script")
 
 	<link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-timepicker.css') }}" />
 @endsection
-@section("breadcrumbs",Breadcrumbs::render('add_server_maintenance'))
+@section("breadcrumbs",Breadcrumbs::render('edit_server_maintenance',$sm))
 @section("sidebar_menu")
 	@include("menu.support_menu")
 @endsection
@@ -16,7 +16,7 @@
 								Server Maintenance
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
-									Add Server Maintenance
+									Edit Server Maintenance
 								</small>
 							</h1>
 						</div><!-- /.page-header -->
@@ -45,7 +45,7 @@
 
 											
 								<!-- PAGE CONTENT BEGINS -->
-								{!! Form::open(array('url' => 'server-maintenance/store','class'=>'form-horizontal','name'=>'')) !!}
+								{!! Form::model($sm,array('route' => ['server.maintenance.update',$sm->id_sm],'class'=>'form-horizontal','method'=>'PUT')) !!}
 								
 									<!-- #section:elements.form -->
 									<div class="form-group">
@@ -53,7 +53,7 @@
 
 										<div class="col-sm-9">
 											
-											{!! Form::text('tgl_check', Request::old('tgl_check'),array('class'=>'ol-xs-10 col-sm-5 date-picker','id'=>'id-date-picker-1','data-date-format'=>'yyyy-mm-dd')); !!}
+											{!! Form::text('tgl_check', null,array('class'=>'ol-xs-10 col-sm-5 date-picker','id'=>'id-date-picker-1','data-date-format'=>'yyyy-mm-dd')); !!}
 											
 										</div>
 									</div>
@@ -61,7 +61,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Bulan </label>
 
 										<div class="col-sm-9">
-											{!! Form::select('periode', $bulan, Request::old('periode'), ['placeholder' => '--- Bulan ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5']); !!}
+											{!! Form::select('periode', $bulan, null, ['placeholder' => '--- Bulan ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5']); !!}
 
 										</div>
 									</div>
@@ -70,7 +70,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Tahun </label>
 
 										<div class="col-sm-9">
-											{!! Form::select('tahun', $tahun, Request::old('tahun'), ['placeholder' => '--- Tahun ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5']); !!}
+											{!! Form::select('tahun', $tahun, null, ['placeholder' => '--- Tahun ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5']); !!}
 
 										</div>
 									</div>
@@ -79,7 +79,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Client </label>
 
 										<div class="col-sm-9">
-											{!! Form::select('id_client', $client, Request::old('client'), ['placeholder' => '--- Client ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5']); !!}
+											{!! Form::select('id_client', $client, null, ['placeholder' => '--- Client ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5']); !!}
 
 										</div>
 									</div>
@@ -115,8 +115,8 @@
 														<tr>
 															<td></td>
 															<td>{{ $v }}</td>
-															<td align="center">{!! Form::checkbox('checked[]',$k,null,['onclick'=>'checks(this)']) !!}</td>
-															<td>{!! Form::textarea('keterangan['.$k.']', Request::old('keterangan[]'),['rows'=>3,'id'=>'keterangan']); !!}</td>
+															<td align="center">{!! Form::checkbox('checked[]',$k,(array_key_exists($k, $sm_detail) ? true : false),['onclick'=>'checks(this)']) !!}</td>
+															<td>{!! Form::textarea('keterangan['.$k.']', (array_key_exists($k, $sm_detail) ? $sm_detail[$k] : ""),['rows'=>3,'id'=>'keterangan']); !!}</td>
 														</tr>
 													@endforeach
 
@@ -170,7 +170,12 @@
 				$(id).parent().parent().remove();
 			}
 
-			
+			function checks(m){
+				var _vals = $(m).val();
+				var _ket = $(m).closest('tr');
+				var s = _ket.find($('#keterangan').removeAttr('disabled'));			
+			}
+
 			function check(e){
 				
 				$('form[name=add_sm]').submit(function() {
