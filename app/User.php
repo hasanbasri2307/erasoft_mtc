@@ -51,4 +51,8 @@ class User extends Model implements AuthenticatableContract,
 	public function cs(){
 		return $this->hasMany('App\ClientSupport',"id_support");
 	}
+
+    public function sm(){
+        return $this->hasMany('App\ServerMaintenance','id_support');
+    }
 }

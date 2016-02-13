@@ -13,4 +13,12 @@ class ServerMaintenance extends Model
     public function detail_sm(){
     	return $this->hasMany('App\SmDetail','id_sm');
     }
+
+    public function client(){
+    	return $this->belongsTo('App\Client','id_client');
+    }
+
+    public function support(){
+    	return $this->belongsTo('App\User','id_support');
+    }
 }

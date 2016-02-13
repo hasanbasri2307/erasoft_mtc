@@ -33,5 +33,65 @@
         <b class="arrow"></b>
     </li>
 
+    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-tag"></i>
+                            <span class="menu-text"> Laporan </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="profile.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Client
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="inbox.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Support
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="pricing.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Log Out Standing
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="invoice.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Rencana Kunjungan
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="timeline.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Server Maintenance
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            
+                        </ul>
+                    </li>
+
 
 </ul><!-- /.nav-list -->

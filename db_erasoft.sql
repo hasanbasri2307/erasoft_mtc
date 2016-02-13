@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 12, 2016 at 10:34 AM
+-- Generation Time: Feb 13, 2016 at 06:35 AM
 -- Server version: 10.0.21-MariaDB
 -- PHP Version: 5.6.17
 
@@ -187,8 +187,9 @@ CREATE TABLE `rk_detail` (
 
 CREATE TABLE `server_maintenance` (
   `id_sm` int(11) NOT NULL,
-  `periode` varchar(15) NOT NULL,
+  `periode` varchar(2) NOT NULL,
   `tahun` int(11) NOT NULL,
+  `tgl_check` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_support` int(11) NOT NULL,
   `id_client` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -205,7 +206,6 @@ CREATE TABLE `sm_detail` (
   `id_sm_detail` int(11) NOT NULL,
   `id_sm` int(11) NOT NULL,
   `id_action` int(11) NOT NULL,
-  `checked` varchar(10) NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -300,12 +300,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nama`, `email`, `password`, `type`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(6, 'Project Manager', 'pm@kompas.com', '$2y$10$eWv0KaGtaKZkSfniIURMhuB4FnjyBCX4XotMisKx/kNVSMjy4UnxO', 'pm', 'active', 'fRhHIhT2GdsVLTNPVyOWmqxOZdIVI6lOXs1JkT0Jmq1o9SPjHg0EIrYbN0gZ', '2016-02-12 02:40:40', '2016-02-12 02:40:40'),
+(6, 'Project Manager', 'pm@kompas.com', '$2y$10$eWv0KaGtaKZkSfniIURMhuB4FnjyBCX4XotMisKx/kNVSMjy4UnxO', 'pm', 'active', 'pmcSvLW3pE6XM8RXjdRiJIBAtHUroa7LazDnbqhNaT6NH6x7fONmRibYwwI8', '2016-02-13 06:35:07', '2016-02-13 06:35:07'),
 (7, 'Tech Support', 'support@kompas.com', '$2y$10$gyGVrqvFhQTbDtey2dFz4.xwO7oCnRMBneJ/lYZZYlW32MOLeBjpq', 'support', 'active', 'J8owt7mOhieG0M9jjEYST0CytleYcCtrqFDk5XNas4b0josrXYkOlyHR8THA', '2016-02-11 03:39:22', '2016-02-11 03:39:22'),
 (9, 'Client', 'client@kompas.com', '$2y$10$xZIe3QXrPFHocOuqwKxRju4Q56qVVitekNzL6zrG7ui44k38dW40G', 'client', 'active', 'BKglRbqjBN3pQAOnwHcKMKLCgs6GjEEgPcwrOHcKNT1dBMHwaHEVJyJ0Ce5D', '2016-01-24 07:48:01', '2016-01-24 00:48:01'),
 (10, 'Admin', 'admin@kompas.com', '$2y$10$0nU7h6Seey9PUq5A98qUPu3o1cWQeAx7YOIFYuWuEsJ7t7SqtoPNS', 'administrator', 'active', 'yBz0Hb2lnrOMYJUpypvFlvZFMnjDlU4MpqzL4LUDLYl8uMsPwcWXE2UJ7aDm', '2016-01-24 06:54:59', '2016-01-23 23:54:59'),
 (12, 'PT Singoedan', 'ilma@gmail.com', '$2y$10$EFsRUUTC8IZZeq8Z986az.4mJaKCC9C1/ONUuej4CCSZoSG0eIwOG', 'client', 'active', 'wkW1ZD0Tu0hcTgYxAN2iEox8VMLDBD4WPfh3o3POwQBtSSwsoz7MCk3PE8L2', '2016-01-24 09:12:01', '2016-01-24 02:12:01'),
-(13, 'chandra', 'chandra@gmail.com', '$2y$10$wKZKWzbjqcJxONsGXgP00eraVuSWd3DNMhANyjc5bQDgMPDfMmpEi', 'support', 'active', 'p7AdJwTx5AdNanUv2F1mDbo9JV1iP5j4wozap2emLf3ANF3QzOucPbtNhDGc', '2016-02-12 02:40:06', '2016-02-12 02:40:06');
+(13, 'chandra', 'chandra@gmail.com', '$2y$10$wKZKWzbjqcJxONsGXgP00eraVuSWd3DNMhANyjc5bQDgMPDfMmpEi', 'support', 'active', 'rjpXNXgs6Sh9PlYe7wsceW0v7KYMETKHi7Gbgld7gb3dY0D5dfWlZPQwwGM9', '2016-02-13 06:28:15', '2016-02-13 06:28:15');
 
 --
 -- Indexes for dumped tables

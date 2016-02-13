@@ -66,8 +66,12 @@
 
                                                     <div class="profile-info-value">
                                                         <span>{!! \Erasoft\Libraries\CustomLib::gen_status_tiket($tiket->status) !!} </span> 
-                                                        @if($tiket->status != "cancelled")
-                                                            <a id="batal_tiket" data-token="{{ csrf_token() }}" data-id="{{ $tiket->id_tiket }}" style="cursor:pointer;"> Batalkan Tiket ?</a> (tiket yang dibatalkan tidak bisa di proses lagi !!)
+                                                        @if($tiket->status == "open")
+                                                            <a id="batal_tiket" data-token="{{ csrf_token() }}" data-id="{{ $tiket->id_tiket }}" style="cursor:pointer;"> Batalkan Tiket ?</a> 
+                                                        @endif
+
+                                                        @if($tiket->status == "process")
+                                                            <a id="finish_tiket" data-token="{{ csrf_token() }}" data-id="{{ $tiket->id_tiket }}" style="cursor:pointer;"> Finish Tiket ?</a> 
                                                         @endif
                                                     </div>
                                                 </div>
@@ -157,6 +161,21 @@
             if(_confirm){
                 var _id = $(this).data("id");
                 var url = '<?php echo url("tiket/update_batal");?>';
+                var token = $(this).data("token");
+                $.post(url, {_token: token,'id_tiket':_id}, function(data, textStatus, xhr) {
+                    if(data.status){
+                        alert("sukses update data");
+                        location.reload(true);
+                    }
+                });
+            }
+        });
+
+        $('#finish_tiket').on('click',function(){
+            var _confirm = confirm("Yakin Finish tiket ? ");
+            if(_confirm){
+                var _id = $(this).data("id");
+                var url = '<?php echo url("tiket/update_finish");?>';
                 var token = $(this).data("token");
                 $.post(url, {_token: token,'id_tiket':_id}, function(data, textStatus, xhr) {
                     if(data.status){

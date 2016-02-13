@@ -22,4 +22,8 @@ class Client extends Model
 	public function user(){
 		return $this->belongsTo("App\User","id_user");
 	}
+
+	public function sm(){
+		return $this->hasMany('App\ServerMaintenance','id_client');
+	}
 }

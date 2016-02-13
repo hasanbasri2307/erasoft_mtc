@@ -200,3 +200,28 @@ Breadcrumbs::register('view_rencana_kunjungan', function($breadcrumbs, $rk)
     $breadcrumbs->parent('rencana_kunjungan');
     $breadcrumbs->push($rk->id_rk, route('rencana.kunjungan.show', $rk->id_rk));
 });
+
+#server maintenance
+Breadcrumbs::register('server_maintenance', function($breadcrumbs)
+{
+    $breadcrumbs->parent('maintenance');
+    $breadcrumbs->push('Server Maintenance', route('server.maintenance'));
+});
+
+Breadcrumbs::register('add_server_maintenance', function($breadcrumbs)
+{
+    $breadcrumbs->parent('server_maintenance');
+    $breadcrumbs->push('Add', route('server.maintenance.create'));
+});
+
+Breadcrumbs::register('edit_server_maintenance', function($breadcrumbs, $sm)
+{
+    $breadcrumbs->parent('server_maintenance');
+    $breadcrumbs->push($rk->id_sm, route('server.maintenance.edit', $sm->id_sm));
+});
+
+Breadcrumbs::register('view_server_maintenance', function($breadcrumbs, $sm)
+{
+    $breadcrumbs->parent('server_maintenance');
+    $breadcrumbs->push($sm->id_sm, route('server.maintenance.show', $sm->id_sm));
+});

@@ -114,6 +114,17 @@ class TiketController extends Controller
         return response()->json(["status"=>false]);
     }
 
+    public function update_finish(Request $req){
+        if($req->ajax()){
+            $tiket = Tiket::find($req->id_tiket);
+            $tiket->status = "finish";
+            $tiket->save();
+            return response()->json(["status"=>true]);            
+        }
+
+        return response()->json(["status"=>false]);
+    }
+
     private function _gen_support($id_client){
         $support = ClientSupport::where("id_client","=",$id_client)->get();
         $res = [];

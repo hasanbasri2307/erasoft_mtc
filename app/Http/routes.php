@@ -87,6 +87,7 @@ Route::group(['middleware'=>'auth'],function(){
    Route::delete('tiket/delete/{id}',['uses'=>'TiketController@destroy','as'=>'tiket.delete']);
    Route::post('tiket/update_support',['uses'=>'TiketController@update_support','as'=>'tiket.update_support']);
    Route::post('tiket/update_batal',['uses'=>'TiketController@update_batal']);
+   Route::post('tiket/update_finish',['uses'=>'TiketController@update_finish']);
 
 
    //Rencana Kunjungan
