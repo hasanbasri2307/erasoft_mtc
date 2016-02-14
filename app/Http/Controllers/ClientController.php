@@ -157,6 +157,11 @@ class ClientController extends Controller
 	    Session::flash("success","Success Delete Client");
     }
 
+    public function client_report(){
+        parent::$_data['client'] = Client::all();
+        return view("report.client_report",parent::$_data);
+    }
+
     private function _gen_support(){
         $support = User::where("type","support")->get();
         $output= [];

@@ -1,6 +1,6 @@
 @extends("template.master")
-@section("title","Tiket List")
-@section("breadcrumbs",Breadcrumbs::render('tiket'))
+@section("title","Log Out Standing List")
+@section("breadcrumbs",Breadcrumbs::render('logoutstanding_report'))
 @section("sidebar_menu")
     @include("menu.pm_menu")
 @endsection
@@ -11,10 +11,10 @@
         <!-- /section:settings.box -->
         <div class="page-header">
             <h1>
-                Tiket
+                Log Out Standing
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    Tiket List
+                    Log Out Standing List
                 </small>
             </h1>
 
@@ -38,9 +38,7 @@
                         <div class="clearfix">
                             <div class="pull-right tableTools-container"></div>
                         </div>
-                        <div class="table-header">
-                            Tiket Registered
-                        </div>
+                        
 
                         <!-- div.table-responsive -->
 
@@ -49,50 +47,63 @@
                             <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
+
                                     <th>No</th>
-                                    <th>Masalah</th>
-                                    <th>Status</th>
-                                    <th>Dibuat Tanggal</th>
-                                    <th>Status Support</th>
-                                    <th></th>
+                                    <th>Aplikasi</th>
+                                    <th>Modul</th>
+                                    <th class="hidden-480">Kegiatan</th>
+                                    <th class="hidden-480">Tgl</th>
+                                    <th class="hidden-480">Yg Melapor</th>
+                                    <th class="hidden-480">Tgl Selesai</th>
+                                    <th class="hidden-480">Status</th>
+                                    <th class="hidden-480">Solusi Erasoft</th>
+                                   
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                <?php $no=1;?>
-                                @foreach($tiket as $data)
+                                <?php $no=0;?>
+                                @foreach($results as $data)
                                     <tr>
-                                        <td class="center">
-                                            {{ $no }}
-                                        </td>
 
+                                        <td>
+                                            {{ $no+=1 }}
+                                        </td>
+                                        <td>
+
+                                             @foreach($data->rk->rk_detail as $item)
+                                                 <span> - {{ $item->bugs->software->nama }}</span><br>
+                                             @endforeach
+                                        
+                                        </td>
+                                        <td>
+                                             @foreach($data->rk->rk_detail as $item)
+                                                <span> - {{   $item->bugs->software_detail->nama_modul }}</span><br >
+                                            @endforeach
+                                        </td>
                                         <td>
                                             {{ $data['masalah'] }}
                                         </td>
                                         <td>
-                                            {!! \Erasoft\Libraries\CustomLib::gen_status_tiket($data['status']) !!}
-                                        </td>
-                                        <td>
                                             {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['created_at']) !!}
                                         </td>
+
+                                        <td class="hidden-480">{{ $data->client->pic }}</td>
+                                       
                                         <td>
-                                            @if($data['id_support'] == 0)
-                                                Support Belum Diset
-                                            @else
-                                                Support Sudah Diset
-                                            @endif
+                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['tgl_selesai']) !!}
                                         </td>
                                         <td>
-                                            <div class="hidden-sm hidden-xs action-buttons">
-                                                <a class="blue" href="{{ url('tiket/show',$data['id_tiket']) }}">
-                                                    <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                                </a>
-
-                                            </div>
-
+                                            {!! \Erasoft\Libraries\CustomLib::gen_status_tiket($data['status']) !!}
+                                        </td>
+                                        
+                                        <td>
+                                             @foreach($data->rk->rk_detail as $item)
+                                                <span> - {{ $item->bugs->penyelesaian }}</span>
+                                                <br >
+                                            @endforeach
                                         </td>
                                     </tr>
-                                    <?php $no++;?>
                                 @endforeach
 
                                 </tbody>
@@ -255,22 +266,19 @@
 
     <script>
 
-        $(document).on('click', 'a#delete_bugs', function(e) {
+        $(document).on('click', 'a#delete_client', function(e) {
             e.preventDefault();
-            var conf = confirm("Delete This Data ? ");
-            if(conf){
-                var token = $(this).data('token');
-                var route = $(this).attr('href');
 
-                $.ajax({
-                    url:route,
-                    type: 'post',
-                    data: {_method: 'delete', _token :token}
-                }).done(function(){
-                    location.reload(true);
-                });
-            }
+            var token = $(this).data('token');
+            var route = $(this).attr('href');
 
+            $.ajax({
+                url:route,
+                type: 'post',
+                data: {_method: 'delete', _token :token}
+            }).done(function(){
+                location.reload(true);
+            });
 
         });
     </script>

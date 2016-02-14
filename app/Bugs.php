@@ -20,6 +20,6 @@ class Bugs extends Model
 	}
 
 	public function rk(){
-		return $this->hashMany('App\RencanaKunjunganDetail','id_bugs');
+		return $this->hasMany('App\RencanaKunjunganDetail','id_bugs');
 	}
 }

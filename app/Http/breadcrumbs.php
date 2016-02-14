@@ -225,3 +225,35 @@ Breadcrumbs::register('view_server_maintenance', function($breadcrumbs, $sm)
     $breadcrumbs->parent('server_maintenance');
     $breadcrumbs->push($sm->id_sm, route('server.maintenance.show', $sm->id_sm));
 });
+
+
+#report
+Breadcrumbs::register('laporan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Laporan', '#');
+});
+
+Breadcrumbs::register('client_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('laporan');
+    $breadcrumbs->push('Client Report', route('client.report'));
+});
+
+Breadcrumbs::register('support_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('laporan');
+    $breadcrumbs->push('Support Report', route('support.report'));
+});
+
+Breadcrumbs::register('logoutstanding_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('laporan');
+    $breadcrumbs->push('Log Out Standing Report', route('logout.standing.report'));
+});
+
+Breadcrumbs::register('rk_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('laporan');
+    $breadcrumbs->push('Rencana Kunjungan Report', route('rencana.kunjungan.report'));
+});

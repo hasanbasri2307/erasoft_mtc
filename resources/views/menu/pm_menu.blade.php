@@ -63,7 +63,7 @@
                         </ul>
                     </li>
 
-    <li class="">
+    <li @if(Route::is('client.report') || Route::is('support.report') || Route::is('logout.standing.report') || Route::is('rencana.kunjungan.report') || Route::is('server.maintenance.report') || Route::is('ls.post') || Route::is('rk.post')) class="active open" @endif>
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-tag"></i>
                             <span class="menu-text"> Laporan </span>
@@ -74,8 +74,8 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="">
-                                <a href="profile.html">
+                            <li @if(Route::is('client.report')) class="active" @endif>
+                                <a href="{{ url('report/client') }}">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Client
                                 </a>
@@ -83,8 +83,8 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="">
-                                <a href="inbox.html">
+                            <li @if(Route::is('support.report')) class="active" @endif>
+                                <a href="{{ url('report/support') }}">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Support
                                 </a>
@@ -92,8 +92,8 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="">
-                                <a href="pricing.html">
+                            <li @if(Route::is('logout.standing.report') || Route::is('ls.post')) class="active" @endif>
+                                <a href="{{ url('report/logout-standing') }}">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Log Out Standing
                                 </a>
@@ -101,8 +101,8 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="">
-                                <a href="invoice.html">
+                            <li @if(Route::is('rencana.kunjungan.report') || Route::is('rk.post')) class="active" @endif>
+                                <a href="{{ url('report/rencana-kunjungan') }}">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Rencana Kunjungan
                                 </a>

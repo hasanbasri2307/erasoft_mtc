@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.custom.css') }}" />
-
+		@yield("css_script")
 		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
@@ -22,7 +22,7 @@
 		
 		<!-- ace styles -->
 		<link rel="stylesheet" href="{{ asset('assets/css/ace.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
-		@yield("css_script")
+		
 
 		<!--[if lte IE 9]>
 			<link rel="stylesheet" href="../assets/css/ace-part2.css" class="ace-main-stylesheet" />

@@ -9,6 +9,7 @@ use Session;
 use Illuminate\Contracts\Auth\Guard;
 use App\ClientSupport;
 use Illuminate\Http\Request;
+use App\Client;
 
 
 class TiketController extends Controller
@@ -125,11 +126,46 @@ class TiketController extends Controller
         return response()->json(["status"=>false]);
     }
 
+    public function logoutstanding_report(){
+        parent::$_data['client']  = $this->_client();
+        return view("report.logoutstanding_report",parent::$_data);
+    }
+
+    public function ls_post(Request $req){
+        if($req->type == "periode_client"){
+            $range = explode('to', trim($req->range));
+            $client = $req->client;
+            $data = Tiket::whereHas('rk',function($q) use($req,$range) {
+                $q->where('tiket.id_client','=',$req->client);
+                $q->whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59']);
+            })->get();
+        }else{
+            $range = explode('to', trim($req->range));
+            $data = Tiket::whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59'])->has('rk')->get();
+        }
+        
+        parent::$_data['results'] = $data;
+
+        return view('report.result_ls',parent::$_data);
+
+    }
+
     private function _gen_support($id_client){
         $support = ClientSupport::where("id_client","=",$id_client)->get();
         $res = [];
         foreach($support as $c){
             $res[$c->id_support] = $c->support->nama;
+        }
+
+        return $res;
+    }
+
+    private function _client(){
+        $client = Client::all();
+        $res = [];
+        foreach ($client as $key => $value) {
+            # code...
+            $res[$value['id_client']] = $value['nama_pt'];
         }
 
         return $res;

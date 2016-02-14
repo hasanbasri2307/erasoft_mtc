@@ -201,4 +201,10 @@ class UserController extends Controller
 
     }
 
+    public function support_report(){
+        parent::$_data['user'] = User::where("type","=","support")->get();
+        return view("report.user_report",parent::$_data);
+
+    }
+
 }

@@ -15,4 +15,8 @@ class RencanaKunjunganDetail extends Model
    	public function bugs(){
    		return $this->belongsTo('App\Bugs','id_bugs');
    	}
+
+   	public function rk(){
+   		return $this->belongsTo('App\RencanaKunjungan','id_rk');
+   	}
 }

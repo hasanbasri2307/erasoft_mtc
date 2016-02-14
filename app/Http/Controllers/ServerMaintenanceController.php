@@ -197,4 +197,8 @@ class ServerMaintenanceController extends Controller
 
 		return $res;
 	}
+
+	public function sm_report(){
+		
+	}
 }

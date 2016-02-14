@@ -14,4 +14,8 @@ class RencanaKunjungan extends Model
     public function tiket(){
     	return $this->belongsTo('App\Tiket','id_tiket');
     }
+
+    public function rk_detail(){
+    	return $this->hasMany('App\RencanaKunjunganDetail','id_rk');
+    }
 }

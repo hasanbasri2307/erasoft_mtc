@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Tiket;
+use App\Client;
 use App\RencanaKunjungan;
 use App\RencanaKunjunganDetail;
 use Illuminate\Support\Facades\Auth;
@@ -115,5 +116,41 @@ class RencanaKunjunganController extends Controller
         }
 
         return response()->json(["status"=>false]);
+    }
+
+    public function rk_report(){
+        parent::$_data['client']  = $this->_client();
+        return view("report.rk_report",parent::$_data);
+    }
+
+    public function rk_post(Request $req){
+        if($req->type == "periode_client"){
+            $range = explode('to', trim($req->range));
+            $client = $req->client;
+            $data = RencanaKunjungan::whereHas('tiket',function($q) use($req,$range) {
+                $q->where('id_client','=',$req->client);
+                $q->whereBetween('created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59']);
+            })->get();
+        }else{
+            $range = explode('to', trim($req->range));
+            $data = Tiket::whereHas('rk',function($q) use($req,$range) {
+                $q->whereBetween('created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59']);
+            })->get();
+        }
+        
+        parent::$_data['results'] = $data;
+
+        return view('report.result_ls',parent::$_data);
+    }
+
+    private function _client(){
+        $client = Client::all();
+        $res = [];
+        foreach ($client as $key => $value) {
+            # code...
+            $res[$value['id_client']] = $value['nama_pt'];
+        }
+
+        return $res;
     }
 }

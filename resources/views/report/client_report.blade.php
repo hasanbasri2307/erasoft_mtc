@@ -1,6 +1,6 @@
 @extends("template.master")
-@section("title","Tiket List")
-@section("breadcrumbs",Breadcrumbs::render('tiket'))
+@section("title","Client List")
+@section("breadcrumbs",Breadcrumbs::render('client_report'))
 @section("sidebar_menu")
     @include("menu.pm_menu")
 @endsection
@@ -11,10 +11,10 @@
         <!-- /section:settings.box -->
         <div class="page-header">
             <h1>
-                Tiket
+                Client
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    Tiket List
+                    Client List
                 </small>
             </h1>
 
@@ -39,7 +39,7 @@
                             <div class="pull-right tableTools-container"></div>
                         </div>
                         <div class="table-header">
-                            Tiket Registered
+                            Client Registered
                         </div>
 
                         <!-- div.table-responsive -->
@@ -49,50 +49,43 @@
                             <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Masalah</th>
-                                    <th>Status</th>
-                                    <th>Dibuat Tanggal</th>
-                                    <th>Status Support</th>
+
+                                    <th>Name</th>
+                                    <th>PIC</th>
+                                    <th class="hidden-480">Phone</th>
+
                                     <th></th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                <?php $no=1;?>
-                                @foreach($tiket as $data)
+                                @foreach($client as $data)
                                     <tr>
-                                        <td class="center">
-                                            {{ $no }}
-                                        </td>
+
 
                                         <td>
-                                            {{ $data['masalah'] }}
+                                            {{ $data['nama_pt'] }}
                                         </td>
-                                        <td>
-                                            {!! \Erasoft\Libraries\CustomLib::gen_status_tiket($data['status']) !!}
-                                        </td>
-                                        <td>
-                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['created_at']) !!}
-                                        </td>
-                                        <td>
-                                            @if($data['id_support'] == 0)
-                                                Support Belum Diset
-                                            @else
-                                                Support Sudah Diset
-                                            @endif
-                                        </td>
+
+                                        <td class="hidden-480">{{ $data['pic'] }}</td>
+                                        <td>{{ $data['no_telepon'] }}</td>
                                         <td>
                                             <div class="hidden-sm hidden-xs action-buttons">
-                                                <a class="blue" href="{{ url('tiket/show',$data['id_tiket']) }}">
+                                                <a class="blue" href="{{ url('client/show',$data['id_client']) }}">
                                                     <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                 </a>
+
+                                                <a class="green" href="{{ url('client/edit',$data['id_client']) }}">
+                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                </a>
+                                                <a href="{{ route('client.delete',array($data['id_client'])) }}" data-method="delete" rel="nofollow"  data-token={{ csrf_token() }} class="red" id="delete_client" onclick="return confirm('Delete This Data?');"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>
+
+
 
                                             </div>
 
                                         </td>
                                     </tr>
-                                    <?php $no++;?>
                                 @endforeach
 
                                 </tbody>
@@ -255,22 +248,19 @@
 
     <script>
 
-        $(document).on('click', 'a#delete_bugs', function(e) {
+        $(document).on('click', 'a#delete_client', function(e) {
             e.preventDefault();
-            var conf = confirm("Delete This Data ? ");
-            if(conf){
-                var token = $(this).data('token');
-                var route = $(this).attr('href');
 
-                $.ajax({
-                    url:route,
-                    type: 'post',
-                    data: {_method: 'delete', _token :token}
-                }).done(function(){
-                    location.reload(true);
-                });
-            }
+            var token = $(this).data('token');
+            var route = $(this).attr('href');
 
+            $.ajax({
+                url:route,
+                type: 'post',
+                data: {_method: 'delete', _token :token}
+            }).done(function(){
+                location.reload(true);
+            });
 
         });
     </script>

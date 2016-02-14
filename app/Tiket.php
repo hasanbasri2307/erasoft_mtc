@@ -16,7 +16,7 @@ class Tiket extends Model
 	}
 
 	public function rk(){
-		return $this->hashOne('App\RencanaKunjungan','id_tiket');
+		return $this->hasOne('App\RencanaKunjungan','id_tiket');
 	}
 
 	public function support(){

@@ -110,6 +110,16 @@ Route::group(['middleware'=>'auth'],function(){
    Route::put('server-maintenance/update/{id}',['uses'=>'ServerMaintenanceController@update','as'=>'server.maintenance.update']);
    Route::delete('server-maintenance/delete/{id}',['uses'=>'ServerMaintenanceController@destroy','as'=>'server.maintenance.delete']);
    Route::post('server-maintenance/update_approve',['uses'=>'ServerMaintenanceController@update_approve']);
+
+   #Report
+   Route::get('report/client',['uses' => 'ClientController@client_report','as'=>'client.report']);
+   Route::get('report/support',['uses' => 'UserController@support_report','as'=>'support.report']);
+   Route::get('report/logout-standing',['uses' => 'TiketController@logoutstanding_report','as'=>'logout.standing.report']);
+   Route::get('report/rencana-kunjungan',['uses' => 'RencanaKunjunganController@rk_report','as'=>'rencana.kunjungan.report']);
+   Route::get('report/server-maintenance',['uses' => 'ServerMaintenanceController@sm_report','as'=>'server.maintenance.report']);
+   Route::post('report/ls/post',['uses'=>'TiketController@ls_post','as'=>'ls.post']);
+   Route::post('report/rk/post',['uses'=>'RencanaKunjunganController@rk_post','as'=>'rk.post']);
+
 });
 
 
