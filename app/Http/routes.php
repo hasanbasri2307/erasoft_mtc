@@ -119,6 +119,7 @@ Route::group(['middleware'=>'auth'],function(){
    Route::get('report/server-maintenance',['uses' => 'ServerMaintenanceController@sm_report','as'=>'server.maintenance.report']);
    Route::post('report/ls/post',['uses'=>'TiketController@ls_post','as'=>'ls.post']);
    Route::post('report/rk/post',['uses'=>'RencanaKunjunganController@rk_post','as'=>'rk.post']);
+   Route::post('report/sm/post',['uses'=>'ServerMaintenanceController@sm_post','as'=>'sm.post']);
 
 });
 

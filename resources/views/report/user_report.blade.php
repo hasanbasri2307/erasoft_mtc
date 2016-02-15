@@ -49,22 +49,23 @@
 											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
-
+														<th>No</th>
 														<th>Name</th>
 														<th>Email</th>
 														<th class="hidden-480">Type</th>
 
 														<th class="hidden-480">Status</th>
 
-														<th></th>
+														
 													</tr>
 												</thead>
 
 												<tbody>
+												<?php $no=0;?>
 												@foreach($user as $data)
 													<tr>
 
-
+														<td>{{ $no+=1 }}</td>
 														<td>
 															{{ $data['nama'] }}
 														</td>
@@ -80,22 +81,7 @@
 															@endif
 														</td>
 
-														<td>
-															<div class="hidden-sm hidden-xs action-buttons">
-																<a class="blue" href="{{ url('user/show',$data['id_user']) }}">
-																	<i class="ace-icon fa fa-search-plus bigger-130"></i>
-																</a>
-
-																<a class="green" href="{{ url('user/edit',$data['id_user']) }}">
-																	<i class="ace-icon fa fa-pencil bigger-130"></i>
-																</a>
-																<a href="{{ route('user.delete',array($data['id_user'])) }}" data-method="delete" rel="nofollow"  data-token={{ csrf_token() }} class="red" id="delete_user"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>
-
-																	
-															
-															</div>
-															
-														</td>
+														
 													</tr>
 												@endforeach
 													
@@ -257,22 +243,5 @@
 			})
 		</script>
 
-		<script>
-			
-			$(document).on('click', 'a#delete_user', function(e) {
-				e.preventDefault();
-
-				var token = $(this).data('token');
-				var route = $(this).attr('href');
-
-			    $.ajax({
-			        url:route,
-			        type: 'post',
-			        data: {_method: 'delete', _token :token}
-			    }).done(function(){
-			    	location.reload(true);
-			    });
-			   
-			});
-		</script>
+		
 @endsection

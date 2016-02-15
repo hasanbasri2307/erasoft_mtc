@@ -131,6 +131,26 @@ class ServerMaintenanceController extends Controller
         return response()->json(["status"=>false]);
     }
 
+    public function sm_report(){
+        parent::$_data['client']  = $this->_client();
+        parent::$_data['tahun']  = $this->_tahun();
+        return view("report.sm_report",parent::$_data);
+    }
+
+    public function sm_post(Request $req){
+        if($req->type == "periode_client"){
+            $where = ['tahun'=>$req->tahun,'id_client'=>$req->client];
+            $data = ServerMaintenance::where($where)->get();
+        }else{
+             
+            $data = ServerMaintenance::where("tahun","=",$req->tahun)->get();
+        }
+        
+        parent::$_data['results'] = $data;
+
+        return view('report.result_sm',parent::$_data);
+    }
+
 	private function _tahun (){
 		$tahun=[];
 		for($i=2016; $i<2020; $i++){
@@ -198,7 +218,5 @@ class ServerMaintenanceController extends Controller
 		return $res;
 	}
 
-	public function sm_report(){
-		
-	}
+	
 }

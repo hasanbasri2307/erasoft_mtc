@@ -4,6 +4,9 @@
 
 	<link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-timepicker.css') }}" />
+	 <style>
+        #mapss {width:500px; height:340px; border:5px solid #DEEBF2;}
+    </style>
 @endsection
 @section("breadcrumbs",Breadcrumbs::render('edit_rencana_kunjungan',$rk))
 @section("sidebar_menu")
@@ -41,6 +44,52 @@
 								{!! Form::model($rk,array('route' => ['rencana.kunjungan.update',$rk->id_rk],'class'=>'form-horizontal','method'=>'PUT')) !!}
 								
 									<!-- #section:elements.form -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Client </label>
+
+										<div class="col-sm-9">
+											
+											{!! Form::text('nm_client',$rk->tiket->client->nama_pt,array('class'=>'ol-xs-10 col-sm-5 ','disabled'=>'')); !!}
+											
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">  PIC </label>
+
+										<div class="col-sm-9">
+											
+											{!! Form::text('pic_client',$rk->tiket->client->pic,array('class'=>'ol-xs-10 col-sm-5 ','disabled'=>'')); !!}
+											
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Telepon </label>
+
+										<div class="col-sm-9">
+											
+											{!! Form::text('tlp_client',$rk->tiket->client->no_telepon,array('class'=>'ol-xs-10 col-sm-5 ','disabled'=>'')); !!}
+											
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Alamat </label>
+
+										<div class="col-sm-9">
+											
+											
+											{!! Form::textarea('alamat_client',$rk->tiket->client->alamat,array('class'=>'ol-xs-10 col-sm-5 ','disabled'=>'')); !!}
+											
+										</div>
+									</div>
+									<div class="form-group">
+					                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Maps </label>
+
+					                    <div class="col-sm-9">
+
+					                        <div id="mapss"></div>
+					                    </div>
+					                </div>
+									<hr />
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Tanggal Kunjungan </label>
 
@@ -152,6 +201,45 @@
 						</div><!-- /.row -->
 @endsection
 @section("js_script")
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+        var geocoder = new google.maps.Geocoder();
+        var _lat = "{{ $rk->tiket->client->lat }}";
+        var _long = "{{ $rk->tiket->client->long }}";
+        var pt = "{{ $rk->tiket->client->nama_pt }}";
+        function geocodePosition(pos) {
+            geocoder.geocode({
+                latLng: pos
+            }, function(responses) {
+                if (responses && responses.length > 0) {
+                    updateMarkerAddress(responses[0].formatted_address);
+                } else {
+                    updateMarkerAddress('Cannot determine address at this location.');
+                }
+            });
+        }
+
+
+        function initialize() {
+            var latLng = new google.maps.LatLng( _lat, _long);
+            var map = new google.maps.Map(document.getElementById('mapss'), {
+                zoom: 13,
+                center: latLng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            var marker = new google.maps.Marker({
+                position: latLng,
+                title: pt,
+                map: map,
+                draggable: true
+            });
+
+           
+        }
+
+        // Onload handler to fire off the app.
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 		<script src="{{ asset('assets/js/date-time/bootstrap-datepicker.js') }}"></script>
 		<script src="{{ asset('assets/js/date-time/bootstrap-timepicker.js') }}"></script>
 		<script src="{{ asset('assets/js/bootbox.js') }}"></script>
@@ -223,6 +311,7 @@
 ;			}
 
 		</script>
+		
 
 	
 		

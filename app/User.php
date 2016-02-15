@@ -59,4 +59,8 @@ class User extends Model implements AuthenticatableContract,
     public function tiket(){
         return $this->hasOne('App\Tiket','id_support');
     }
+
+    public function rk(){
+        return $this->hasMany('App\RencanaKunjungan','id_support');
+    }
 }

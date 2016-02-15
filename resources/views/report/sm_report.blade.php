@@ -1,11 +1,11 @@
 @extends("template.master")
-@section("title","Logout Standing Report")
+@section("title","Server Maintenance Report")
 @section("css_script")
     <link rel="stylesheet" href="{{ asset('assets/css/chosen.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/daterangepicker.css') }}" />
 @endsection
-@section("breadcrumbs",Breadcrumbs::render('logoutstanding_report'))
+@section("breadcrumbs",Breadcrumbs::render('sm_report'))
 @section("sidebar_menu")
     @include("menu.pm_menu")
 @endsection
@@ -13,7 +13,7 @@
     <div class="page-content">
         <div class="page-header">
             <h1>
-                Logout Standing Report
+                Server Maintenance Report
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
                     Report
@@ -49,7 +49,7 @@
 
                                                     
                                                 </div>
-                                                {!! Form::open(array('url' => 'report/ls/post','class'=>'form-horizontal','method'=>'POST')) !!}
+                                                {!! Form::open(array('url' => 'report/sm/post','class'=>'form-horizontal','method'=>'POST')) !!}
                                                 <div class="widget-body">
                                                     <div class="widget-main">
                                                         {!! Form::hidden('type','periode_client') !!}
@@ -64,7 +64,7 @@
 
 
                                                         <hr />
-                                                        <label for="id-date-range-picker-1">Range</label>
+                                                        <label for="id-date-range-picker-1">Tahun</label>
 
                                                         <div class="row">
                                                             <div class="col-xs-8 col-sm-11">
@@ -74,7 +74,7 @@
                                                                         <i class="fa fa-calendar bigger-110"></i>
                                                                     </span>
 
-                                                                    {!! Form::text('range','',['class'=>'orm-control','id'=>'id-date-range-picker-1']) !!}
+                                                                   {!! Form::select('tahun',$tahun,'',['class'=>'chosen-select form-control','id'=>'form-field-select-3','data-placeholder'=>'Pilih Tahun']) !!}
                                                                     
                                                                 </div>
 
@@ -99,11 +99,11 @@
                                     <div class="col-sm-4">
                                             <div class="widget-box">
                                                 <div class="widget-header">
-                                                    <h4 class="widget-title">Periode</h4>
+                                                    <h4 class="widget-title">Tahun</h4>
 
                                                     
                                                 </div>
-                                                {!! Form::open(array('url' => 'report/ls/post','class'=>'form-horizontal','method'=>'POST')) !!}
+                                                {!! Form::open(array('url' => 'report/sm/post','class'=>'form-horizontal','method'=>'POST')) !!}
                                                 <div class="widget-body">
                                                     <div class="widget-main">
                                                         {!! Form::hidden('type','periode') !!}
@@ -117,7 +117,7 @@
                                                                         <i class="fa fa-calendar bigger-110"></i>
                                                                     </span>
 
-                                                                   {!! Form::text('range','',['class'=>'orm-control','id'=>'id-date-range-picker-1']) !!}
+                                                                   {!! Form::select('tahun',$tahun,'',['class'=>'chosen-select form-control','id'=>'form-field-select-3','data-placeholder'=>'Pilih Tahun']) !!}
                                                                 </div>
 
                                                                 <!-- /section:plugins/date-time.daterangepicker -->
@@ -151,19 +151,7 @@
     <script src="{{ asset('assets/js/date-time/daterangepicker.js') }}"></script>
     <script>
     $(document).ready(function() {
-        $('input[name=range]').daterangepicker({
-            'applyClass' : 'btn-sm btn-success',
-            'cancelClass' : 'btn-sm btn-default',
-            'format' : 'YYYY-MM-DD',
-            'separator' : ' to ',
-            locale: {
-                applyLabel: 'Apply',
-                cancelLabel: 'Cancel',
-            }
-        })
-        .prev().on(ace.click_event, function(){
-            $(this).next().focus();
-        });
+       
 
         if(!ace.vars['touch']) {
             $('.chosen-select').chosen({allow_single_deselect:true}); 
@@ -198,6 +186,6 @@
         }
     });
     
-        
+       
     </script>
 @endsection

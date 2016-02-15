@@ -71,35 +71,35 @@
                                         </td>
                                         <td>
 
-                                             @foreach($data->rk->rk_detail as $item)
-                                                 <span> - {{ $item->bugs->software->nama }}</span><br>
+                                             @foreach($data->rk_detail as $item)
+                                                 <span> {{ $item->bugs->software->nama }}</span><br>
                                              @endforeach
                                         
                                         </td>
                                         <td>
-                                             @foreach($data->rk->rk_detail as $item)
-                                                <span> - {{   $item->bugs->software_detail->nama_modul }}</span><br >
+                                             @foreach($data->rk_detail as $item)
+                                                <span> {{   $item->bugs->software_detail->nama_modul }}</span><br >
                                             @endforeach
                                         </td>
                                         <td>
-                                            {{ $data['masalah'] }}
+                                            {{ $data->tiket->masalah }}
                                         </td>
                                         <td>
-                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['created_at']) !!}
+                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data->tiket->created_at) !!}
                                         </td>
 
-                                        <td class="hidden-480">{{ $data->client->pic }}</td>
+                                        <td class="hidden-480">{{ $data->tiket->client->pic }}</td>
                                        
                                         <td>
-                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data['tgl_selesai']) !!}
+                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data->tiket->tgl_selesai) !!}
                                         </td>
                                         <td>
-                                            {!! \Erasoft\Libraries\CustomLib::gen_status_tiket($data['status']) !!}
+                                            {!! \Erasoft\Libraries\CustomLib::gen_status_tiket($data->tiket->status) !!}
                                         </td>
                                         
                                         <td>
-                                             @foreach($data->rk->rk_detail as $item)
-                                                <span> - {{ $item->bugs->penyelesaian }}</span>
+                                             @foreach($data->rk_detail as $item)
+                                                <span> {{ $item->bugs->penyelesaian }}</span>
                                                 <br >
                                             @endforeach
                                         </td>
@@ -264,22 +264,5 @@
         })
     </script>
 
-    <script>
-
-        $(document).on('click', 'a#delete_client', function(e) {
-            e.preventDefault();
-
-            var token = $(this).data('token');
-            var route = $(this).attr('href');
-
-            $.ajax({
-                url:route,
-                type: 'post',
-                data: {_method: 'delete', _token :token}
-            }).done(function(){
-                location.reload(true);
-            });
-
-        });
-    </script>
+    
 @endsection

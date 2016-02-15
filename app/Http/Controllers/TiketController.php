@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Tiket;
+use App\RencanaKunjungan;
 use App\Http\Requests\TiketRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -135,15 +136,17 @@ class TiketController extends Controller
         if($req->type == "periode_client"){
             $range = explode('to', trim($req->range));
             $client = $req->client;
-            $data = Tiket::whereHas('rk',function($q) use($req,$range) {
+            $data = RencanaKunjungan::whereHas('tiket',function($q) use($req,$range) {
                 $q->where('tiket.id_client','=',$req->client);
-                $q->whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59']);
+                $q->whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. ' 23:59:59']);
             })->get();
         }else{
             $range = explode('to', trim($req->range));
-            $data = Tiket::whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59'])->has('rk')->get();
+            $data = RencanaKunjungan::whereHas('tiket',function($q) use($req,$range) {
+                $q->whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. ' 23:59:59']);
+            })->get();
         }
-        
+    
         parent::$_data['results'] = $data;
 
         return view('report.result_ls',parent::$_data);

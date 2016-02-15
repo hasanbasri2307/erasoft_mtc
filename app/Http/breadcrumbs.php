@@ -257,3 +257,9 @@ Breadcrumbs::register('rk_report', function($breadcrumbs)
     $breadcrumbs->parent('laporan');
     $breadcrumbs->push('Rencana Kunjungan Report', route('rencana.kunjungan.report'));
 });
+
+Breadcrumbs::register('sm_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('laporan');
+    $breadcrumbs->push('Server Maintenance Report', route('server.maintenance.report'));
+});
