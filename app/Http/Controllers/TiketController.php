@@ -131,7 +131,12 @@ class TiketController extends Controller
         return view("report.logoutstanding_report",parent::$_data);
     }
 
-    public function ls_post(Request $req){
+    public function maintenanceprogress_report(){
+        parent::$_data['client']  = $this->_client();
+        return view("report.logoutstanding_report",parent::$_data);
+    }
+
+    public function mp_post(Request $req){
         if($req->type == "periode_client"){
             $range = explode('to', trim($req->range));
             $client = $req->client;
@@ -142,6 +147,26 @@ class TiketController extends Controller
         }else{
             $range = explode('to', trim($req->range));
             $data = Tiket::whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59'])->has('rk')->get();
+        }
+        
+        parent::$_data['results'] = $data;
+
+        return view('report.result_ls',parent::$_data);
+
+    }
+
+    public function ls_post(Request $req){
+        if($req->type == "periode_client"){
+            $range = explode('to', trim($req->range));
+            $client = $req->client;
+            $data = Tiket::whereHas('rk',function($q) use($req,$range) {
+                $q->where('tiket.id_client','=',$req->client);
+        
+                $q->whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59']);
+            })->get();
+        }else{
+            $range = explode('to', trim($req->range));
+            $data = Tiket::whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59'])->where('tiket.status','=','process')->has('rk')->get();
         }
         
         parent::$_data['results'] = $data;

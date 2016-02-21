@@ -252,6 +252,12 @@ Breadcrumbs::register('logoutstanding_report', function($breadcrumbs)
     $breadcrumbs->push('Log Out Standing Report', route('logout.standing.report'));
 });
 
+Breadcrumbs::register('maintenanceprogress_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('laporan');
+    $breadcrumbs->push('Maintenance Progress Report', route('maintenance.progress.report'));
+});
+
 Breadcrumbs::register('rk_report', function($breadcrumbs)
 {
     $breadcrumbs->parent('laporan');

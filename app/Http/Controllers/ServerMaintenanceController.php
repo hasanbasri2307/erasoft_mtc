@@ -42,7 +42,7 @@ class ServerMaintenanceController extends Controller
 
 	public function store(ServerMaintenanceRequest $req){
 
-		$check = ServerMaintenance::where(['periode'=>$req->periode,'tahun'=>$req->tahun])->count();
+		$check = ServerMaintenance::where(['periode'=>$req->periode,'tahun'=>$req->tahun,'id_client'=>$req->id_client])->count();
 		
 		if($check > 0 ){
 			Session::flash("error","Data Bulan: <b>".\Erasoft\Libraries\CustomLib::gen_bulan($req->periode)."</b> Tahun: <b>".$req->tahun."</b> Sudah Ada");

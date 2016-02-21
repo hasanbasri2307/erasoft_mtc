@@ -88,6 +88,11 @@ class UserController extends Controller
     {
         //
         parent::$_data['user'] = User::find($id);
+        if(parent::$_data['user']->type == "client"){
+            parent::$_data['type'] = ["pm"=>"Project Manager","support"=>"Support","client"=>"Client"];
+        }else{
+            parent::$_data['type'] = \Erasoft\Libraries\CustomLib::gen_type();
+        }
         return view('master.user.user_edit',parent::$_data);
     }
 
@@ -101,9 +106,19 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         //
+        if($request->email != $request->em){
+            $check = User::where('email','=',$request->email)->count();
+            if($check > 0 ){
+                Session::flash('error','Email telah terdaftar, gunakan email lain');
+                return redirect()->back()->withInput();
+            }
+        }
+
         try {
             $user = User::find($id);
             $user->nama = $request->name;
+            $user->email = $request->email;
+            $user->type = $request->type;
             $user->save();
 
             Session::flash("success","Success Update User");

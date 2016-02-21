@@ -115,10 +115,12 @@ Route::group(['middleware'=>'auth'],function(){
    Route::get('report/client',['uses' => 'ClientController@client_report','as'=>'client.report']);
    Route::get('report/support',['uses' => 'UserController@support_report','as'=>'support.report']);
    Route::get('report/logout-standing',['uses' => 'TiketController@logoutstanding_report','as'=>'logout.standing.report']);
+   Route::get('report/mainteance-progress-report',['uses' => 'TiketController@maintenanceprogress_report','as'=>'maintenance.progress.report']);
    Route::get('report/rencana-kunjungan',['uses' => 'RencanaKunjunganController@rk_report','as'=>'rencana.kunjungan.report']);
    Route::get('report/server-maintenance',['uses' => 'ServerMaintenanceController@sm_report','as'=>'server.maintenance.report']);
    Route::post('report/ls/post',['uses'=>'TiketController@ls_post','as'=>'ls.post']);
    Route::post('report/rk/post',['uses'=>'RencanaKunjunganController@rk_post','as'=>'rk.post']);
+   Route::post('report/mp/post',['uses'=>'TiketController@mp_post','as'=>'mp.post']);
 
 });
 

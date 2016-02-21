@@ -18,6 +18,13 @@
 
 						<div class="row">
 							<div class="col-xs-12">
+							@if(Session::has('error'))
+											    {!!  CustomLib::generate_notification(Session::get('error'),"error") !!}
+										@endif
+
+										@if(Session::has('success'))
+											    {!!  CustomLib::generate_notification(Session::get('success'),"success") !!}
+										@endif
 							@if(!$errors->isEmpty())
 												<?php
 													$data ="";
@@ -35,7 +42,8 @@
 								<!-- PAGE CONTENT BEGINS -->
 
 								{!! Form::model($user, array('route' => array('user.update', $user->id_user),'class'=>'form-horizontal','method' => 'PUT')) !!}
-								
+									
+									{!! Form::hidden('em',$user->email) !!}
 									<!-- #section:elements.form -->
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Name </label>
@@ -49,7 +57,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Email </label>
 
 										<div class="col-sm-9">
-											{!! Form::email('email', $user->email,array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Email','disabled'=>'disabled')); !!}
+											{!! Form::email('email', $user->email,array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Email')); !!}
 										</div>
 									</div>
 
@@ -57,7 +65,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Type </label>
 
 										<div class="col-sm-9">
-											{!! Form::select('type', CustomLib::gen_type(), $user->type, ['placeholder' => '--- Type Users ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5','disabled'=>'disabled']); !!}
+											{!! Form::select('type', $type, $user->type, ['placeholder' => '--- Type Users ---','id'=>'form-field-select-1','class'=>'col-xs-10 col-sm-5']); !!}
 
 										</div>
 									</div>

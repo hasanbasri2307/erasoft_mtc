@@ -101,6 +101,15 @@
                                 <b class="arrow"></b>
                             </li>
 
+                            <li @if(Route::is('maintenance.progress.report') || Route::is('lmp.post')) class="active" @endif>
+                                <a href="{{ url('report/maintenance-progress-report') }}">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Maintenance Progress Report
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
                             <li @if(Route::is('rencana.kunjungan.report') || Route::is('rk.post')) class="active" @endif>
                                 <a href="{{ url('report/rencana-kunjungan') }}">
                                     <i class="menu-icon fa fa-caret-right"></i>

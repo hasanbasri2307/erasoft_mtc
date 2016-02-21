@@ -46,7 +46,11 @@
 											
 								<!-- PAGE CONTENT BEGINS -->
 								{!! Form::model($sm,array('route' => ['server.maintenance.update',$sm->id_sm],'class'=>'form-horizontal','method'=>'PUT')) !!}
-								
+
+									{!! Form::hidden('b',$sm->periode) !!}
+									{!! Form::hidden('t',$sm->tahun) !!}
+									{!! Form::hidden('c',$sm->id_client) !!}
+									
 									<!-- #section:elements.form -->
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Tanggal Check </label>
