@@ -133,7 +133,7 @@ class TiketController extends Controller
 
     public function maintenanceprogress_report(){
         parent::$_data['client']  = $this->_client();
-        return view("report.logoutstanding_report",parent::$_data);
+        return view("report.maintenanceprogress_report",parent::$_data);
     }
 
     public function mp_post(Request $req){
@@ -142,16 +142,19 @@ class TiketController extends Controller
             $client = $req->client;
             $data = Tiket::whereHas('rk',function($q) use($req,$range) {
                 $q->where('tiket.id_client','=',$req->client);
-                $q->whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59']);
+                $q->where('tiket.status','=',"finish");
+                $q->whereBetween('rencana_kunjungan.created_at',[$range[0].' 00:00:01',$range[1]. ' 23:59:59']);
             })->get();
         }else{
             $range = explode('to', trim($req->range));
-            $data = Tiket::whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59'])->has('rk')->get();
+            $data = Tiket::where('tiket.status','=','finish')->whereHas('rk',function($q) use($req,$range) {
+                $q->whereBetween('rencana_kunjungan.created_at',[$range[0].' 00:00:01',$range[1]. ' 23:59:59']);
+            })->get();
         }
         
         parent::$_data['results'] = $data;
 
-        return view('report.result_ls',parent::$_data);
+        return view('report.result_mp',parent::$_data);
 
     }
 
@@ -161,12 +164,14 @@ class TiketController extends Controller
             $client = $req->client;
             $data = Tiket::whereHas('rk',function($q) use($req,$range) {
                 $q->where('tiket.id_client','=',$req->client);
-        
-                $q->whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59']);
+                $q->where('tiket.status','=',"process");
+                $q->whereBetween('rencana_kunjungan.created_at',[$range[0].' 00:00:01',$range[1]. ' 23:59:59']);
             })->get();
         }else{
             $range = explode('to', trim($req->range));
-            $data = Tiket::whereBetween('tiket.created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59'])->where('tiket.status','=','process')->has('rk')->get();
+            $data = Tiket::where('tiket.status','=','process')->whereHas('rk',function($q) use($req,$range) {
+                $q->whereBetween('rencana_kunjungan.created_at',[$range[0].' 00:00:01',$range[1]. ' 23:59:59']);
+            })->get();
         }
         
         parent::$_data['results'] = $data;

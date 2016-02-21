@@ -18,4 +18,8 @@ class RencanaKunjungan extends Model
     public function rk_detail(){
     	return $this->hasMany('App\RencanaKunjunganDetail','id_rk');
     }
+
+    public function support(){
+        return $this->belongsTo('App\User','id_support');
+    }
 }

@@ -1,6 +1,6 @@
 @extends("template.master")
-@section("title","Client List")
-@section("breadcrumbs",Breadcrumbs::render('client_report'))
+@section("title","Server Maintenance List")
+@section("breadcrumbs",Breadcrumbs::render('sm_report'))
 @section("sidebar_menu")
     @include("menu.pm_menu")
 @endsection
@@ -11,10 +11,10 @@
         <!-- /section:settings.box -->
         <div class="page-header">
             <h1>
-                Client
+                Server Maintenance
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    Client List
+                    Server Maintenance List
                 </small>
             </h1>
 
@@ -38,9 +38,7 @@
                         <div class="clearfix">
                             <div class="pull-right tableTools-container"></div>
                         </div>
-                        <div class="table-header">
-                            Client Registered
-                        </div>
+                        
 
                         <!-- div.table-responsive -->
 
@@ -49,28 +47,42 @@
                             <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Name</th>
-                                    <th>PIC</th>
-                                    <th class="hidden-480">Phone</th>
-                                    <th>Alamat</th>
 
+                                    <th>No</th>
+                                    <th>Periode</th>
+                                    <th>Tahun</th>
+                                    <th class="hidden-480">Support</th>
+                                    <th class="hidden-480">Client</th>
+                                    <th class="hidden-480">Status</th>
+
+                                   
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 <?php $no=0;?>
-                                @foreach($client as $data)
+                                @foreach($results as $data)
                                     <tr>
 
-                                        <td>{{ $no+=1 }}</td>
                                         <td>
-                                            {{ $data['nama_pt'] }}
+                                            {{ $no+=1 }}
                                         </td>
-
-                                        <td class="hidden-480">{{ $data['pic'] }}</td>
-                                        <td>{{ $data['no_telepon'] }}</td>
-                                        <td>{{ $data['alamat'] }}</td>
+                                        <td>
+                                            {!! \Erasoft\Libraries\CustomLib::gen_bulan($data->periode) !!}                                        
+                                        </td>
+                                        <td>
+                                             {{ $data->tahun }}
+                                        </td>
+                                        <td>
+                                            {{ $data->support->nama }}
+                                        </td>
+                                        <td>
+                                            {{ $data->client->nama_pt }}
+                                        </td>
+                                        <td>
+                                            {!!  \Erasoft\Libraries\CustomLib::gen_status_t($data->status) !!}
+                                        </td>
+                                    
                                     </tr>
                                 @endforeach
 
@@ -125,7 +137,7 @@
 
             //initiate TableTools extension
             var tableTools_obj = new $.fn.dataTable.TableTools( oTable1, {
-                "sSwfPath": "../assets/js/dataTables/extensions/TableTools/swf/copy_csv_xls_pdf.swf", //in Ace demo ../assets will be replaced by correct assets path
+                    "sSwfPath": "<?php echo asset('assets/js/dataTables/extensions/TableTools/swf/copy_csv_xls_pdf.swf');?>", //in Ace demo ../assets will be replaced by correct assets path
 
                 "sRowSelector": "td:not(:last-child)",
                 "sRowSelect": "multi",
@@ -175,7 +187,7 @@
                         "sButtonClass": "btn btn-white btn-primary  btn-bold",
                         "sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
 
-                        "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
+                        "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Laporan Server Maintenance</small></a></div></div>",
 
                         "sInfo": "<h3 class='no-margin-top'>Print view</h3>\
 									  <p>Please use your browser's print function to\
@@ -232,5 +244,4 @@
         })
     </script>
 
-    
 @endsection

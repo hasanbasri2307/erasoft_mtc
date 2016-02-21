@@ -1,6 +1,6 @@
 @extends("template.master")
-@section("title","Log Out Standing List")
-@section("breadcrumbs",Breadcrumbs::render('logoutstanding_report'))
+@section("title","Maintenance Progress List")
+@section("breadcrumbs",Breadcrumbs::render('maintenanceprogress_report'))
 @section("sidebar_menu")
     @include("menu.pm_menu")
 @endsection
@@ -11,10 +11,10 @@
         <!-- /section:settings.box -->
         <div class="page-header">
             <h1>
-                Log Out Standing
+                Maintenance Progress Report
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    Log Out Standing List
+                    Maintenance Progress List
                 </small>
             </h1>
 
@@ -156,7 +156,7 @@
                 }
             
                 //initiate TableTools extension
-               var tableTools_obj = new $.fn.dataTable.TableTools( oTable1, {
+                var tableTools_obj = new $.fn.dataTable.TableTools( oTable1, {
                     "sSwfPath": "<?php echo asset('assets/js/dataTables/extensions/TableTools/swf/copy_csv_xls_pdf.swf');?>", //in Ace demo ../assets will be replaced by correct assets path
                     
                     "sRowSelector": "td:not(:last-child)",
@@ -207,7 +207,7 @@
                             "sButtonClass": "btn btn-white btn-primary  btn-bold",
                             "sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
                             
-                            "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Laporan Logout Standing</small></a></div></div>",
+                            "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Laporan Maintenance Progress</small></a></div></div>",
                             
                             "sInfo": "<h3 class='no-margin-top'>Print view</h3>\
                                       <p>Please use your browser's print function to\

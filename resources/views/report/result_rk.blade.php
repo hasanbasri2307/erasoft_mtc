@@ -1,6 +1,6 @@
 @extends("template.master")
-@section("title","Client List")
-@section("breadcrumbs",Breadcrumbs::render('client_report'))
+@section("title","Rencana Kunjungan List")
+@section("breadcrumbs",Breadcrumbs::render('rk_report'))
 @section("sidebar_menu")
     @include("menu.pm_menu")
 @endsection
@@ -11,10 +11,10 @@
         <!-- /section:settings.box -->
         <div class="page-header">
             <h1>
-                Client
+                Rencana Kunjungan
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    Client List
+                    Rencana Kunjungan List
                 </small>
             </h1>
 
@@ -38,9 +38,7 @@
                         <div class="clearfix">
                             <div class="pull-right tableTools-container"></div>
                         </div>
-                        <div class="table-header">
-                            Client Registered
-                        </div>
+                        
 
                         <!-- div.table-responsive -->
 
@@ -49,28 +47,53 @@
                             <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Name</th>
-                                    <th>PIC</th>
-                                    <th class="hidden-480">Phone</th>
-                                    <th>Alamat</th>
 
+                                    <th>No</th>
+                                    <th>Tgl Kunjungan</th>
+                                    <th>Jam Berangkat</th>
+                                    <th class="hidden-480">Jam Pulang</th>
+                                    <th class="hidden-480">Aktifitas</th>
+                                    <th class="hidden-480">Tipe</th>
+                                    <th class="hidden-480">Support</th>
+                                    <th class="hidden-480">Client</th>
+                                    <th class="hidden-480">Tiket ID</th>
+                                   
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 <?php $no=0;?>
-                                @foreach($client as $data)
+                                @foreach($results as $data)
                                     <tr>
 
-                                        <td>{{ $no+=1 }}</td>
                                         <td>
-                                            {{ $data['nama_pt'] }}
+                                            {{ $no+=1 }}
                                         </td>
-
-                                        <td class="hidden-480">{{ $data['pic'] }}</td>
-                                        <td>{{ $data['no_telepon'] }}</td>
-                                        <td>{{ $data['alamat'] }}</td>
+                                        <td>
+                                            {!! \Erasoft\Libraries\CustomLib::gen_tanggal($data->tgl_kunjungan) !!}                                        
+                                        </td>
+                                        <td>
+                                             {{ $data->jam_berangkat }}
+                                        </td>
+                                        <td>
+                                            {{ $data->jam_pulang }}
+                                        </td>
+                                        <td>
+                                            {{ $data->aktifitas }}
+                                        </td>
+                                        <td>
+                                            {{ $data->tipe }}
+                                        </td>
+                                        <td class="hidden-480">{{ $data->support->nama }}</td>
+                                       
+                                        <td>
+                                            {{ $data->tiket->client->nama_pt }}
+                                        </td>
+                                       
+                                        
+                                        <td>
+                                             #{{ $data->tiket->id_tiket }}
+                                        </td>
                                     </tr>
                                 @endforeach
 
@@ -124,8 +147,8 @@
             }
 
             //initiate TableTools extension
-            var tableTools_obj = new $.fn.dataTable.TableTools( oTable1, {
-                "sSwfPath": "../assets/js/dataTables/extensions/TableTools/swf/copy_csv_xls_pdf.swf", //in Ace demo ../assets will be replaced by correct assets path
+           var tableTools_obj = new $.fn.dataTable.TableTools( oTable1, {
+                    "sSwfPath": "<?php echo asset('assets/js/dataTables/extensions/TableTools/swf/copy_csv_xls_pdf.swf');?>", //in Ace demo ../assets will be replaced by correct assets path
 
                 "sRowSelector": "td:not(:last-child)",
                 "sRowSelect": "multi",
@@ -175,7 +198,7 @@
                         "sButtonClass": "btn btn-white btn-primary  btn-bold",
                         "sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
 
-                        "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
+                        "sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Laporan Rencana Kunjungan</small></a></div></div>",
 
                         "sInfo": "<h3 class='no-margin-top'>Print view</h3>\
 									  <p>Please use your browser's print function to\
@@ -232,5 +255,4 @@
         })
     </script>
 
-    
 @endsection

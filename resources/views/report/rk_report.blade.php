@@ -198,18 +198,6 @@
         }
     });
     
-        function get_software_detail(gp){
-            var value = $(gp).val();
-            $.ajax({
-                method:"GET",
-                url: "{{ action('BugsController@get_software_detail') }}",
-                data: {id_software:value},
-                success: function(data){
-                    if(data.status == true){
-                        $('#sd').html(data.data).slideDown('slow');
-                    }
-                }
-            });
-        }
+       
     </script>
 @endsection

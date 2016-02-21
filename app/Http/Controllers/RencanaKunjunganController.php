@@ -35,7 +35,8 @@ class RencanaKunjunganController extends Controller
     }
 
     public function create($id_tiket){
-    	parent::$_data['id_tiket'] = $id_tiket;
+        parent::$_data['tiket'] = Tiket::where("id_tiket",'=',$id_tiket)->first();
+        parent::$_data['id_tiket'] = $id_tiket;
     	return view("rencana_kunjungan.rencana_kunjungan_add",parent::$_data);
     }
 
@@ -68,6 +69,7 @@ class RencanaKunjunganController extends Controller
     }
 
     public function edit($id){
+
         parent::$_data['rk'] = RencanaKunjungan::find($id);
         parent::$_data['rk_detail'] = RencanaKunjunganDetail::where("id_rk","=",$id)->get();
         return view("rencana_kunjungan.rencana_kunjungan_edit",parent::$_data);
@@ -129,18 +131,18 @@ class RencanaKunjunganController extends Controller
             $client = $req->client;
             $data = RencanaKunjungan::whereHas('tiket',function($q) use($req,$range) {
                 $q->where('id_client','=',$req->client);
-                $q->whereBetween('created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59']);
+                $q->whereBetween('rencana_kunjungan.tgl_kunjungan',[$range[0].' 00:00:01',$range[1]. ' 23:59:59']);
             })->get();
         }else{
             $range = explode('to', trim($req->range));
-            $data = Tiket::whereHas('rk',function($q) use($req,$range) {
-                $q->whereBetween('created_at',[$range[0].' 00:00:01',$range[1]. '23:59:59']);
+            $data = RencanaKunjungan::whereHas('tiket',function($q) use($req,$range) {
+                $q->whereBetween('rencana_kunjungan.tgl_kunjungan',[$range[0].' 00:00:01',$range[1]. ' 23:59:59']);
             })->get();
         }
         
         parent::$_data['results'] = $data;
 
-        return view('report.result_ls',parent::$_data);
+        return view('report.result_rk',parent::$_data);
     }
 
     private function _client(){

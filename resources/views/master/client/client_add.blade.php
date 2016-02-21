@@ -62,7 +62,7 @@
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Phone </label>
 
                     <div class="col-sm-9">
-                        {!! Form::number('phone', Request::old('phone'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Phone Number')); !!}
+                        {!! Form::text('phone', Request::old('phone'),array('class'=>'col-xs-10 col-sm-5','id'=>'form-field-1','placeholder'=>'Phone Number')); !!}
                     </div>
                 </div>
                 <div class="form-group">

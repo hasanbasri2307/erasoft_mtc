@@ -63,7 +63,7 @@
                         </ul>
                     </li>
 
-    <li @if(Route::is('client.report') || Route::is('support.report') || Route::is('logout.standing.report') || Route::is('rencana.kunjungan.report') || Route::is('server.maintenance.report') || Route::is('ls.post') || Route::is('rk.post')) class="active open" @endif>
+    <li @if(Route::is('client.report') || Route::is('support.report') || Route::is('logout.standing.report') || Route::is('rencana.kunjungan.report') || Route::is('server.maintenance.report') || Route::is('ls.post') || Route::is('rk.post') || Route::is('sm.post') || Route::is('maintenance.progress.report') || Route::is('mp.post')) class="active open" @endif>
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-tag"></i>
                             <span class="menu-text"> Laporan </span>
@@ -101,8 +101,8 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li @if(Route::is('maintenance.progress.report') || Route::is('lmp.post')) class="active" @endif>
-                                <a href="{{ url('report/maintenance-progress-report') }}">
+                            <li @if(Route::is('maintenance.progress.report') || Route::is('mp.post')) class="active" @endif>
+                                <a href="{{ url('report/maintenance-progress') }}">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Maintenance Progress Report
                                 </a>
@@ -119,8 +119,8 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="">
-                                <a href="timeline.html">
+                            <li @if(Route::is('server.maintenance.report') || Route::is('sm.post')) class="active" @endif>
+                                <a href="{{ url('report/server-maintenance') }}">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Server Maintenance
                                 </a>

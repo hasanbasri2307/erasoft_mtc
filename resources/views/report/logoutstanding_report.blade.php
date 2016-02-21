@@ -146,6 +146,7 @@
     </div><!-- /.row -->
 @endsection
 @section("js_script")
+
     <script src="{{ asset('assets/js/chosen.jquery.js') }}"></script>
     <script src="{{ asset('assets/js/date-time/moment.js') }}"></script>
     <script src="{{ asset('assets/js/date-time/daterangepicker.js') }}"></script>
@@ -198,18 +199,7 @@
         }
     });
     
-        function get_software_detail(gp){
-            var value = $(gp).val();
-            $.ajax({
-                method:"GET",
-                url: "{{ action('BugsController@get_software_detail') }}",
-                data: {id_software:value},
-                success: function(data){
-                    if(data.status == true){
-                        $('#sd').html(data.data).slideDown('slow');
-                    }
-                }
-            });
-        }
+        
     </script>
+    
 @endsection

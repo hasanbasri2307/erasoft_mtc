@@ -1,5 +1,10 @@
 @extends("template.master")
 @section("title","Rencana Kunjungan Detail")
+@section("css_script")
+     <style>
+        #mapss {width:500px; height:340px; border:5px solid #DEEBF2;}
+    </style>
+@endsection
 @section("breadcrumbs",Breadcrumbs::render('view_rencana_kunjungan',$rk))
 @section("sidebar_menu")
     @include("menu.support_menu")
@@ -44,6 +49,22 @@
 
                                                     <div class="profile-info-value">
                                                         <span>{{ $rk->tiket->client->nama_pt }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> Alamat </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span>{{ $rk->tiket->client->alamat }}</span>
+                                                    </div>
+                                                </div>
+
+                                                 <div class="profile-info-row">
+                                                    <div class="profile-info-name"> Maps </div>
+
+                                                    <div class="profile-info-value">
+                                                         <a href="http://maps.google.com" target="_blank"><div id="mapss"></div></a>
                                                     </div>
                                                 </div>
 
@@ -96,6 +117,14 @@
                                                         <span>{{ $rk->id_tiket }}</span>
                                                     </div>
                                                 </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> Status Tiket </div>
+
+                                                    <div class="profile-info-value">
+                                                       <span>{!! \Erasoft\Libraries\CustomLib::gen_status_tiket($rk->tiket->status) !!}</span>
+                                                    </div>
+                                                </div>
+
 
                                                 <div class="profile-info-row">
                                                     <div class="profile-info-name"> Status </div>
@@ -157,4 +186,45 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.page-content -->
+@endsection
+@section("js_script")
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+        var geocoder = new google.maps.Geocoder();
+        var _lat = "{{ $rk->tiket->client->lat }}";
+        var _long = "{{ $rk->tiket->client->long }}";
+        var pt = "{{ $rk->tiket->client->nama_pt }}";
+        function geocodePosition(pos) {
+            geocoder.geocode({
+                latLng: pos
+            }, function(responses) {
+                if (responses && responses.length > 0) {
+                    updateMarkerAddress(responses[0].formatted_address);
+                } else {
+                    updateMarkerAddress('Cannot determine address at this location.');
+                }
+            });
+        }
+
+
+        function initialize() {
+            var latLng = new google.maps.LatLng( _lat, _long);
+            var map = new google.maps.Map(document.getElementById('mapss'), {
+                zoom: 13,
+                center: latLng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            var marker = new google.maps.Marker({
+                position: latLng,
+                title: pt,
+                map: map,
+                draggable: true
+            });
+
+           
+        }
+
+        // Onload handler to fire off the app.
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 @endsection
